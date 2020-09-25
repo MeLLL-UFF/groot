@@ -1,2 +1,2 @@
 # tango
-TrANsfer learning with Genetic programming from bOostsrl
+GROOT - Genetic algorithms to aid  tRansfer Learning with bOOsTsrl
