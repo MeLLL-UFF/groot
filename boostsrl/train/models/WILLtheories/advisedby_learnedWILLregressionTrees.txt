@@ -1,0 +1,587 @@
+usePrologVariables: true.
+
+% maxTreeDepthInNodes                 = 5
+% maxTreeDepthInLiterals              = 12
+% maxNumberOfLiteralsAtAnInteriorNode = 1
+% maxFreeBridgersInBody               = 1
+% maxNumberOfClauses                  = 12
+% maxNodesToConsider                  = 10
+% maxNodesToCreate                    = 10.000
+% maxAcceptableNodeScoreToStop        = 0,003
+% negPosRatio                         = 2,000
+% testNegPosRatio                     = -1,000
+% # of pos examples                   = 226
+% # of neg examples                   = 0
+
+
+
+%%%%%  WILL-Produced Tree #1 @ 15:20:52 9/29/20.  [Using 3.680.080 memory cells.]  %%%%%
+
+% FOR advisedby(A, B):
+%   if ( student(B) )
+%   then return -0.14185106490048763;  // std dev = 8,16e-08, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
+%   else if ( professor(A) )
+%   | then return -0.1418510649004878;  // std dev = 0,000, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
+%   | else if ( student(A) )
+%   | | then return 0.7479127146270694;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
+%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+
+
+% Clauses:
+
+advisedby(A, B, -0.14185106490048763) :- 
+     student(B), 
+     !. // Clause #1.
+
+advisedby(A, B, -0.1418510649004878) :- 
+     professor(A), 
+     !. // Clause #2.
+
+advisedby(A, B, 0.7479127146270694) :- 
+     student(A), 
+     !. // Clause #3.
+
+advisedby(A, B, 0) :- !. // Clause #4.
+
+
+% The flattened versions of these clauses:
+
+flattened_advisedby(underscore, a, -0.14185106490048763) :-  /* #neg=90 */ 
+   student(a),
+   !. // Flattened version of clause #1.
+
+flattened_advisedby(a, underscore, -0.1418510649004878) :-  /* #neg=9 */ 
+   professor(a),
+   !. // Flattened version of clause #2.
+
+flattened_advisedby(a, underscore, 0.7479127146270694) :-  /* #neg=14 #pos=113 */ 
+   student(a),
+   !. // Flattened version of clause #3.
+
+flattened_advisedby(underscore, underscore, 0) :- 
+   !. // Flattened version of clause #4.
+
+
+% The unique flattened literals:
+%   professor(a)
+%   student(a)
+
+%%%%%  WILL-Produced Tree #2 @ 15:20:52 9/29/20.  [Using 3.742.960 memory cells.]  %%%%%
+
+% FOR advisedby(A, B):
+%   if ( student(B) )
+%   then return -0.1254446385283914;  // std dev = 0,000, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
+%   else if ( professor(A) )
+%   | then return -0.12544463852839138;  // std dev = 0,000, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
+%   | else if ( student(A) )
+%   | | then return 0.6309392933122696;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
+%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+
+
+% Clauses:
+
+advisedby(A, B, -0.1254446385283914) :- 
+     student(B), 
+     !. // Clause #1.
+
+advisedby(A, B, -0.12544463852839138) :- 
+     professor(A), 
+     !. // Clause #2.
+
+advisedby(A, B, 0.6309392933122696) :- 
+     student(A), 
+     !. // Clause #3.
+
+advisedby(A, B, 0) :- !. // Clause #4.
+
+
+% The flattened versions of these clauses:
+
+flattened_advisedby(underscore, a, -0.1254446385283914) :-  /* #neg=90 */ 
+   student(a),
+   !. // Flattened version of clause #1.
+
+flattened_advisedby(a, underscore, -0.12544463852839138) :-  /* #neg=9 */ 
+   professor(a),
+   !. // Flattened version of clause #2.
+
+flattened_advisedby(a, underscore, 0.6309392933122696) :-  /* #neg=14 #pos=113 */ 
+   student(a),
+   !. // Flattened version of clause #3.
+
+flattened_advisedby(underscore, underscore, 0) :- 
+   !. // Flattened version of clause #4.
+
+
+% The unique flattened literals:
+%   professor(a)
+%   student(a)
+
+%%%%%  WILL-Produced Tree #3 @ 15:20:53 9/29/20.  [Using 3.795.536 memory cells.]  %%%%%
+
+% FOR advisedby(A, B):
+%   if ( student(B) )
+%   then return -0.11231637819360621;  // std dev = 7,30e-08, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
+%   else if ( professor(A) )
+%   | then return -0.11231637819360639;  // std dev = 0,000, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
+%   | else return 0.49352170114897687;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
+
+
+% Clauses:
+
+advisedby(A, B, -0.11231637819360621) :- 
+     student(B), 
+     !. // Clause #1.
+
+advisedby(A, B, -0.11231637819360639) :- 
+     professor(A), 
+     !. // Clause #2.
+
+advisedby(A, B, 0.49352170114897687) :- !. // Clause #3.
+
+
+% The flattened versions of these clauses:
+
+flattened_advisedby(underscore, a, -0.11231637819360621) :-  /* #neg=90 */ 
+   student(a),
+   !. // Flattened version of clause #1.
+
+flattened_advisedby(a, underscore, -0.11231637819360639) :-  /* #neg=9 */ 
+   professor(a),
+   !. // Flattened version of clause #2.
+
+flattened_advisedby(underscore, underscore, 0.49352170114897687) :-  /* #neg=14 #pos=113 */ 
+   !. // Flattened version of clause #3.
+
+
+% The unique flattened literals:
+%   professor(a)
+%   student(a)
+
+%%%%%  WILL-Produced Tree #4 @ 15:20:53 9/29/20.  [Using 3.841.704 memory cells.]  %%%%%
+
+% FOR advisedby(A, B):
+%   if ( student(B) )
+%   then return -0.10159632948783621;  // std dev = 5,05e-08, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
+%   else if ( professor(A) )
+%   | then return -0.10159632948783627;  // std dev = 5,27e-09, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
+%   | else if ( student(A) )
+%   | | then return 0.37167824583218206;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
+%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+
+
+% Clauses:
+
+advisedby(A, B, -0.10159632948783621) :- 
+     student(B), 
+     !. // Clause #1.
+
+advisedby(A, B, -0.10159632948783627) :- 
+     professor(A), 
+     !. // Clause #2.
+
+advisedby(A, B, 0.37167824583218206) :- 
+     student(A), 
+     !. // Clause #3.
+
+advisedby(A, B, 0) :- !. // Clause #4.
+
+
+% The flattened versions of these clauses:
+
+flattened_advisedby(underscore, a, -0.10159632948783621) :-  /* #neg=90 */ 
+   student(a),
+   !. // Flattened version of clause #1.
+
+flattened_advisedby(a, underscore, -0.10159632948783627) :-  /* #neg=9 */ 
+   professor(a),
+   !. // Flattened version of clause #2.
+
+flattened_advisedby(a, underscore, 0.37167824583218206) :-  /* #neg=14 #pos=113 */ 
+   student(a),
+   !. // Flattened version of clause #3.
+
+flattened_advisedby(underscore, underscore, 0) :- 
+   !. // Flattened version of clause #4.
+
+
+% The unique flattened literals:
+%   professor(a)
+%   student(a)
+
+%%%%%  WILL-Produced Tree #5 @ 15:20:53 9/29/20.  [Using 3.882.072 memory cells.]  %%%%%
+
+% FOR advisedby(A, B):
+%   if ( student(B) )
+%   then return -0.09269127618926104;  // std dev = 2,79e-08, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
+%   else if ( professor(A) )
+%   | then return -0.09269127618926097;  // std dev = 0,000, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
+%   | else if ( student(A) )
+%   | | then return 0.2805396736953972;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
+%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+
+
+% Clauses:
+
+advisedby(A, B, -0.09269127618926104) :- 
+     student(B), 
+     !. // Clause #1.
+
+advisedby(A, B, -0.09269127618926097) :- 
+     professor(A), 
+     !. // Clause #2.
+
+advisedby(A, B, 0.2805396736953972) :- 
+     student(A), 
+     !. // Clause #3.
+
+advisedby(A, B, 0) :- !. // Clause #4.
+
+
+% The flattened versions of these clauses:
+
+flattened_advisedby(underscore, a, -0.09269127618926104) :-  /* #neg=90 */ 
+   student(a),
+   !. // Flattened version of clause #1.
+
+flattened_advisedby(a, underscore, -0.09269127618926097) :-  /* #neg=9 */ 
+   professor(a),
+   !. // Flattened version of clause #2.
+
+flattened_advisedby(a, underscore, 0.2805396736953972) :-  /* #neg=14 #pos=113 */ 
+   student(a),
+   !. // Flattened version of clause #3.
+
+flattened_advisedby(underscore, underscore, 0) :- 
+   !. // Flattened version of clause #4.
+
+
+% The unique flattened literals:
+%   professor(a)
+%   student(a)
+
+%%%%%  WILL-Produced Tree #6 @ 15:20:53 9/29/20.  [Using 3.939.376 memory cells.]  %%%%%
+
+% FOR advisedby(A, B):
+%   if ( student(B) )
+%   then return -0.08518475138839682;  // std dev = 5,16e-08, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
+%   else if ( professor(A) )
+%   | then return -0.08518475138839687;  // std dev = 3,73e-09, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
+%   | else if ( student(A) )
+%   | | then return 0.21614645702431154;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
+%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+
+
+% Clauses:
+
+advisedby(A, B, -0.08518475138839682) :- 
+     student(B), 
+     !. // Clause #1.
+
+advisedby(A, B, -0.08518475138839687) :- 
+     professor(A), 
+     !. // Clause #2.
+
+advisedby(A, B, 0.21614645702431154) :- 
+     student(A), 
+     !. // Clause #3.
+
+advisedby(A, B, 0) :- !. // Clause #4.
+
+
+% The flattened versions of these clauses:
+
+flattened_advisedby(underscore, a, -0.08518475138839682) :-  /* #neg=90 */ 
+   student(a),
+   !. // Flattened version of clause #1.
+
+flattened_advisedby(a, underscore, -0.08518475138839687) :-  /* #neg=9 */ 
+   professor(a),
+   !. // Flattened version of clause #2.
+
+flattened_advisedby(a, underscore, 0.21614645702431154) :-  /* #neg=14 #pos=113 */ 
+   student(a),
+   !. // Flattened version of clause #3.
+
+flattened_advisedby(underscore, underscore, 0) :- 
+   !. // Flattened version of clause #4.
+
+
+% The unique flattened literals:
+%   professor(a)
+%   student(a)
+
+%%%%%  WILL-Produced Tree #7 @ 15:20:53 9/29/20.  [Using 3.978.496 memory cells.]  %%%%%
+
+% FOR advisedby(A, B):
+%   if ( student(B) )
+%   then return -0.07877675473109161;  // std dev = 5,16e-08, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
+%   else if ( professor(A) )
+%   | then return -0.07877675473109173;  // std dev = 0,000, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
+%   | else if ( student(A) )
+%   | | then return 0.17051505636407485;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
+%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+
+
+% Clauses:
+
+advisedby(A, B, -0.07877675473109161) :- 
+     student(B), 
+     !. // Clause #1.
+
+advisedby(A, B, -0.07877675473109173) :- 
+     professor(A), 
+     !. // Clause #2.
+
+advisedby(A, B, 0.17051505636407485) :- 
+     student(A), 
+     !. // Clause #3.
+
+advisedby(A, B, 0) :- !. // Clause #4.
+
+
+% The flattened versions of these clauses:
+
+flattened_advisedby(underscore, a, -0.07877675473109161) :-  /* #neg=90 */ 
+   student(a),
+   !. // Flattened version of clause #1.
+
+flattened_advisedby(a, underscore, -0.07877675473109173) :-  /* #neg=9 */ 
+   professor(a),
+   !. // Flattened version of clause #2.
+
+flattened_advisedby(a, underscore, 0.17051505636407485) :-  /* #neg=14 #pos=113 */ 
+   student(a),
+   !. // Flattened version of clause #3.
+
+flattened_advisedby(underscore, underscore, 0) :- 
+   !. // Flattened version of clause #4.
+
+
+% The unique flattened literals:
+%   professor(a)
+%   student(a)
+
+%%%%%  WILL-Produced Tree #8 @ 15:20:53 9/29/20.  [Using 4.024.968 memory cells.]  %%%%%
+
+% FOR advisedby(A, B):
+%   if ( student(B) )
+%   then return -0.07324622576333707;  // std dev = 0,000, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
+%   else if ( professor(A) )
+%   | then return -0.07324622576333704;  // std dev = 2,63e-09, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
+%   | else if ( student(A) )
+%   | | then return 0.1374011175040191;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
+%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+
+
+% Clauses:
+
+advisedby(A, B, -0.07324622576333707) :- 
+     student(B), 
+     !. // Clause #1.
+
+advisedby(A, B, -0.07324622576333704) :- 
+     professor(A), 
+     !. // Clause #2.
+
+advisedby(A, B, 0.1374011175040191) :- 
+     student(A), 
+     !. // Clause #3.
+
+advisedby(A, B, 0) :- !. // Clause #4.
+
+
+% The flattened versions of these clauses:
+
+flattened_advisedby(underscore, a, -0.07324622576333707) :-  /* #neg=90 */ 
+   student(a),
+   !. // Flattened version of clause #1.
+
+flattened_advisedby(a, underscore, -0.07324622576333704) :-  /* #neg=9 */ 
+   professor(a),
+   !. // Flattened version of clause #2.
+
+flattened_advisedby(a, underscore, 0.1374011175040191) :-  /* #neg=14 #pos=113 */ 
+   student(a),
+   !. // Flattened version of clause #3.
+
+flattened_advisedby(underscore, underscore, 0) :- 
+   !. // Flattened version of clause #4.
+
+
+% The unique flattened literals:
+%   professor(a)
+%   student(a)
+
+%%%%%  WILL-Produced Tree #9 @ 15:20:53 9/29/20.  [Using 4.063.984 memory cells.]  %%%%%
+
+% FOR advisedby(A, B):
+%   if ( student(B) )
+%   then return -0.06842697784420265;  // std dev = 4,34e-08, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
+%   else if ( professor(A) )
+%   | then return -0.06842697784420272;  // std dev = 0,000, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
+%   | else if ( student(A) )
+%   | | then return 0.11269695940364122;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
+%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+
+
+% Clauses:
+
+advisedby(A, B, -0.06842697784420265) :- 
+     student(B), 
+     !. // Clause #1.
+
+advisedby(A, B, -0.06842697784420272) :- 
+     professor(A), 
+     !. // Clause #2.
+
+advisedby(A, B, 0.11269695940364122) :- 
+     student(A), 
+     !. // Clause #3.
+
+advisedby(A, B, 0) :- !. // Clause #4.
+
+
+% The flattened versions of these clauses:
+
+flattened_advisedby(underscore, a, -0.06842697784420265) :-  /* #neg=90 */ 
+   student(a),
+   !. // Flattened version of clause #1.
+
+flattened_advisedby(a, underscore, -0.06842697784420272) :-  /* #neg=9 */ 
+   professor(a),
+   !. // Flattened version of clause #2.
+
+flattened_advisedby(a, underscore, 0.11269695940364122) :-  /* #neg=14 #pos=113 */ 
+   student(a),
+   !. // Flattened version of clause #3.
+
+flattened_advisedby(underscore, underscore, 0) :- 
+   !. // Flattened version of clause #4.
+
+
+% The unique flattened literals:
+%   professor(a)
+%   student(a)
+
+%%%%%  WILL-Produced Tree #10 @ 15:20:53 9/29/20.  [Using 4.103.616 memory cells.]  %%%%%
+
+% FOR advisedby(A, B):
+%   if ( student(B) )
+%   then return -0.06419184008202626;  // std dev = 0,000, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
+%   else if ( professor(A) )
+%   | then return -0.0641918400820262;  // std dev = 2,63e-09, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
+%   | else if ( student(A) )
+%   | | then return 0.09378456109669607;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
+%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+
+
+% Clauses:
+
+advisedby(A, B, -0.06419184008202626) :- 
+     student(B), 
+     !. // Clause #1.
+
+advisedby(A, B, -0.0641918400820262) :- 
+     professor(A), 
+     !. // Clause #2.
+
+advisedby(A, B, 0.09378456109669607) :- 
+     student(A), 
+     !. // Clause #3.
+
+advisedby(A, B, 0) :- !. // Clause #4.
+
+
+% The flattened versions of these clauses:
+
+flattened_advisedby(underscore, a, -0.06419184008202626) :-  /* #neg=90 */ 
+   student(a),
+   !. // Flattened version of clause #1.
+
+flattened_advisedby(a, underscore, -0.0641918400820262) :-  /* #neg=9 */ 
+   professor(a),
+   !. // Flattened version of clause #2.
+
+flattened_advisedby(a, underscore, 0.09378456109669607) :-  /* #neg=14 #pos=113 */ 
+   student(a),
+   !. // Flattened version of clause #3.
+
+flattened_advisedby(underscore, underscore, 0) :- 
+   !. // Flattened version of clause #4.
+
+
+% The unique flattened literals:
+%   professor(a)
+%   student(a)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%  Final call for computing score for advisedby.  %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+stepLength_tree1(1.0).
+stepLength_tree2(1.0).
+stepLength_tree3(1.0).
+stepLength_tree4(1.0).
+stepLength_tree5(1.0).
+stepLength_tree6(1.0).
+stepLength_tree7(1.0).
+stepLength_tree8(1.0).
+stepLength_tree9(1.0).
+stepLength_tree10(1.0).
+
+logPrior(-1.8).
+advisedby(D, E, Total) :- // A general accessor. 
+   advisedby(D, E, 1000000, Total), !.
+advisedby(D, E, Total) :- waitHere("This should not fail", advisedby(D, E, Total)).
+
+advisedby(D, E, TreesToUse, Total) :- // A tree-limited accessor (e.g., for tuning the number of trees to use).
+   logPrior(LogPrior),
+   getScore_advisedby_tree1(D, E, TreesToUse, Total1),
+   getScore_advisedby_tree2(D, E, TreesToUse, Total2),
+   getScore_advisedby_tree3(D, E, TreesToUse, Total3),
+   getScore_advisedby_tree4(D, E, TreesToUse, Total4),
+   getScore_advisedby_tree5(D, E, TreesToUse, Total5),
+   getScore_advisedby_tree6(D, E, TreesToUse, Total6),
+   getScore_advisedby_tree7(D, E, TreesToUse, Total7),
+   getScore_advisedby_tree8(D, E, TreesToUse, Total8),
+   getScore_advisedby_tree9(D, E, TreesToUse, Total9),
+   getScore_advisedby_tree10(D, E, TreesToUse, Total10),
+   Total is LogPrior + Total1 + Total2 + Total3 + Total4 + Total5 + Total6 + Total7 + Total8 + Total9 + Total10,
+   !.
+advisedby(D, E, TreesToUse, Total) :- waitHere("This should not fail", advisedby(D, E, TreesToUse, Total)).
+
+getScore_advisedby_tree1(D, E, TreesToUse, 0.0) :- 1 > TreesToUse, !.
+getScore_advisedby_tree1(D, E, TreesToUse, Total1) :- advisedby_tree1(D, E, Total), stepLength_tree1(StepLen), Total1 is Total * StepLen.
+
+getScore_advisedby_tree2(D, E, TreesToUse, 0.0) :- 2 > TreesToUse, !.
+getScore_advisedby_tree2(D, E, TreesToUse, Total2) :- advisedby_tree2(D, E, Total), stepLength_tree2(StepLen), Total2 is Total * StepLen.
+
+getScore_advisedby_tree3(D, E, TreesToUse, 0.0) :- 3 > TreesToUse, !.
+getScore_advisedby_tree3(D, E, TreesToUse, Total3) :- advisedby_tree3(D, E, Total), stepLength_tree3(StepLen), Total3 is Total * StepLen.
+
+getScore_advisedby_tree4(D, E, TreesToUse, 0.0) :- 4 > TreesToUse, !.
+getScore_advisedby_tree4(D, E, TreesToUse, Total4) :- advisedby_tree4(D, E, Total), stepLength_tree4(StepLen), Total4 is Total * StepLen.
+
+getScore_advisedby_tree5(D, E, TreesToUse, 0.0) :- 5 > TreesToUse, !.
+getScore_advisedby_tree5(D, E, TreesToUse, Total5) :- advisedby_tree5(D, E, Total), stepLength_tree5(StepLen), Total5 is Total * StepLen.
+
+getScore_advisedby_tree6(D, E, TreesToUse, 0.0) :- 6 > TreesToUse, !.
+getScore_advisedby_tree6(D, E, TreesToUse, Total6) :- advisedby_tree6(D, E, Total), stepLength_tree6(StepLen), Total6 is Total * StepLen.
+
+getScore_advisedby_tree7(D, E, TreesToUse, 0.0) :- 7 > TreesToUse, !.
+getScore_advisedby_tree7(D, E, TreesToUse, Total7) :- advisedby_tree7(D, E, Total), stepLength_tree7(StepLen), Total7 is Total * StepLen.
+
+getScore_advisedby_tree8(D, E, TreesToUse, 0.0) :- 8 > TreesToUse, !.
+getScore_advisedby_tree8(D, E, TreesToUse, Total8) :- advisedby_tree8(D, E, Total), stepLength_tree8(StepLen), Total8 is Total * StepLen.
+
+getScore_advisedby_tree9(D, E, TreesToUse, 0.0) :- 9 > TreesToUse, !.
+getScore_advisedby_tree9(D, E, TreesToUse, Total9) :- advisedby_tree9(D, E, Total), stepLength_tree9(StepLen), Total9 is Total * StepLen.
+
+getScore_advisedby_tree10(D, E, TreesToUse, 0.0) :- 10 > TreesToUse, !.
+getScore_advisedby_tree10(D, E, TreesToUse, Total10) :- advisedby_tree10(D, E, Total), stepLength_tree10(StepLen), Total10 is Total * StepLen.
+
+flattenedLiteralsInThisSetOfTrees(advisedby, 2, [
+   professor(a),
+   student(a)]).

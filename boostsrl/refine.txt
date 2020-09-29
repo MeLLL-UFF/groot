@@ -1,0 +1,30 @@
+0;;workedunder(A, B) :- actor(B).;false;true
+0;false;female(A).;false;true
+0;false,false;actor(A).;false;false
+1;;workedunder(A, B) :- actor(B).;false;true
+1;false;female(A).;false;true
+1;false,false;actor(A).;false;false
+2;;workedunder(A, B) :- actor(B).;false;true
+2;false;director(A).;false;true
+2;false,false;female(A).;false;false
+3;;workedunder(A, B) :- actor(B).;false;true
+3;false;female(A).;false;true
+3;false,false;actor(A).;false;false
+4;;workedunder(A, B) :- actor(B).;false;true
+4;false;female(A).;false;true
+4;false,false;actor(A).;false;false
+5;;workedunder(A, B) :- actor(B).;false;true
+5;false;female(A).;false;true
+5;false,false;actor(A).;false;false
+6;;workedunder(A, B) :- actor(B).;false;true
+6;false;female(A).;false;true
+6;false,false;actor(A).;false;false
+7;;workedunder(A, B) :- actor(B).;false;true
+7;false;female(A).;false;true
+7;false,false;actor(A).;false;false
+8;;workedunder(A, B) :- actor(B).;false;true
+8;false;female(A).;false;true
+8;false,false;actor(A).;false;false
+9;;workedunder(A, B) :- actor(B).;false;true
+9;false;female(A).;false;true
+9;false,false;actor(A).;false;false
