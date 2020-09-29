@@ -1,0 +1,2 @@
+#pip install -r requirements.txt
+git+git://github.com/rodrigoazs/boostsrl-python-package.git
