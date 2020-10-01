@@ -1,0 +1,3 @@
+{"id": "35", "source":"nell_sports", "target":"nell_finances", "predicate":"athleteplaysforteam", "to_predicate":"bankchiefexecutiveceo"}
+{"id": "36", "source":"nell_sports", "target":"nell_finances", "predicate":"athleteplaysforteam", "to_predicate":"companyceo"}
+{"id": "37", "source":"nell_sports", "target":"nell_finances", "predicate":"teamplayssport", "to_predicate":"companyeconomicsector"}
