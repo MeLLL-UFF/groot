@@ -12,17 +12,19 @@ class Population:
 		self.toolbox = base.Toolbox()
 		# self.toolbox.register("mate", tools.cxTwoPoint) 
 
-	def construct_population(self, tree_source, bk_source, bk_target, pred_target):
+	def construct_population(self, tree_source, bk_source, bk_target, pred_target,
+		                     target):
 		for index in range(self.pop_size):
 
 			creator.create("FitnessMax", base.Fitness, weights=(-1.0,))
 			creator.create("Individual", Individual, fitness=creator.FitnessMax)
-			tmp = creator.Individual(tree_source, bk_source, bk_target, pred_target)
-
+			tmp = creator.Individual(tree_source, bk_source, bk_target, 
+				                     pred_target, target)
 
 			# self.toolbox.register("function", tmp.constructIndividual, list_flags)
 			self.toolbox.register("function", tmp.construct_individual)
-			self.population.append(self.toolbox.function())
+			self.toolbox.function()
+			self.population.append(tmp)
 
 	def print_pop(self):
 		print ('['),

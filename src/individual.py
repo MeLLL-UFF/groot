@@ -10,7 +10,7 @@ class Individual:
 	def __init__(self, tree_source, bk_source, bk_target, pred_target, target):
 		#pred_target é : pred_target = [('movie', '+,-'), ('director', '+'),...]
 		self.tree_source = tree_source
-		self.modified_tree_source = tree_source
+		self.modified_tree_source = copy.deepcopy(tree_source)
 		self.bk_source = bk_source
 		self.bk_target = bk_target
 		self.pred_target = pred_target
@@ -19,6 +19,7 @@ class Individual:
 		self.new_bk_source = []
 		self.new_bk_target = []
 		self.transfer = []
+		self.individual_trees = []
 
 	def compare_predicates(self, bk, pred_source, pred_target):
 		for pred in bk:
@@ -31,36 +32,44 @@ class Individual:
 		#COLOCAR MENSAGEM DE ERRO
 		return False
 
-	def change_predicate(self, pred, new_info):
+	def change_predicate(self, pred, new_info, var):
 		#new_info é uma lista com o que se quer colocar entre pred e as variáveis
 		#pred é do tipo: predicado(A)
 		new_info = "".join(str(x) for x in new_info)
-		return '{}{}({}'.format(pred.split('(')[0], new_info, pred.split('(')[1])
+		return '{}{}{}'.format(pred.split('(')[0], new_info, var)
 
-	def mapping_transfer(self, source_pred, target_pred, tree_number, index_node):
+	def mapping_transfer(self, source_pred, target_pred, tree_number, index_node, with_number=True):
 		#source é do tipo: pred(A) e target é pred
 		new_source_pred = source_pred.split('(')[0]
 		no_var = len(source_pred.split('(')[1].split(','))
-		for pred in self.new_bk_source:
-			if new_source_pred in pred and 'source: {}'.format(pred) not in self.transfer: 
-				self.transfer.append('source: {}'.format(pred))
-				break
-		for pred in self.new_bk_target:
-			if target_pred in pred and 'target: {}'.format(pred) not in self.transfer:
-				self.transfer.append('target: {}'.format(pred))
-				break
-		var_pred = '(A'
-		for i in range(1, no_var-1):
-			var_pred = '{},{}'.format(var_pred, list(string.ascii_uppercase)[i])
-		if no_var > 1:
-			var_pred = '{},{})'.format(var_pred, list(string.ascii_uppercase)[no_var-1])
-		else: 
-			var_pred = '{})'.format(var_pred)
-		if 'setMap: {}={}{}.'.format(self.change_predicate(source_pred, [tree_number, index_node]),
-											target_pred, var_pred) not in self.transfer:
-			self.transfer.append('setMap: {}={}{}.'.format(self.change_predicate(source_pred, 
-														    [tree_number, index_node]),
-															target_pred, var_pred))
+		var_pred = '({})'.format(",".join(list(string.ascii_uppercase)[0:no_var]))
+		if with_number:
+			for pred in self.new_bk_source:
+				if new_source_pred in pred and 'source: {}.'.format(pred) not in self.transfer: 
+					self.transfer.append('source: {}.'.format(self.change_predicate(source_pred, 
+															    [tree_number, index_node], var_pred)))
+					break
+			for pred in self.new_bk_target:
+				if target_pred in pred and 'target: {}'.format(pred) not in self.transfer:
+					self.transfer.append('target: {}'.format(pred))
+					break
+			if 'setMap: {}={}{}.'.format(self.change_predicate(source_pred, [tree_number, index_node], var_pred),
+												target_pred, var_pred) not in self.transfer:
+				self.transfer.append('setMap: {}={}{}.'.format(self.change_predicate(source_pred, 
+															    [tree_number, index_node], var_pred),
+																target_pred, var_pred))
+		else:
+			for pred in self.new_bk_source:
+				if new_source_pred in pred and 'source: {}.'.format(pred) not in self.transfer: 
+					self.transfer.append('source: {}.'.format(source_pred))
+					break
+			for pred in self.new_bk_target:
+				if target_pred in pred and 'target: {}'.format(pred) not in self.transfer:
+					self.transfer.append('target: {}'.format(pred))
+					break
+			if 'setMap: {}={}{}.'.format(source_pred, target_pred, var_pred) not in self.transfer:
+				self.transfer.append('setMap: {}={}{}.'.format(source_pred, target_pred, var_pred))
+
 
 	def generate_new_preds(self):
 		self.new_bk_source = copy.deepcopy(self.bk_source)
@@ -105,7 +114,6 @@ class Individual:
 		return valid_pred
 
 	def change_pred(self, source_pred, target_pred):
-		#pegar os parâmetros do source_pred e passar para o target_pred
 		return '{}({}'.format(target_pred.split('(')[0], source_pred.split('(')[1])
 
 	def define_individual(self, structured_tree, tree_number):
@@ -125,25 +133,17 @@ class Individual:
 	def define_individuals(self, structured_trees):
 		individual_trees = []
 		for index in range(0, len(structured_trees)):
-			individual_trees.extend(self.define_individual(structured_trees[index], index))
-		return individual_trees
+			self.individual_trees.extend(self.define_individual(structured_trees[index], index))
 
 	def generate_random_individual(self, structured_tree, tree_number):
 		new_tree = []
-		# new_tree.append(structured_tree[0])
 		index_node = 1
 		modes = self.compare_predicates(self.bk_target, structured_tree[0], self.target)
 		if modes:
 			new_tree.append('{}{}'.format(self.target, modes))
-		self.mapping_transfer(structured_tree[0], self.target, tree_number, index_node)
+		self.mapping_transfer(structured_tree[0], self.target, tree_number, index_node, False)
 		for values, node in structured_tree[1].items():
-			#mode: pegar do bk
-			#num_variaveis: pegar do bk
-			# guardar do anterior para pegar no proximo e nao jogar fora a list_pred
-			#list_pred = [movie(+movie, -person), director(+person)] e, ao pegar mode e num_variaveis
-			# pegar apenas os predicados que casam fazendo uma variavel allowed_pred
-			#choice = random em allowed_pred
-			#trocar allowed_pred[choice] e node
+			var_pred = '({}'.format(node.split('(')[1])
 			pred_source = self.get_modes(structured_tree, node)
 			valid_preds = self.get_valid_predicates(pred_source)
 			index_choice = randint(0, len(valid_preds)-1)
@@ -153,7 +153,7 @@ class Individual:
 			self.modified_tree_source[tree_number][1][values] = node.replace(node, 
 																			self.change_predicate(node, 
 																								 [tree_number, 
-																								 index_node]))
+																								 index_node], var_pred))
 			index_node += 1
 		return structured_tree
 
@@ -164,16 +164,19 @@ class Individual:
 			individual_structured_trees.append(self.generate_random_individual(structured_tree, index))
 		return individual_structured_trees
 
-	def evaluate(self, individual_tree, target):
-		pass
-		# mapping_preds = self.generate_map(individual_tree)
-		# background_tr = boostsrl.modes(self.bk_target, [target], useStdLogicVariables=False)
-		# model_tr = boostsrl.train(background_tr, train_pos_target, train_neg_target, train_facts_target, refine=individual_tree, transfer=mapping_preds, trees=trees_number)
-		#fazer teste e retornar
+	def evaluate(self, train_pos_target, train_neg_target, train_facts_target,
+		         test_pos_target, test_neg_target, test_facts_target):
+		refine = self.define_individuals(self.modified_tree_source)
+		background_train = boostsrl.modes(self.bk_target, [self.target])
+		model_tr = boostsrl.train(background_train, train_pos_target, train_neg_target, 
+			                      train_facts_target, refine=refine, transfer=self.transfer, trees=10)
+		test_model = boostsrl.test(model_tr, test_pos_target, test_neg_target, 
+			                       test_facts_target, trees=10)
+		print(test_model.summarize_results())
+		return test_model.summarize_results()['Precision'][0]
 
 	def construct_individual(self):
 		self.generate_new_preds()
 		structured_trees = self.generate_random_individuals()
-		individual_trees = self.define_individuals(structured_trees)
-		return individual_trees
+		self.define_individuals(structured_trees)
 
