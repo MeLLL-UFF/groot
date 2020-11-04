@@ -29,6 +29,43 @@ def open_files():
   return experiments, bk_experiments 
 
 
+def generate_file(bk, source, predicate, results):
+  # Load source dataset
+  src_total_data = datasets.load(source, bk[source], seed=results['save']['seed'])
+  src_data = datasets.load(source, bk[source], target=predicate, balanced=results['source_balanced'], seed=results['save']['seed'])  
+
+  # Group and shuffle
+  src_facts = datasets.group_folds(src_data[0])
+  src_pos = datasets.group_folds(src_data[1])
+  src_neg = datasets.group_folds(src_data[2])
+
+  print('Source train facts examples: %s' % len(src_facts))
+  print('Source train pos examples: %s' % len(src_pos))
+  print('Source train neg examples: %s\n' % len(src_neg))
+
+  dir_path = 'files/' + source + '/src/'
+  if not os.path.exists(dir_path):
+    os.makedirs(dir_path)
+
+  with open(dir_path +'/src_facts.txt', 'w') as file:
+    for fact in src_facts:
+      file.write(fact)
+      file.write('\n')
+  file.close()
+
+  with open(dir_path + '/src_pos.txt', 'w') as file:
+    for pos in src_pos:
+      file.write(pos)
+      file.write('\n')
+  file.close()
+
+  with open(dir_path + '/src_neg.txt', 'w') as file:
+    for neg in src_neg:
+      file.write(neg)
+      file.write('\n')
+  file.close()
+
+
 def generate_train_test_files():
   experiments, bk_experiments = open_files()
 
@@ -60,36 +97,5 @@ def generate_train_test_files():
     to_predicate = experiment['to_predicate']
 
     # Load source dataset
-    src_total_data = datasets.load(source, bk_experiments[source], seed=results['save']['seed'])
-    src_data = datasets.load(source, bk_experiments[source], target=predicate, balanced=source_balanced, seed=results['save']['seed'])  
-
-    # Group and shuffle
-    src_facts = datasets.group_folds(src_data[0])
-    src_pos = datasets.group_folds(src_data[1])
-    src_neg = datasets.group_folds(src_data[2])
-
-    print('Source train facts examples: %s' % len(src_facts))
-    print('Source train pos examples: %s' % len(src_pos))
-    print('Source train neg examples: %s\n' % len(src_neg))
-
-    dir_path = 'files/' + source + '/src/'
-    if not os.path.exists(dir_path):
-      os.makedirs(dir_path)
-
-    with open(dir_path +'/src_facts.txt', 'w') as file:
-    	for fact in src_facts:
-    		file.write(fact)
-    		file.write('\n')
-    file.close()
-
-    with open(dir_path + '/src_pos.txt', 'w') as file:
-    	for pos in src_pos:
-    		file.write(pos)
-    		file.write('\n')
-    file.close()
-
-    with open(dir_path + '/src_neg.txt', 'w') as file:
-    	for neg in src_neg:
-    		file.write(neg)
-    		file.write('\n')
-    file.close()
+    generate_file(bk_experiments, source, predicate, results)
+    generate_file(bk_experiments, target, to_predicate, results)
