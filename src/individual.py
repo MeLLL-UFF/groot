@@ -35,6 +35,7 @@ class Individual:
             else: 
                 pred_source = self.predicate_inst.get_modes(src_tree, src_tree[line_index])
                 new_src_pred = src_tree[line_index]
+            # print(pred_source)
             new_individual_tree.append(self.predicate_inst.change_pred(new_src_pred, pred_source))
         return new_individual_tree
 
@@ -52,12 +53,12 @@ class Individual:
         self.transfer = Transfer(ind.predicate_inst, ind.target)
         # print(self.transfer.predicate_inst.bk_source)
         # print("ESTOU EM evaluate")
-        shutil.rmtree('boostsrl/train')
-        os.remove('boostsrl/train_output.txt')
-        shutil.rmtree('boostsrl/test')
-        os.remove('boostsrl/test_output.txt')
-        os.remove('boostsrl/refine.txt')
-        os.remove('boostsrl/transfer.txt')
+        # shutil.rmtree('boostsrl/train')
+        # os.remove('boostsrl/train_output.txt')
+        # shutil.rmtree('boostsrl/test')
+        # os.remove('boostsrl/test_output.txt')
+        # os.remove('boostsrl/refine.txt')
+        # os.remove('boostsrl/transfer.txt')
         # print(ind.source_tree)
         ind.modified_src_tree = ind.transfer.mapping_all_trees(ind.individual_trees, ind.source_tree)
         refine = []
@@ -71,9 +72,7 @@ class Individual:
                                   trees=20)
         test_model = boostsrl.test(model_tr, test_pos_target, test_neg_target, 
                                    test_facts_target, trees=20)
-        # print(test_model.summarize_results())
-        return test_model.summarize_results()['AUC ROC'],
-        # return test_model.summarize_results()['Precision'][0],
+        return -test_model.summarize_results()['CLL'],
 
     def mutate_pred(self, individual_tree, mut_rate):
         new_individual_tree = []
@@ -84,8 +83,7 @@ class Individual:
                                                                 pred.split(":- ")[1])
                 else:
                     pred_source = self.predicate_inst.get_modes(individual_tree, pred)
-                # print(pred_source)
-                # print(pred)
+
                 new_individual_tree.append(self.predicate_inst.change_pred(pred, pred_source))
             else:
                 new_individual_tree.append(pred)

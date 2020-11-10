@@ -20,8 +20,8 @@ class Population:
     def construct_population(self, tree_source, target, predicate_inst):
         for index in range(self.pop_size):
 
-            creator.create("FitnessMax", base.Fitness, weights=(1.0,))
-            creator.create("Individual", Individual, fitness=creator.FitnessMax)
+            creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
+            creator.create("Individual", Individual, fitness=creator.FitnessMin)
             tmp = creator.Individual(tree_source, target, predicate_inst)
 
             # self.toolbox.register("function", tmp.constructIndividual, list_flags)
@@ -92,8 +92,8 @@ class Population:
         result = self.population[0].fitness.values[0]
         for indice in range(self.pop_size):
             fit = self.population[indice].fitness.values
-            print(fit, fit[0] > result)
-            if fit[0] > result:
+            print(fit, fit[0] < result)
+            if fit[0] < result:
                 result = fit[0]
         print(f"bestResult: {result}")
         return result

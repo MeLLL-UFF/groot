@@ -48,8 +48,10 @@ class Predicate:
         if not self.variables:
             self.variables.extend(("".join(re.findall('\((.*?)\)', individual_tree[0])[0])).split(', '))
         tmp_var = ("".join(re.findall('\((.*?)\)',pred_source))).split(',')
+        for i in self.variables: i.strip()
+        
         for var in tmp_var:
-            if var in self.variables:
+            if var.strip() in self.variables:
                 new_pred_source += '+,'
             else: 
                 new_pred_source += '-,'
@@ -77,7 +79,6 @@ class Predicate:
         else: target_pred = split_pred[2]
         var_pred = '({}'.format(target_pred.split('(')[1])
         valid_preds = self.get_valid_predicates(pred_source)
-        # print(valid_preds)
         index_choice = randint(0, len(valid_preds)-1)
         target_pred = self.new_pred(target_pred, valid_preds[index_choice])
         if has_target: 
