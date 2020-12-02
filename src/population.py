@@ -17,12 +17,12 @@ class Population:
         self.toolbox.register("selBest", tools.selBest)
         self.toolbox.register("selWorst", tools.selWorst)
 
-    def construct_population(self, tree_source, target, predicate_inst):
+    def construct_population(self, tree_source, target, source, predicate_inst):
         for index in range(self.pop_size):
 
             creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
             creator.create("Individual", Individual, fitness=creator.FitnessMin)
-            tmp = creator.Individual(tree_source, target, predicate_inst)
+            tmp = creator.Individual(tree_source, target, source, predicate_inst)
 
             # self.toolbox.register("function", tmp.constructIndividual, list_flags)
             self.toolbox.register("function", tmp.generate_individuals)
@@ -66,17 +66,13 @@ class Population:
         return new_pop
 
     #evaluating population
-    def evaluation(self, new_pop, train_pos_target, 
-                   train_neg_target, train_facts_target,
-                   test_pos_target, test_neg_target, 
-                   test_facts_target):
+    def evaluation(self, new_pop, pos_target, 
+                   neg_target, facts_target):
         '''
             Evaluating all population
         '''
-        self.toolbox.register("evaluate", new_pop[0].evaluate, train_pos_target=train_pos_target, 
-                        train_neg_target=train_neg_target, train_facts_target=train_facts_target,
-                        test_pos_target=test_pos_target, test_neg_target=test_neg_target, 
-                        test_facts_target=test_facts_target)
+        self.toolbox.register("evaluate", new_pop[0].evaluate, pos_target=pos_target, 
+                        neg_target=neg_target, facts_target=facts_target)
         fitnesses = map(self.toolbox.evaluate, new_pop) #<--- problema
         
         for ind, fit in zip(new_pop, fitnesses):
