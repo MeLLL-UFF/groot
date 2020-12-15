@@ -1,4 +1,4 @@
-% Running on host: MacBook-Air-de-Leticia
+% Running on host: Air-de-Leticia
 
 % Switching to VarIndicator = uppercase.
 
@@ -44,9 +44,9 @@
 % LoadAllLibraries() called.  Currently loaded libraries: [listsInLogic, differentInLogic, modes_arithmeticInLogic, inlines_comparisonInLogic, modes_listsInLogic, inlines_differentInLogic, modes_differentInLogic, arithmeticInLogic, inlines_listsInLogic, modes_comparisonInLogic, comparisonInLogic, inlines_arithmeticInLogic]
 
 %  Read the facts.
-%  Have read 2.387 facts.
-% Have read 113 examples from 'train' [train/train*].
-% Have read 113 examples from 'train' [train/train*].
+%  Have read 1.679 facts.
+% Have read 78 examples from 'train' [train/train*].
+% Have read 78 examples from 'train' [train/train*].
 
 %  LearnOneClause initialized.
 
@@ -67,20 +67,20 @@
 % Collecting the types of constants.
 
 % Looking at the training examples to see if any types of new constants can be inferred.
-% Time to collect constants: 90 milliseconds
+% Time to collect constants: 315 milliseconds
 % Time to collect examples: 0 seconds
 
-% Read 113 pos examples and 113 neg examples.
-% Time to init learnOneClause: 107 milliseconds
+% Read 78 pos examples and 78 neg examples.
+% Time to init learnOneClause: 349 milliseconds
 % Old dirnull
 Setting model dir
 
-% Have 113 'raw' positive examples and kept 113.
-% Have 113 'raw' negative examples and kept 113.
+% Have 78 'raw' positive examples and kept 78.
+% Have 78 'raw' negative examples and kept 78.
 
 % processing backup's for advisedby
-%  POS EX = 113
-%  NEG EX = 113
+%  POS EX = 78
+%  NEG EX = 78
 
 % Memory usage by WILLSetup (just counts # targets?):
 %  |backupPosExamples| = 1
@@ -92,285 +92,91 @@ File: train/advice.txt doesnt exist.Hence no advice loaded
 % Learning 10 trees in this iteration for advisedby
 
 % Learn model for: advisedby
-% Kept 113 of the 113 positive examples.
-% Kept 113 of the 113 negative examples.
+% Kept 78 of the 78 positive examples.
+% Kept 78 of the 78 negative examples.
 %      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
 %         ILP node to extend: null
 %      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
 Variance:0.25
 Set score:0.0025
-% Dataset size: 226
+% Dataset size: 156
 Computing probabilities
 prob time:2 milliseconds
 No hidden examples for : advisedby
-Time to build dataset: 4 milliseconds
+Time to build dataset: 3 milliseconds
 %      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
 %         ILP node to extend: null
 %      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.2500000000000032
+Variance:0.25000000000000017
 Set score:0.0025
 % [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
 
-% Have these 10 positive seeds: 8 32 127 142 152 155 163 168 189 191
+% Have these 10 positive seeds: 14 23 59 65 85 91 97 104 109 117
 
 % The best node found: null
 
 % target           = advisedby(D, E)
-%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 226,0/226,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 156,0/156,0 pos, 0,0/0,0 neg]
+% [ LazyGroundClauseIndex ]  Building full index for professor/1 with 48 assertions.
+%     Score = -14,625001 (regressionFit = 14,625000, penalties=1.12E-6) for clause:  advisedby(_, A) :- professor(A).  [covers 96,0/156,0 pos, 0,0/0,0 neg]
+% [ LazyGroundClauseIndex ]  Building full index for student/1 with 162 assertions.
+%     Score = -8,863638 (regressionFit = 8,863636, penalties=2.0200000000000006E-6) for clause:  advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
 
-% Finding mapping for predicates: [actor]
-% Number of legal mappings: 2
-% [ LazyGroundClauseIndex ]  Building full index for student/1 with 216 assertions.
-%     Score = -19,110295 (regressionFit = 19,110294, penalties=1.12E-6) for clause:  advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-% [ LazyGroundClauseIndex ]  Building full index for professor/1 with 62 assertions.
-%     Score = -19,110295 (regressionFit = 19,110294, penalties=1.12E-6) for clause:  advisedby(_, A) :- professor(A).  [covers 136,0/226,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
+% The best node found: advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
 
 % Expanding node at Level 0 with score = 1,797693e+308.
-% Will extend: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
+% Will extend: advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
 % Path: 0;
-Comparing variance: 7.401486830834377E-17 to score=0.0025 #egs=90.0
-Comparing variance: 0.14051686851211428 to score=0.0025 #egs=136.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 136,0
-%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-0,140517)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 1 and with score = -0,140517) into the LAST position (#1) in the search queue.
+Comparing variance: 0.10072314049586789 to score=0.0025 #egs=88.0
+Comparing variance: 5.224578939412501E-17 to score=0.0025 #egs=68.0
+%   Creating a TRUE-branch interior node with wgtedCountTrueBranchPos = 88,0
+%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-0,100723)
+%         ILP node to extend: advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+%      Insert tree-structured search node (@ level = 1 and with score = -0,100723) into the LAST position (#1) in the search queue.
+%   Creating a FALSE-branch leaf because good enough fit since score < 0.0025
 
-% Time for loop #1: 67 milliseconds.
-% Internal node max length = 1
+% Time for loop #1: 90 milliseconds.
+% Internal node max length = 2
 % Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
 
 % On cycle #1, the best clause found is:
-%      advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-% This clause covers 90 positive examples, of which 90 are newly covered.
+%      advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+% This clause covers 88 positive examples, of which 88 are newly covered.
 % It also covers 0 negative examples, of which 0 are newly covered.
 
-% Have these 10 positive seeds: 3 8 27 47 54 58 66 78 101 119
+% Working on expanding this node: 'advisedby(A, B) :- professor(B), student(A).  [covers 88,0/88,0 pos, 0,0/0,0 neg]'
+%     Score = -8,863638 (regressionFit = 8,863636, penalties=2.0200000000000006E-6) for clause:  advisedby(A, B) :- professor(B), student(A).  [covers 88,0/88,0 pos, 0,0/0,0 neg]
+
+% Have these 10 positive seeds: 0 25 27 28 38 50 52 57 61 67
 
 % The best node found: null
+% [ LazyGroundNthArgumentClauseIndex ]  Argument 1:  Building full index for tempadvisedby/2.
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.1300000000000005E-6) for clause:  advisedby(A, B) :- professor(B), student(A), tempadvisedby(_, A).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.9300000000000005E-6) for clause:  advisedby(A, B) :- professor(B), student(A), tempadvisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
 
-% Finding mapping for predicates: [female]
-% Number of legal mappings: 1
-%     Score = -12,456694 (regressionFit = 12,456693, penalties=1.12E-6) for clause:  advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
+% The best node found: advisedby(A, B) :- professor(B), student(A), tempadvisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
 
-% The best node found: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = advisedby(A, B) :- professor(B), student(A), tempadvisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg] *****
 
-% Expanding node at Level 1 with score = -0,141.
-% Will extend: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% Path: 0;false
-Comparing variance: -9.25185853854297E-18 to score=0.0025 #egs=9.0
-Comparing variance: 0.09808419616839577 to score=0.0025 #egs=127.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 127,0
-%      addToQueueOfTreeStructuredLearningTasks (level=2; score=-0,098084)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 2 and with score = -0,098084) into the LAST position (#1) in the search queue.
 
-% Time for loop #2: 19 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #2, the best clause found is:
-%      advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% This clause covers 9 positive examples, of which 9 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% Have these 3 positive seeds: 47 49 110
-
-% The best node found: null
-%     Score = -Infinity (regressionFit = Infinity, penalties=1.12E-6) for clause:  advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 2 with score = -0,098.
-% Will extend: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% Path: 0;false,false
-Comparing variance: 0.09808419616839577 to score=0.0025 #egs=127.0
+% Expanding node at Level 1 with score = -0,101.
+% Will extend: advisedby(A, B) :- professor(B), student(A), tempadvisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+% Path: 0;true
 Comparing variance: NaN to score=0.0025 #egs=0.0
-%   Creating a FALSE-branch leaf because wgtedCountFalseBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+Comparing variance: 0.10072314049586789 to score=0.0025 #egs=88.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
 
-% Time for loop #3: 72 milliseconds.
-% Internal node max length = 1
+% Time for loop #2: 47 milliseconds.
+% Internal node max length = 2
 % Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #3, the best clause found is:
-%      advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% This clause covers 127 positive examples, of which 127 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% ******************************************
-
-%  Have stopped ILP's outer loop because the tree-structured queue is empty.
-
-% ******************************************
-
-%%%%%  WILL-Produced Tree #1 @ 15:20:52 9/29/20.  [Using 3.680.080 memory cells.]  %%%%%
-
-
-% FOR advisedby(A, B):
-%   if ( student(B) )
-%   then return -0.14185106490048763;  // std dev = 8,16e-08, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
-%   else if ( professor(A) )
-%   | then return -0.1418510649004878;  // std dev = 0,000, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
-%   | else if ( student(A) )
-%   | | then return 0.7479127146270694;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
-%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
-
-
-% Clauses:
-
-advisedby(A, B, -0.14185106490048763) :- 
-     student(B), 
-     !. // Clause #1.
-
-advisedby(A, B, -0.1418510649004878) :- 
-     professor(A), 
-     !. // Clause #2.
-
-advisedby(A, B, 0.7479127146270694) :- 
-     student(A), 
-     !. // Clause #3.
-
-advisedby(A, B, 0) :- !. // Clause #4.
-
-
-% The flattened versions of these clauses:
-
-flattened_advisedby(underscore, a, -0.14185106490048763) :-  /* #neg=90 */ 
-   student(a),
-   !. // Flattened version of clause #1.
-
-flattened_advisedby(a, underscore, -0.1418510649004878) :-  /* #neg=9 */ 
-   professor(a),
-   !. // Flattened version of clause #2.
-
-flattened_advisedby(a, underscore, 0.7479127146270694) :-  /* #neg=14 #pos=113 */ 
-   student(a),
-   !. // Flattened version of clause #3.
-
-flattened_advisedby(underscore, underscore, 0) :- 
-   !. // Flattened version of clause #4.
-
-
-% The unique flattened literals:
-%   professor(a)
-%   student(a)
-
-% Saving model in: train/models/bRDNs/advisedby.model.ckpt
-% Time taken to learn 1 trees is 299 milliseconds.
-
-%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.09808419616839581
-Set score:0.0025
-% Only 226 out of 226 converged.
-% Kept 113 of the 113 positive examples.
-% Kept 113 of the 113 negative examples.
-% Dataset size: 226
-Computing probabilities
-prob time:25 milliseconds
-No hidden examples for : advisedby
-Time to build dataset: 34 milliseconds
-%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.19595182215484114
-Set score:0.0025
-% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
-
-% Have these 10 positive seeds: 8 15 21 29 72 73 84 111 127 142
-
-% The best node found: null
-
-% target           = advisedby(D, E)
-%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 226,0/226,0 pos, 0,0/0,0 neg]
-%     Score = -17,264998 (regressionFit = 17,264997, penalties=1.12E-6) for clause:  advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 0 with score = 1,797693e+308.
-% Will extend: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-% Path: 1;
-Comparing variance: -1.7270135938613546E-17 to score=0.0025 #egs=90.0
-Comparing variance: 0.12694850615553416 to score=0.0025 #egs=136.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 136,0
-%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-0,126949)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 1 and with score = -0,126949) into the LAST position (#1) in the search queue.
-
-% Time for loop #1: 18 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #1, the best clause found is:
-%      advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-% This clause covers 90 positive examples, of which 90 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% Have these 10 positive seeds: 22 31 43 45 47 58 62 64 80 90
-
-% The best node found: null
-%     Score = -12,456694 (regressionFit = 12,456693, penalties=1.12E-6) for clause:  advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 1 with score = -0,127.
-% Will extend: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% Path: 1;false
-Comparing variance: 0.0 to score=0.0025 #egs=9.0
-Comparing variance: 0.09808419616839018 to score=0.0025 #egs=127.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 127,0
-%      addToQueueOfTreeStructuredLearningTasks (level=2; score=-0,098084)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 2 and with score = -0,098084) into the LAST position (#1) in the search queue.
-
-% Time for loop #2: 15 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
 
 % On cycle #2, the best clause found is:
-%      advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% This clause covers 9 positive examples, of which 9 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% Have these 10 positive seeds: 3 11 24 26 38 39 44 45 49 73
-
-% The best node found: null
-%     Score = -Infinity (regressionFit = Infinity, penalties=1.12E-6) for clause:  advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 2 with score = -0,098.
-% Will extend: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% Path: 1;false,false
-Comparing variance: 0.09808419616839018 to score=0.0025 #egs=127.0
-Comparing variance: NaN to score=0.0025 #egs=0.0
-%   Creating a FALSE-branch leaf because wgtedCountFalseBranchPos = 0,0 < 2.1 * minPosCov = 6,3
-
-% Time for loop #3: 7 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #3, the best clause found is:
-%      advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% This clause covers 127 positive examples, of which 127 are newly covered.
+%      advisedby(A, B) :- professor(B), student(A), tempadvisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
 % It also covers 0 negative examples, of which 0 are newly covered.
 
 % ******************************************
@@ -379,797 +185,872 @@ Comparing variance: NaN to score=0.0025 #egs=0.0
 
 % ******************************************
 
-%%%%%  WILL-Produced Tree #2 @ 15:20:52 9/29/20.  [Using 3.742.960 memory cells.]  %%%%%
+%%%%%  WILL-Produced Tree #1 @ 20:41:17 12/15/20.  [Using 3.399.936 memory cells.]  %%%%%
 
 
 % FOR advisedby(A, B):
-%   if ( student(B) )
-%   then return -0.1254446385283914;  // std dev = 0,000, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
-%   else if ( professor(A) )
-%   | then return -0.12544463852839138;  // std dev = 0,000, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
-%   | else if ( student(A) )
-%   | | then return 0.6309392933122696;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
-%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   if ( professor(B), student(A) )
+%   then if ( tempadvisedby(C, A), tempadvisedby(C, B) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else return 0.7445125714631483;  // std dev = 2,977, 88,000 (wgt'ed) examples reached here.  /* #neg=10 #pos=78 */
+%   else return -0.14185106490048768;  // std dev = 5,96e-08, 68,000 (wgt'ed) examples reached here.  /* #neg=68 */
 
 
 % Clauses:
 
-advisedby(A, B, -0.1254446385283914) :- 
-     student(B), 
-     !. // Clause #1.
-
-advisedby(A, B, -0.12544463852839138) :- 
-     professor(A), 
-     !. // Clause #2.
-
-advisedby(A, B, 0.6309392933122696) :- 
+advisedby(A, B, 0) :- 
+     professor(B), 
      student(A), 
-     !. // Clause #3.
-
-advisedby(A, B, 0) :- !. // Clause #4.
-
-
-% The flattened versions of these clauses:
-
-flattened_advisedby(underscore, a, -0.1254446385283914) :-  /* #neg=90 */ 
-   student(a),
-   !. // Flattened version of clause #1.
-
-flattened_advisedby(a, underscore, -0.12544463852839138) :-  /* #neg=9 */ 
-   professor(a),
-   !. // Flattened version of clause #2.
-
-flattened_advisedby(a, underscore, 0.6309392933122696) :-  /* #neg=14 #pos=113 */ 
-   student(a),
-   !. // Flattened version of clause #3.
-
-flattened_advisedby(underscore, underscore, 0) :- 
-   !. // Flattened version of clause #4.
-
-
-% The unique flattened literals:
-%   professor(a)
-%   student(a)
-
-% Saving model in: train/models/bRDNs/advisedby.model.ckpt
-% Time taken to learn 2 trees is 509 milliseconds.
-
-%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.0980841961683902
-Set score:0.0025
-% Only 226 out of 226 converged.
-% Kept 113 of the 113 positive examples.
-% Kept 113 of the 113 negative examples.
-% Dataset size: 226
-Computing probabilities
-prob time:12 milliseconds
-No hidden examples for : advisedby
-Time to build dataset: 15 milliseconds
-%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.14546956950458123
-Set score:0.0025
-% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
-
-% Have these 7 positive seeds: 70 145 164 178 180 196 221
-
-% The best node found: null
-
-% target           = advisedby(D, E)
-%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 226,0/226,0 pos, 0,0/0,0 neg]
-%     Score = -15,541447 (regressionFit = 15,541446, penalties=1.12E-6) for clause:  advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 0 with score = 1,797693e+308.
-% Will extend: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-% Path: 2;
-Comparing variance: 5.921189464667501E-17 to score=0.0025 #egs=90.0
-Comparing variance: 0.11427534077154791 to score=0.0025 #egs=136.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 136,0
-%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-0,114275)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 1 and with score = -0,114275) into the LAST position (#1) in the search queue.
-
-% Time for loop #1: 9 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #1, the best clause found is:
-%      advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-% This clause covers 90 positive examples, of which 90 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% Have these 10 positive seeds: 16 37 38 42 57 59 61 65 77 87
-
-% The best node found: null
-
-% Finding mapping for predicates: [director]
-% Number of legal mappings: 1
-%     Score = -12,456694 (regressionFit = 12,456693, penalties=1.12E-6) for clause:  advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 1 with score = -0,114.
-% Will extend: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% Path: 2;false
-Comparing variance: -1.5419764230904951E-18 to score=0.0025 #egs=9.0
-Comparing variance: 0.09808419616839278 to score=0.0025 #egs=127.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-
-% Time for loop #2: 10 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #2, the best clause found is:
-%      advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% This clause covers 9 positive examples, of which 9 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% ******************************************
-
-%  Have stopped ILP's outer loop because the tree-structured queue is empty.
-
-% ******************************************
-
-%%%%%  WILL-Produced Tree #3 @ 15:20:53 9/29/20.  [Using 3.795.536 memory cells.]  %%%%%
-
-
-% FOR advisedby(A, B):
-%   if ( student(B) )
-%   then return -0.11231637819360621;  // std dev = 7,30e-08, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
-%   else if ( professor(A) )
-%   | then return -0.11231637819360639;  // std dev = 0,000, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
-%   | else return 0.49352170114897687;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
-
-
-% Clauses:
-
-advisedby(A, B, -0.11231637819360621) :- 
-     student(B), 
+     tempadvisedby(C, A), 
+     tempadvisedby(C, B), 
      !. // Clause #1.
 
-advisedby(A, B, -0.11231637819360639) :- 
-     professor(A), 
-     !. // Clause #2.
-
-advisedby(A, B, 0.49352170114897687) :- !. // Clause #3.
-
-
-% The flattened versions of these clauses:
-
-flattened_advisedby(underscore, a, -0.11231637819360621) :-  /* #neg=90 */ 
-   student(a),
-   !. // Flattened version of clause #1.
-
-flattened_advisedby(a, underscore, -0.11231637819360639) :-  /* #neg=9 */ 
-   professor(a),
-   !. // Flattened version of clause #2.
-
-flattened_advisedby(underscore, underscore, 0.49352170114897687) :-  /* #neg=14 #pos=113 */ 
-   !. // Flattened version of clause #3.
-
-
-% The unique flattened literals:
-%   professor(a)
-%   student(a)
-
-% Saving model in: train/models/bRDNs/advisedby.model.ckpt
-% Time taken to learn 3 trees is 597 milliseconds.
-
-%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.11427534077154794
-Set score:0.0025
-% Only 226 out of 226 converged.
-% Kept 113 of the 113 positive examples.
-% Kept 113 of the 113 negative examples.
-% Dataset size: 226
-Computing probabilities
-prob time:11 milliseconds
-No hidden examples for : advisedby
-Time to build dataset: 14 milliseconds
-%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.11025577723599178
-Set score:0.0025
-% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
-
-% Have these 8 positive seeds: 1 29 114 137 152 181 205 206
-
-% The best node found: null
-
-% target           = advisedby(D, E)
-%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 226,0/226,0 pos, 0,0/0,0 neg]
-%     Score = -14,339188 (regressionFit = 14,339187, penalties=1.12E-6) for clause:  advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 0 with score = 1,797693e+308.
-% Will extend: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-% Path: 3;
-Comparing variance: 2.837236618486511E-17 to score=0.0025 #egs=90.0
-Comparing variance: 0.10543520013224252 to score=0.0025 #egs=136.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 136,0
-%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-0,105435)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 1 and with score = -0,105435) into the LAST position (#1) in the search queue.
-
-% Time for loop #1: 16 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #1, the best clause found is:
-%      advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-% This clause covers 90 positive examples, of which 90 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% Have these 8 positive seeds: 3 23 34 59 77 96 106 123
-
-% The best node found: null
-%     Score = -12,456694 (regressionFit = 12,456693, penalties=1.12E-6) for clause:  advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 1 with score = -0,105.
-% Will extend: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% Path: 3;false
-Comparing variance: 3.0839528461809902E-18 to score=0.0025 #egs=9.0
-Comparing variance: 0.09808419616839249 to score=0.0025 #egs=127.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 127,0
-%      addToQueueOfTreeStructuredLearningTasks (level=2; score=-0,098084)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 2 and with score = -0,098084) into the LAST position (#1) in the search queue.
-
-% Time for loop #2: 8 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #2, the best clause found is:
-%      advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% This clause covers 9 positive examples, of which 9 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% Have these 10 positive seeds: 8 16 23 25 33 78 89 96 98 109
-
-% The best node found: null
-%     Score = -Infinity (regressionFit = Infinity, penalties=1.12E-6) for clause:  advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 2 with score = -0,098.
-% Will extend: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% Path: 3;false,false
-Comparing variance: 0.09808419616839249 to score=0.0025 #egs=127.0
-Comparing variance: NaN to score=0.0025 #egs=0.0
-%   Creating a FALSE-branch leaf because wgtedCountFalseBranchPos = 0,0 < 2.1 * minPosCov = 6,3
-
-% Time for loop #3: 7 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #3, the best clause found is:
-%      advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% This clause covers 127 positive examples, of which 127 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% ******************************************
-
-%  Have stopped ILP's outer loop because the tree-structured queue is empty.
-
-% ******************************************
-
-%%%%%  WILL-Produced Tree #4 @ 15:20:53 9/29/20.  [Using 3.841.704 memory cells.]  %%%%%
-
-
-% FOR advisedby(A, B):
-%   if ( student(B) )
-%   then return -0.10159632948783621;  // std dev = 5,05e-08, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
-%   else if ( professor(A) )
-%   | then return -0.10159632948783627;  // std dev = 5,27e-09, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
-%   | else if ( student(A) )
-%   | | then return 0.37167824583218206;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
-%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
-
-
-% Clauses:
-
-advisedby(A, B, -0.10159632948783621) :- 
-     student(B), 
-     !. // Clause #1.
-
-advisedby(A, B, -0.10159632948783627) :- 
-     professor(A), 
-     !. // Clause #2.
-
-advisedby(A, B, 0.37167824583218206) :- 
+advisedby(A, B, 0.7445125714631483) :- 
+     professor(B), 
      student(A), 
-     !. // Clause #3.
-
-advisedby(A, B, 0) :- !. // Clause #4.
-
-
-% The flattened versions of these clauses:
-
-flattened_advisedby(underscore, a, -0.10159632948783621) :-  /* #neg=90 */ 
-   student(a),
-   !. // Flattened version of clause #1.
-
-flattened_advisedby(a, underscore, -0.10159632948783627) :-  /* #neg=9 */ 
-   professor(a),
-   !. // Flattened version of clause #2.
-
-flattened_advisedby(a, underscore, 0.37167824583218206) :-  /* #neg=14 #pos=113 */ 
-   student(a),
-   !. // Flattened version of clause #3.
-
-flattened_advisedby(underscore, underscore, 0) :- 
-   !. // Flattened version of clause #4.
-
-
-% The unique flattened literals:
-%   professor(a)
-%   student(a)
-
-% Saving model in: train/models/bRDNs/advisedby.model.ckpt
-% Time taken to learn 4 trees is 703 milliseconds.
-
-%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.0980841961683925
-Set score:0.0025
-% Only 226 out of 226 converged.
-% Kept 113 of the 113 positive examples.
-% Kept 113 of the 113 negative examples.
-% Dataset size: 226
-Computing probabilities
-prob time:11 milliseconds
-No hidden examples for : advisedby
-Time to build dataset: 12 milliseconds
-%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.08940888814286987
-Set score:0.0025
-% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
-
-% Have these 10 positive seeds: 16 37 49 60 67 97 104 134 136 190
-
-% The best node found: null
-
-% target           = advisedby(D, E)
-%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 226,0/226,0 pos, 0,0/0,0 neg]
-%     Score = -13,627440 (regressionFit = 13,627439, penalties=1.12E-6) for clause:  advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 0 with score = 1,797693e+308.
-% Will extend: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-% Path: 4;
-Comparing variance: 8.635067969306773E-18 to score=0.0025 #egs=90.0
-Comparing variance: 0.10020175551856536 to score=0.0025 #egs=136.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 136,0
-%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-0,100202)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 1 and with score = -0,100202) into the LAST position (#1) in the search queue.
-
-% Time for loop #1: 8 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #1, the best clause found is:
-%      advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-% This clause covers 90 positive examples, of which 90 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% Have these 10 positive seeds: 2 13 14 20 28 42 54 69 85 86
-
-% The best node found: null
-%     Score = -12,456694 (regressionFit = 12,456693, penalties=1.12E-6) for clause:  advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 1 with score = -0,100.
-% Will extend: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% Path: 4;false
-Comparing variance: 0.0 to score=0.0025 #egs=9.0
-Comparing variance: 0.09808419616839231 to score=0.0025 #egs=127.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 127,0
-%      addToQueueOfTreeStructuredLearningTasks (level=2; score=-0,098084)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 2 and with score = -0,098084) into the LAST position (#1) in the search queue.
-
-% Time for loop #2: 4 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #2, the best clause found is:
-%      advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% This clause covers 9 positive examples, of which 9 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% Have these 7 positive seeds: 17 42 68 76 78 100 118
-
-% The best node found: null
-%     Score = -Infinity (regressionFit = Infinity, penalties=1.12E-6) for clause:  advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 2 with score = -0,098.
-% Will extend: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% Path: 4;false,false
-Comparing variance: 0.09808419616839231 to score=0.0025 #egs=127.0
-Comparing variance: NaN to score=0.0025 #egs=0.0
-%   Creating a FALSE-branch leaf because wgtedCountFalseBranchPos = 0,0 < 2.1 * minPosCov = 6,3
-
-% Time for loop #3: 7 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #3, the best clause found is:
-%      advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% This clause covers 127 positive examples, of which 127 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% ******************************************
-
-%  Have stopped ILP's outer loop because the tree-structured queue is empty.
-
-% ******************************************
-
-%%%%%  WILL-Produced Tree #5 @ 15:20:53 9/29/20.  [Using 3.882.072 memory cells.]  %%%%%
-
-
-% FOR advisedby(A, B):
-%   if ( student(B) )
-%   then return -0.09269127618926104;  // std dev = 2,79e-08, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
-%   else if ( professor(A) )
-%   | then return -0.09269127618926097;  // std dev = 0,000, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
-%   | else if ( student(A) )
-%   | | then return 0.2805396736953972;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
-%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
-
-
-% Clauses:
-
-advisedby(A, B, -0.09269127618926104) :- 
-     student(B), 
-     !. // Clause #1.
-
-advisedby(A, B, -0.09269127618926097) :- 
-     professor(A), 
      !. // Clause #2.
 
-advisedby(A, B, 0.2805396736953972) :- 
-     student(A), 
-     !. // Clause #3.
-
-advisedby(A, B, 0) :- !. // Clause #4.
+advisedby(A, B, -0.14185106490048768) :- !. // Clause #3.
 
 
 % The flattened versions of these clauses:
 
-flattened_advisedby(underscore, a, -0.09269127618926104) :-  /* #neg=90 */ 
+flattened_advisedby(a, b, 0) :- 
+   professor(b),
    student(a),
+   tempadvisedby(uniqueVar1, a),
+   tempadvisedby(uniqueVar1, b),
    !. // Flattened version of clause #1.
 
-flattened_advisedby(a, underscore, -0.09269127618926097) :-  /* #neg=9 */ 
-   professor(a),
+flattened_advisedby(a, b, 0.7445125714631483) :-  /* #neg=10 #pos=78 */ 
+   professor(b),
+   student(a),
    !. // Flattened version of clause #2.
 
-flattened_advisedby(a, underscore, 0.2805396736953972) :-  /* #neg=14 #pos=113 */ 
-   student(a),
+flattened_advisedby(underscore, underscore, -0.14185106490048768) :-  /* #neg=68 */ 
    !. // Flattened version of clause #3.
-
-flattened_advisedby(underscore, underscore, 0) :- 
-   !. // Flattened version of clause #4.
 
 
 % The unique flattened literals:
-%   professor(a)
+%   professor(b)
+%   tempadvisedby(uniqueVar1, a)
+%   tempadvisedby(uniqueVar1, b)
 %   student(a)
 
 % Saving model in: train/models/bRDNs/advisedby.model.ckpt
-% Time taken to learn 5 trees is 786 milliseconds.
+% Time taken to learn 1 trees is 301 milliseconds.
 
 %      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
 %         ILP node to extend: null
 %      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.09808419616839233
+Variance:0.10072314049586784
 Set score:0.0025
-% Only 226 out of 226 converged.
-% Kept 113 of the 113 positive examples.
-% Kept 113 of the 113 negative examples.
-% Dataset size: 226
-Computing probabilities
-prob time:15 milliseconds
-No hidden examples for : advisedby
-Time to build dataset: 16 milliseconds
-%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.07746979499689514
-Set score:0.0025
-% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
-
-% Have these 9 positive seeds: 1 6 10 26 82 177 198 216 225
-
-% The best node found: null
-
-% target           = advisedby(D, E)
-%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 226,0/226,0 pos, 0,0/0,0 neg]
-%     Score = -13,219819 (regressionFit = 13,219818, penalties=1.12E-6) for clause:  advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 0 with score = 1,797693e+308.
-% Will extend: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-% Path: 5;
-Comparing variance: 2.960594732333751E-17 to score=0.0025 #egs=90.0
-Comparing variance: 0.09720454176461446 to score=0.0025 #egs=136.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 136,0
-%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-0,097205)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 1 and with score = -0,097205) into the LAST position (#1) in the search queue.
-
-% Time for loop #1: 7 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #1, the best clause found is:
-%      advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-% This clause covers 90 positive examples, of which 90 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% Have these 9 positive seeds: 11 30 40 44 48 80 82 85 134
-
-% The best node found: null
-%     Score = -12,456694 (regressionFit = 12,456693, penalties=1.12E-6) for clause:  advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 1 with score = -0,097.
-% Will extend: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% Path: 5;false
-Comparing variance: 1.5419764230904951E-18 to score=0.0025 #egs=9.0
-Comparing variance: 0.09808419616839224 to score=0.0025 #egs=127.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 127,0
-%      addToQueueOfTreeStructuredLearningTasks (level=2; score=-0,098084)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 2 and with score = -0,098084) into the LAST position (#1) in the search queue.
-
-% Time for loop #2: 4 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #2, the best clause found is:
-%      advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% This clause covers 9 positive examples, of which 9 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% Have these 9 positive seeds: 9 12 22 33 40 42 52 81 82
-
-% The best node found: null
-%     Score = -Infinity (regressionFit = Infinity, penalties=1.12E-6) for clause:  advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 2 with score = -0,098.
-% Will extend: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% Path: 5;false,false
-Comparing variance: 0.09808419616839224 to score=0.0025 #egs=127.0
-Comparing variance: NaN to score=0.0025 #egs=0.0
-%   Creating a FALSE-branch leaf because wgtedCountFalseBranchPos = 0,0 < 2.1 * minPosCov = 6,3
-
-% Time for loop #3: 3 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #3, the best clause found is:
-%      advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% This clause covers 127 positive examples, of which 127 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% ******************************************
-
-%  Have stopped ILP's outer loop because the tree-structured queue is empty.
-
-% ******************************************
-
-%%%%%  WILL-Produced Tree #6 @ 15:20:53 9/29/20.  [Using 3.939.376 memory cells.]  %%%%%
-
-
-% FOR advisedby(A, B):
-%   if ( student(B) )
-%   then return -0.08518475138839682;  // std dev = 5,16e-08, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
-%   else if ( professor(A) )
-%   | then return -0.08518475138839687;  // std dev = 3,73e-09, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
-%   | else if ( student(A) )
-%   | | then return 0.21614645702431154;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
-%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
-
-
-% Clauses:
-
-advisedby(A, B, -0.08518475138839682) :- 
-     student(B), 
-     !. // Clause #1.
-
-advisedby(A, B, -0.08518475138839687) :- 
-     professor(A), 
-     !. // Clause #2.
-
-advisedby(A, B, 0.21614645702431154) :- 
-     student(A), 
-     !. // Clause #3.
-
-advisedby(A, B, 0) :- !. // Clause #4.
-
-
-% The flattened versions of these clauses:
-
-flattened_advisedby(underscore, a, -0.08518475138839682) :-  /* #neg=90 */ 
-   student(a),
-   !. // Flattened version of clause #1.
-
-flattened_advisedby(a, underscore, -0.08518475138839687) :-  /* #neg=9 */ 
-   professor(a),
-   !. // Flattened version of clause #2.
-
-flattened_advisedby(a, underscore, 0.21614645702431154) :-  /* #neg=14 #pos=113 */ 
-   student(a),
-   !. // Flattened version of clause #3.
-
-flattened_advisedby(underscore, underscore, 0) :- 
-   !. // Flattened version of clause #4.
-
-
-% The unique flattened literals:
-%   professor(a)
-%   student(a)
-
-% Saving model in: train/models/bRDNs/advisedby.model.ckpt
-% Time taken to learn 6 trees is 862 milliseconds.
-
-%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.09808419616839226
-Set score:0.0025
-% Only 226 out of 226 converged.
-% Kept 113 of the 113 positive examples.
-% Kept 113 of the 113 negative examples.
-% Dataset size: 226
+% Only 156 out of 156 converged.
+% Kept 78 of the 78 positive examples.
+% Kept 78 of the 78 negative examples.
+% Dataset size: 156
 Computing probabilities
 prob time:18 milliseconds
 No hidden examples for : advisedby
-Time to build dataset: 20 milliseconds
+Time to build dataset: 42 milliseconds
 %      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
 %         ILP node to extend: null
 %      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.07041623021831854
+Variance:0.1964759521781141
 Set score:0.0025
 % [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
 
-% Have these 7 positive seeds: 2 20 41 43 67 119 176
+% Have these 10 positive seeds: 8 28 71 83 90 92 93 117 122 127
 
 % The best node found: null
 
 % target           = advisedby(D, E)
-%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 226,0/226,0 pos, 0,0/0,0 neg]
-%     Score = -12,978998 (regressionFit = 12,978997, penalties=1.12E-6) for clause:  advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 156,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -13,028725 (regressionFit = 13,028724, penalties=1.12E-6) for clause:  advisedby(_, A) :- professor(A).  [covers 96,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -8,863638 (regressionFit = 8,863636, penalties=2.0200000000000006E-6) for clause:  advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
 
-% The best node found: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
+% The best node found: advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
 
 % Expanding node at Level 0 with score = 1,797693e+308.
-% Will extend: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
+% Will extend: advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+% Path: 1;
+Comparing variance: 0.1007231404958703 to score=0.0025 #egs=88.0
+Comparing variance: -3.918434204559376E-17 to score=0.0025 #egs=68.0
+%   Creating a TRUE-branch interior node with wgtedCountTrueBranchPos = 88,0
+%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-0,100723)
+%         ILP node to extend: advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+%      Insert tree-structured search node (@ level = 1 and with score = -0,100723) into the LAST position (#1) in the search queue.
+%   Creating a FALSE-branch leaf because good enough fit since score < 0.0025
+
+% Time for loop #1: 39 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #1, the best clause found is:
+%      advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+% This clause covers 88 positive examples, of which 88 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% Working on expanding this node: 'advisedby(A, B) :- professor(B), student(A).  [covers 88,0/88,0 pos, 0,0/0,0 neg]'
+%     Score = -8,863638 (regressionFit = 8,863636, penalties=2.0200000000000006E-6) for clause:  advisedby(A, B) :- professor(B), student(A).  [covers 88,0/88,0 pos, 0,0/0,0 neg]
+
+% Have these 10 positive seeds: 2 5 8 10 11 15 18 23 30 31
+
+% The best node found: null
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.0300000000000002E-6) for clause:  advisedby(A, B) :- professor(B), student(A), advisedby(_, A).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.9300000000000005E-6) for clause:  advisedby(A, B) :- professor(B), student(A), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+
+% The best node found: advisedby(A, B) :- professor(B), student(A), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = advisedby(A, B) :- professor(B), student(A), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg] *****
+
+
+% Expanding node at Level 1 with score = -0,101.
+% Will extend: advisedby(A, B) :- professor(B), student(A), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+% Path: 1;true
+Comparing variance: NaN to score=0.0025 #egs=0.0
+Comparing variance: 0.1007231404958703 to score=0.0025 #egs=88.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+
+% Time for loop #2: 39 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #2, the best clause found is:
+%      advisedby(A, B) :- professor(B), student(A), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% ******************************************
+
+%  Have stopped ILP's outer loop because the tree-structured queue is empty.
+
+% ******************************************
+
+%%%%%  WILL-Produced Tree #2 @ 20:41:17 12/15/20.  [Using 3.450.040 memory cells.]  %%%%%
+
+
+% FOR advisedby(A, B):
+%   if ( professor(B), student(A) )
+%   then if ( advisedby(C, A), tempadvisedby(C, B) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else return 0.6281908794091159;  // std dev = 2,977, 88,000 (wgt'ed) examples reached here.  /* #neg=10 #pos=78 */
+%   else return -0.1254446385283916;  // std dev = 0,000, 68,000 (wgt'ed) examples reached here.  /* #neg=68 */
+
+
+% Clauses:
+
+advisedby(A, B, 0) :- 
+     professor(B), 
+     student(A), 
+     advisedby(C, A), 
+     tempadvisedby(C, B), 
+     !. // Clause #1.
+
+advisedby(A, B, 0.6281908794091159) :- 
+     professor(B), 
+     student(A), 
+     !. // Clause #2.
+
+advisedby(A, B, -0.1254446385283916) :- !. // Clause #3.
+
+
+% The flattened versions of these clauses:
+
+flattened_advisedby(a, b, 0) :- 
+   professor(b),
+   student(a),
+   advisedby(uniqueVar2, a),
+   tempadvisedby(uniqueVar2, b),
+   !. // Flattened version of clause #1.
+
+flattened_advisedby(a, b, 0.6281908794091159) :-  /* #neg=10 #pos=78 */ 
+   professor(b),
+   student(a),
+   !. // Flattened version of clause #2.
+
+flattened_advisedby(underscore, underscore, -0.1254446385283916) :-  /* #neg=68 */ 
+   !. // Flattened version of clause #3.
+
+
+% The unique flattened literals:
+%   professor(b)
+%   student(a)
+%   advisedby(uniqueVar2, a)
+%   tempadvisedby(uniqueVar2, b)
+
+% Saving model in: train/models/bRDNs/advisedby.model.ckpt
+% Time taken to learn 2 trees is 508 milliseconds.
+
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.10072314049587028
+Set score:0.0025
+% Only 156 out of 156 converged.
+% Kept 78 of the 78 positive examples.
+% Kept 78 of the 78 negative examples.
+% Dataset size: 156
+Computing probabilities
+prob time:48 milliseconds
+No hidden examples for : advisedby
+Time to build dataset: 115 milliseconds
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.14649575903670897
+Set score:0.0025
+% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
+
+% Have these 7 positive seeds: 6 12 48 62 94 107 116
+
+% The best node found: null
+
+% target           = advisedby(D, E)
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 156,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -11,538139 (regressionFit = 11,538138, penalties=1.12E-6) for clause:  advisedby(_, A) :- student(A).  [covers 60,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -19,722518 (regressionFit = 19,722516, penalties=2.0200000000000006E-6) for clause:  advisedby(A, B) :- student(B), professor(A).  [covers 23,0/156,0 pos, 0,0/0,0 neg]
+
+% The best node found: advisedby(A, B) :- student(B), professor(A).  [covers 23,0/156,0 pos, 0,0/0,0 neg]
+
+% Expanding node at Level 0 with score = 1,797693e+308.
+% Will extend: advisedby(A, B) :- student(B), professor(A).  [covers 23,0/156,0 pos, 0,0/0,0 neg]
+% Path: 2;
+Comparing variance: 4.827056628805028E-18 to score=0.0025 #egs=23.0
+Comparing variance: 0.14828959476002165 to score=0.0025 #egs=133.0
+%   Creating a TRUE-branch interior node with wgtedCountTrueBranchPos = 23,0
+%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-4,82706e-18)
+%         ILP node to extend: advisedby(A, B) :- student(B), professor(A).  [covers 23,0/156,0 pos, 0,0/0,0 neg]
+%      Insert tree-structured search node (@ level = 1 and with score = -4,82706e-18) into the LAST position (#1) in the search queue.
+
+% Time for loop #1: 65 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #1, the best clause found is:
+%      advisedby(A, B) :- student(B), professor(A).  [covers 23,0/156,0 pos, 0,0/0,0 neg]
+% This clause covers 23 positive examples, of which 23 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% Working on expanding this node: 'advisedby(A, B) :- student(B), professor(A).  [covers 23,0/23,0 pos, 0,0/0,0 neg]'
+%     Score = -19,722518 (regressionFit = 19,722516, penalties=2.0200000000000006E-6) for clause:  advisedby(A, B) :- student(B), professor(A).  [covers 23,0/23,0 pos, 0,0/0,0 neg]
+
+% Have these 7 positive seeds: 1 4 6 8 9 21 22
+
+% The best node found: null
+% [ LazyGroundNthArgumentClauseIndex ]  Argument 1:  Building full index for sameperson/2.
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.1300000000000005E-6) for clause:  advisedby(A, B) :- student(B), professor(A), sameperson(_, A).  [covers 23,0/23,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.9300000000000005E-6) for clause:  advisedby(A, B) :- student(B), professor(A), sameperson(C, A), advisedby(C, B).  [covers 0,0/23,0 pos, 0,0/0,0 neg]
+
+% The best node found: advisedby(A, B) :- student(B), professor(A), sameperson(C, A), advisedby(C, B).  [covers 0,0/23,0 pos, 0,0/0,0 neg]
+
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = advisedby(A, B) :- student(B), professor(A), sameperson(C, A), advisedby(C, B).  [covers 0,0/23,0 pos, 0,0/0,0 neg] *****
+
+
+% Expanding node at Level 1 with score = -4,83e-18.
+% Will extend: advisedby(A, B) :- student(B), professor(A), sameperson(C, A), advisedby(C, B).  [covers 0,0/23,0 pos, 0,0/0,0 neg]
+% Path: 2;true
+Comparing variance: NaN to score=0.0025 #egs=0.0
+Comparing variance: 4.827056628805028E-18 to score=0.0025 #egs=23.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+%   Creating a FALSE-branch leaf because good enough fit since score < 0.0025
+
+% Time for loop #2: 46 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #2, the best clause found is:
+%      advisedby(A, B) :- student(B), professor(A), sameperson(C, A), advisedby(C, B).  [covers 0,0/23,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% ******************************************
+
+%  Have stopped ILP's outer loop because the tree-structured queue is empty.
+
+% ******************************************
+
+%%%%%  WILL-Produced Tree #3 @ 20:41:17 12/15/20.  [Using 3.515.984 memory cells.]  %%%%%
+
+
+% FOR advisedby(A, B):
+%   if ( student(B), professor(A) )
+%   then if ( sameperson(C, A), advisedby(C, B) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else return -0.11231637819360638;  // std dev = 1,05e-08, 23,000 (wgt'ed) examples reached here.  /* #neg=23 */
+%   else return 0.28726180730668105;  // std dev = 4,441, 133,000 (wgt'ed) examples reached here.  /* #neg=55 #pos=78 */
+
+
+% Clauses:
+
+advisedby(A, B, 0) :- 
+     student(B), 
+     professor(A), 
+     sameperson(C, A), 
+     advisedby(C, B), 
+     !. // Clause #1.
+
+advisedby(A, B, -0.11231637819360638) :- 
+     student(B), 
+     professor(A), 
+     !. // Clause #2.
+
+advisedby(A, B, 0.28726180730668105) :- !. // Clause #3.
+
+
+% The flattened versions of these clauses:
+
+flattened_advisedby(a, b, 0) :- 
+   student(b),
+   professor(a),
+   sameperson(uniqueVar3, a),
+   advisedby(uniqueVar3, b),
+   !. // Flattened version of clause #1.
+
+flattened_advisedby(a, b, -0.11231637819360638) :-  /* #neg=23 */ 
+   student(b),
+   professor(a),
+   !. // Flattened version of clause #2.
+
+flattened_advisedby(underscore, underscore, 0.28726180730668105) :-  /* #neg=55 #pos=78 */ 
+   !. // Flattened version of clause #3.
+
+
+% The unique flattened literals:
+%   advisedby(uniqueVar3, b)
+%   sameperson(uniqueVar3, a)
+%   professor(a)
+%   student(b)
+
+% Saving model in: train/models/bRDNs/advisedby.model.ckpt
+% Time taken to learn 3 trees is 907 milliseconds.
+
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:5.204170427930421E-18
+Set score:1.3010426069826053E-18
+% Only 156 out of 156 converged.
+% Kept 78 of the 78 positive examples.
+% Kept 78 of the 78 negative examples.
+% Dataset size: 156
+Computing probabilities
+prob time:35 milliseconds
+No hidden examples for : advisedby
+Time to build dataset: 41 milliseconds
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.13169505538756096
+Set score:1.3010426069826053E-18
+% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
+
+% Have these 7 positive seeds: 51 86 113 123 128 139 144
+
+% The best node found: null
+
+% target           = advisedby(D, E)
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 156,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -11,235577 (regressionFit = 11,235575, penalties=1.12E-6) for clause:  advisedby(_, A) :- professor(A).  [covers 96,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -8,891393 (regressionFit = 8,891391, penalties=2.0200000000000006E-6) for clause:  advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+
+% The best node found: advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+
+% Expanding node at Level 0 with score = 1,797693e+308.
+% Will extend: advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+% Path: 3;
+Comparing variance: 0.10072314049586818 to score=1.3010426069826053E-18 #egs=88.0
+Comparing variance: 4.081610429955891E-4 to score=1.3010426069826053E-18 #egs=68.0
+%   Creating a TRUE-branch interior node with wgtedCountTrueBranchPos = 88,0
+%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-0,100723)
+%         ILP node to extend: advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+%      Insert tree-structured search node (@ level = 1 and with score = -0,100723) into the LAST position (#1) in the search queue.
+
+% Time for loop #1: 47 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #1, the best clause found is:
+%      advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+% This clause covers 88 positive examples, of which 88 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% Working on expanding this node: 'advisedby(A, B) :- professor(B), student(A).  [covers 88,0/88,0 pos, 0,0/0,0 neg]'
+%     Score = -8,891393 (regressionFit = 8,891391, penalties=2.0200000000000006E-6) for clause:  advisedby(A, B) :- professor(B), student(A).  [covers 88,0/88,0 pos, 0,0/0,0 neg]
+
+% Have these 10 positive seeds: 1 18 28 44 52 68 70 75 77 81
+
+% The best node found: null
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.0300000000000002E-6) for clause:  advisedby(A, B) :- professor(B), student(A), advisedby(_, A).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.9300000000000005E-6) for clause:  advisedby(A, B) :- professor(B), student(A), advisedby(C, A), sameperson(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+
+% The best node found: advisedby(A, B) :- professor(B), student(A), advisedby(C, A), sameperson(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = advisedby(A, B) :- professor(B), student(A), advisedby(C, A), sameperson(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg] *****
+
+
+% Expanding node at Level 1 with score = -0,101.
+% Will extend: advisedby(A, B) :- professor(B), student(A), advisedby(C, A), sameperson(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+% Path: 3;true
+Comparing variance: NaN to score=1.3010426069826053E-18 #egs=0.0
+Comparing variance: 0.10072314049586818 to score=1.3010426069826053E-18 #egs=88.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+
+% Time for loop #2: 59 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #2, the best clause found is:
+%      advisedby(A, B) :- professor(B), student(A), advisedby(C, A), sameperson(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% ******************************************
+
+%  Have stopped ILP's outer loop because the tree-structured queue is empty.
+
+% ******************************************
+
+%%%%%  WILL-Produced Tree #4 @ 20:41:18 12/15/20.  [Using 3.556.624 memory cells.]  %%%%%
+
+
+% FOR advisedby(A, B):
+%   if ( professor(B), student(A) )
+%   then if ( advisedby(C, A), sameperson(C, B) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else return 0.42131522454653036;  // std dev = 2,977, 88,000 (wgt'ed) examples reached here.  /* #neg=10 #pos=78 */
+%   else return -0.12985541570248574;  // std dev = 0,167, 68,000 (wgt'ed) examples reached here.  /* #neg=68 */
+
+
+% Clauses:
+
+advisedby(A, B, 0) :- 
+     professor(B), 
+     student(A), 
+     advisedby(C, A), 
+     sameperson(C, B), 
+     !. // Clause #1.
+
+advisedby(A, B, 0.42131522454653036) :- 
+     professor(B), 
+     student(A), 
+     !. // Clause #2.
+
+advisedby(A, B, -0.12985541570248574) :- !. // Clause #3.
+
+
+% The flattened versions of these clauses:
+
+flattened_advisedby(a, b, 0) :- 
+   professor(b),
+   student(a),
+   advisedby(uniqueVar4, a),
+   sameperson(uniqueVar4, b),
+   !. // Flattened version of clause #1.
+
+flattened_advisedby(a, b, 0.42131522454653036) :-  /* #neg=10 #pos=78 */ 
+   professor(b),
+   student(a),
+   !. // Flattened version of clause #2.
+
+flattened_advisedby(underscore, underscore, -0.12985541570248574) :-  /* #neg=68 */ 
+   !. // Flattened version of clause #3.
+
+
+% The unique flattened literals:
+%   professor(b)
+%   sameperson(uniqueVar4, b)
+%   advisedby(uniqueVar4, a)
+%   student(a)
+
+% Saving model in: train/models/bRDNs/advisedby.model.ckpt
+% Time taken to learn 4 trees is 1,168 seconds.
+
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.1007231404958682
+Set score:1.3010426069826053E-18
+% Only 156 out of 156 converged.
+% Kept 78 of the 78 positive examples.
+% Kept 78 of the 78 negative examples.
+% Dataset size: 156
+Computing probabilities
+prob time:18 milliseconds
+No hidden examples for : advisedby
+Time to build dataset: 19 milliseconds
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.10294310172694998
+Set score:1.3010426069826053E-18
+% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
+
+% Have these 10 positive seeds: 6 10 23 53 55 64 68 81 90 107
+
+% The best node found: null
+
+% target           = advisedby(D, E)
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 156,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -14,042184 (regressionFit = 14,042182, penalties=1.12E-6) for clause:  advisedby(A, _) :- student(A).  [covers 125,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -12,855360 (regressionFit = 12,855358, penalties=1.9200000000000003E-6) for clause:  advisedby(A, B) :- student(A), student(B).  [covers 37,0/156,0 pos, 0,0/0,0 neg]
+
+% The best node found: advisedby(A, B) :- student(A), student(B).  [covers 37,0/156,0 pos, 0,0/0,0 neg]
+
+% Expanding node at Level 0 with score = 1,797693e+308.
+% Will extend: advisedby(A, B) :- student(A), student(B).  [covers 37,0/156,0 pos, 0,0/0,0 neg]
+% Path: 4;
+Comparing variance: -2.100421938480026E-17 to score=1.3010426069826053E-18 #egs=37.0
+Comparing variance: 0.10802821767492997 to score=1.3010426069826053E-18 #egs=119.0
+%   Creating a TRUE-branch interior node with wgtedCountTrueBranchPos = 37,0
+%      addToQueueOfTreeStructuredLearningTasks (level=1; score=2,10042e-17)
+%         ILP node to extend: advisedby(A, B) :- student(A), student(B).  [covers 37,0/156,0 pos, 0,0/0,0 neg]
+%      Insert tree-structured search node (@ level = 1 and with score = 2,10042e-17) into the LAST position (#1) in the search queue.
+
+% Time for loop #1: 13 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #1, the best clause found is:
+%      advisedby(A, B) :- student(A), student(B).  [covers 37,0/156,0 pos, 0,0/0,0 neg]
+% This clause covers 37 positive examples, of which 37 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% Working on expanding this node: 'advisedby(A, B) :- student(A), student(B).  [covers 37,0/37,0 pos, 0,0/0,0 neg]'
+%     Score = -12,855360 (regressionFit = 12,855358, penalties=1.9200000000000003E-6) for clause:  advisedby(A, B) :- student(A), student(B).  [covers 37,0/37,0 pos, 0,0/0,0 neg]
+
+% Have these 10 positive seeds: 0 1 3 7 8 14 16 17 19 25
+
+% The best node found: null
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.0300000000000002E-6) for clause:  advisedby(A, B) :- student(A), student(B), tempadvisedby(_, A).  [covers 0,0/37,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.830000000000001E-6) for clause:  advisedby(A, B) :- student(A), student(B), tempadvisedby(C, A), advisedby(C, B).  [covers 0,0/37,0 pos, 0,0/0,0 neg]
+
+% The best node found: advisedby(A, B) :- student(A), student(B), tempadvisedby(C, A), advisedby(C, B).  [covers 0,0/37,0 pos, 0,0/0,0 neg]
+
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = advisedby(A, B) :- student(A), student(B), tempadvisedby(C, A), advisedby(C, B).  [covers 0,0/37,0 pos, 0,0/0,0 neg] *****
+
+
+% Expanding node at Level 1 with score = 2,10e-17.
+% Will extend: advisedby(A, B) :- student(A), student(B), tempadvisedby(C, A), advisedby(C, B).  [covers 0,0/37,0 pos, 0,0/0,0 neg]
+% Path: 4;true
+Comparing variance: NaN to score=1.3010426069826053E-18 #egs=0.0
+Comparing variance: -2.100421938480026E-17 to score=1.3010426069826053E-18 #egs=37.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+%   Creating a FALSE-branch leaf because good enough fit since score < 1.3010426069826053E-18
+
+% Time for loop #2: 21 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #2, the best clause found is:
+%      advisedby(A, B) :- student(A), student(B), tempadvisedby(C, A), advisedby(C, B).  [covers 0,0/37,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% ******************************************
+
+%  Have stopped ILP's outer loop because the tree-structured queue is empty.
+
+% ******************************************
+
+%%%%%  WILL-Produced Tree #5 @ 20:41:18 12/15/20.  [Using 3.599.528 memory cells.]  %%%%%
+
+
+% FOR advisedby(A, B):
+%   if ( student(A), student(B) )
+%   then if ( tempadvisedby(C, A), advisedby(C, B) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else return -0.12899328789695194;  // std dev = 0,000, 37,000 (wgt'ed) examples reached here.  /* #neg=37 */
+%   else return 0.2079201615675733;  // std dev = 3,585, 119,000 (wgt'ed) examples reached here.  /* #neg=41 #pos=78 */
+
+
+% Clauses:
+
+advisedby(A, B, 0) :- 
+     student(A), 
+     student(B), 
+     tempadvisedby(C, A), 
+     advisedby(C, B), 
+     !. // Clause #1.
+
+advisedby(A, B, -0.12899328789695194) :- 
+     student(A), 
+     student(B), 
+     !. // Clause #2.
+
+advisedby(A, B, 0.2079201615675733) :- !. // Clause #3.
+
+
+% The flattened versions of these clauses:
+
+flattened_advisedby(a, b, 0) :- 
+   student(a),
+   student(b),
+   tempadvisedby(uniqueVar5, a),
+   advisedby(uniqueVar5, b),
+   !. // Flattened version of clause #1.
+
+flattened_advisedby(a, b, -0.12899328789695194) :-  /* #neg=37 */ 
+   student(a),
+   student(b),
+   !. // Flattened version of clause #2.
+
+flattened_advisedby(underscore, underscore, 0.2079201615675733) :-  /* #neg=41 #pos=78 */ 
+   !. // Flattened version of clause #3.
+
+
+% The unique flattened literals:
+%   tempadvisedby(uniqueVar5, a)
+%   student(a)
+%   advisedby(uniqueVar5, b)
+%   student(b)
+
+% Saving model in: train/models/bRDNs/advisedby.model.ckpt
+% Time taken to learn 5 trees is 1,307 seconds.
+
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:-2.0816681711721685E-17
+Set score:-5.204170427930421E-18
+% Only 156 out of 156 converged.
+% Kept 78 of the 78 positive examples.
+% Kept 78 of the 78 negative examples.
+% Dataset size: 156
+Computing probabilities
+prob time:108 milliseconds
+No hidden examples for : advisedby
+Time to build dataset: 114 milliseconds
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.09317800728870262
+Set score:-5.204170427930421E-18
+% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
+
+% Have these 9 positive seeds: 6 23 34 84 100 118 121 134 148
+
+% The best node found: null
+
+% target           = advisedby(D, E)
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 156,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -12,669388 (regressionFit = 12,669387, penalties=1.12E-6) for clause:  advisedby(A, _) :- student(A).  [covers 125,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -8,876298 (regressionFit = 8,876296, penalties=2.0200000000000006E-6) for clause:  advisedby(A, B) :- student(A), professor(B).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+
+% The best node found: advisedby(A, B) :- student(A), professor(B).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+
+% Expanding node at Level 0 with score = 1,797693e+308.
+% Will extend: advisedby(A, B) :- student(A), professor(B).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+% Path: 5;
+Comparing variance: 0.1007231404958683 to score=-5.204170427930421E-18 #egs=88.0
+Comparing variance: 1.861754583142338E-4 to score=-5.204170427930421E-18 #egs=68.0
+%   Creating a TRUE-branch interior node with wgtedCountTrueBranchPos = 88,0
+%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-0,100723)
+%         ILP node to extend: advisedby(A, B) :- student(A), professor(B).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+%      Insert tree-structured search node (@ level = 1 and with score = -0,100723) into the LAST position (#1) in the search queue.
+
+% Time for loop #1: 36 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #1, the best clause found is:
+%      advisedby(A, B) :- student(A), professor(B).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+% This clause covers 88 positive examples, of which 88 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% Working on expanding this node: 'advisedby(A, B) :- student(A), professor(B).  [covers 88,0/88,0 pos, 0,0/0,0 neg]'
+%     Score = -8,876298 (regressionFit = 8,876296, penalties=2.0200000000000006E-6) for clause:  advisedby(A, B) :- student(A), professor(B).  [covers 88,0/88,0 pos, 0,0/0,0 neg]
+
+% Have these 10 positive seeds: 0 5 9 10 17 19 25 26 28 39
+
+% The best node found: null
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.0300000000000002E-6) for clause:  advisedby(A, B) :- student(A), professor(B), advisedby(_, A).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.9300000000000005E-6) for clause:  advisedby(A, B) :- student(A), professor(B), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+
+% The best node found: advisedby(A, B) :- student(A), professor(B), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = advisedby(A, B) :- student(A), professor(B), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg] *****
+
+
+% Expanding node at Level 1 with score = -0,101.
+% Will extend: advisedby(A, B) :- student(A), professor(B), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+% Path: 5;true
+Comparing variance: NaN to score=-5.204170427930421E-18 #egs=0.0
+Comparing variance: 0.1007231404958683 to score=-5.204170427930421E-18 #egs=88.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+
+% Time for loop #2: 12 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #2, the best clause found is:
+%      advisedby(A, B) :- student(A), professor(B), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% ******************************************
+
+%  Have stopped ILP's outer loop because the tree-structured queue is empty.
+
+% ******************************************
+
+%%%%%  WILL-Produced Tree #6 @ 20:41:18 12/15/20.  [Using 3.641.504 memory cells.]  %%%%%
+
+
+% FOR advisedby(A, B):
+%   if ( student(A), professor(B) )
+%   then if ( advisedby(C, A), tempadvisedby(C, B) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else return 0.2664455298682112;  // std dev = 2,977, 88,000 (wgt'ed) examples reached here.  /* #neg=10 #pos=78 */
+%   else return -0.11766348224505459;  // std dev = 0,113, 68,000 (wgt'ed) examples reached here.  /* #neg=68 */
+
+
+% Clauses:
+
+advisedby(A, B, 0) :- 
+     student(A), 
+     professor(B), 
+     advisedby(C, A), 
+     tempadvisedby(C, B), 
+     !. // Clause #1.
+
+advisedby(A, B, 0.2664455298682112) :- 
+     student(A), 
+     professor(B), 
+     !. // Clause #2.
+
+advisedby(A, B, -0.11766348224505459) :- !. // Clause #3.
+
+
+% The flattened versions of these clauses:
+
+flattened_advisedby(a, b, 0) :- 
+   student(a),
+   professor(b),
+   advisedby(uniqueVar6, a),
+   tempadvisedby(uniqueVar6, b),
+   !. // Flattened version of clause #1.
+
+flattened_advisedby(a, b, 0.2664455298682112) :-  /* #neg=10 #pos=78 */ 
+   student(a),
+   professor(b),
+   !. // Flattened version of clause #2.
+
+flattened_advisedby(underscore, underscore, -0.11766348224505459) :-  /* #neg=68 */ 
+   !. // Flattened version of clause #3.
+
+
+% The unique flattened literals:
+%   professor(b)
+%   tempadvisedby(uniqueVar6, b)
+%   student(a)
+%   advisedby(uniqueVar6, a)
+
+% Saving model in: train/models/bRDNs/advisedby.model.ckpt
+% Time taken to learn 6 trees is 1,639 seconds.
+
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.10072314049586831
+Set score:-5.204170427930421E-18
+% Only 156 out of 156 converged.
+% Kept 78 of the 78 positive examples.
+% Kept 78 of the 78 negative examples.
+% Dataset size: 156
+Computing probabilities
+prob time:87 milliseconds
+No hidden examples for : advisedby
+Time to build dataset: 90 milliseconds
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.08081635290138355
+Set score:-5.204170427930421E-18
+% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
+
+% Have these 10 positive seeds: 14 23 32 37 66 84 92 100 106 146
+
+% The best node found: null
+
+% target           = advisedby(D, E)
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 156,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -9,739142 (regressionFit = 9,739141, penalties=1.12E-6) for clause:  advisedby(_, A) :- professor(A).  [covers 96,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -8,874255 (regressionFit = 8,874253, penalties=2.0200000000000006E-6) for clause:  advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+
+% The best node found: advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+
+% Expanding node at Level 0 with score = 1,797693e+308.
+% Will extend: advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
 % Path: 6;
-Comparing variance: 2.960594732333751E-17 to score=0.0025 #egs=90.0
-Comparing variance: 0.09543380079540953 to score=0.0025 #egs=136.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 136,0
-%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-0,095434)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 1 and with score = -0,095434) into the LAST position (#1) in the search queue.
+Comparing variance: 0.1007231404958674 to score=-5.204170427930421E-18 #egs=88.0
+Comparing variance: 1.561203692432273E-4 to score=-5.204170427930421E-18 #egs=68.0
+%   Creating a TRUE-branch interior node with wgtedCountTrueBranchPos = 88,0
+%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-0,100723)
+%         ILP node to extend: advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+%      Insert tree-structured search node (@ level = 1 and with score = -0,100723) into the LAST position (#1) in the search queue.
 
-% Time for loop #1: 11 milliseconds.
-% Internal node max length = 1
+% Time for loop #1: 13 milliseconds.
+% Internal node max length = 2
 % Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
 
 % On cycle #1, the best clause found is:
-%      advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-% This clause covers 90 positive examples, of which 90 are newly covered.
+%      advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+% This clause covers 88 positive examples, of which 88 are newly covered.
 % It also covers 0 negative examples, of which 0 are newly covered.
 
-% Have these 10 positive seeds: 0 13 24 28 30 34 43 48 53 65
+% Working on expanding this node: 'advisedby(A, B) :- professor(B), student(A).  [covers 88,0/88,0 pos, 0,0/0,0 neg]'
+%     Score = -8,874255 (regressionFit = 8,874253, penalties=2.0200000000000006E-6) for clause:  advisedby(A, B) :- professor(B), student(A).  [covers 88,0/88,0 pos, 0,0/0,0 neg]
+
+% Have these 10 positive seeds: 7 15 21 31 37 42 43 48 52 59
 
 % The best node found: null
-%     Score = -12,456694 (regressionFit = 12,456693, penalties=1.12E-6) for clause:  advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.0300000000000002E-6) for clause:  advisedby(A, B) :- professor(B), student(A), advisedby(_, A).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.9300000000000005E-6) for clause:  advisedby(A, B) :- professor(B), student(A), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
 
-% The best node found: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
+% The best node found: advisedby(A, B) :- professor(B), student(A), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
 
-% Expanding node at Level 1 with score = -0,095.
-% Will extend: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% Path: 6;false
-Comparing variance: 0.0 to score=0.0025 #egs=9.0
-Comparing variance: 0.09808419616839238 to score=0.0025 #egs=127.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 127,0
-%      addToQueueOfTreeStructuredLearningTasks (level=2; score=-0,098084)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 2 and with score = -0,098084) into the LAST position (#1) in the search queue.
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = advisedby(A, B) :- professor(B), student(A), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg] *****
 
-% Time for loop #2: 8 milliseconds.
-% Internal node max length = 1
+
+% Expanding node at Level 1 with score = -0,101.
+% Will extend: advisedby(A, B) :- professor(B), student(A), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+% Path: 6;true
+Comparing variance: NaN to score=-5.204170427930421E-18 #egs=0.0
+Comparing variance: 0.1007231404958674 to score=-5.204170427930421E-18 #egs=88.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+
+% Time for loop #2: 16 milliseconds.
+% Internal node max length = 2
 % Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
 
 % On cycle #2, the best clause found is:
-%      advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% This clause covers 9 positive examples, of which 9 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% Have these 10 positive seeds: 11 20 35 45 49 69 71 90 103 105
-
-% The best node found: null
-%     Score = -Infinity (regressionFit = Infinity, penalties=1.12E-6) for clause:  advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 2 with score = -0,098.
-% Will extend: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% Path: 6;false,false
-Comparing variance: 0.09808419616839238 to score=0.0025 #egs=127.0
-Comparing variance: NaN to score=0.0025 #egs=0.0
-%   Creating a FALSE-branch leaf because wgtedCountFalseBranchPos = 0,0 < 2.1 * minPosCov = 6,3
-
-% Time for loop #3: 5 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #3, the best clause found is:
-%      advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% This clause covers 127 positive examples, of which 127 are newly covered.
+%      advisedby(A, B) :- professor(B), student(A), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
 % It also covers 0 negative examples, of which 0 are newly covered.
 
 % ******************************************
@@ -1178,165 +1059,147 @@ Comparing variance: NaN to score=0.0025 #egs=0.0
 
 % ******************************************
 
-%%%%%  WILL-Produced Tree #7 @ 15:20:53 9/29/20.  [Using 3.978.496 memory cells.]  %%%%%
+%%%%%  WILL-Produced Tree #7 @ 20:41:18 12/15/20.  [Using 3.680.328 memory cells.]  %%%%%
 
 
 % FOR advisedby(A, B):
-%   if ( student(B) )
-%   then return -0.07877675473109161;  // std dev = 5,16e-08, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
-%   else if ( professor(A) )
-%   | then return -0.07877675473109173;  // std dev = 0,000, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
-%   | else if ( student(A) )
-%   | | then return 0.17051505636407485;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
-%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   if ( professor(B), student(A) )
+%   then if ( advisedby(C, A), tempadvisedby(C, B) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else return 0.2059559107439094;  // std dev = 2,977, 88,000 (wgt'ed) examples reached here.  /* #neg=10 #pos=78 */
+%   else return -0.10600575567921348;  // std dev = 0,103, 68,000 (wgt'ed) examples reached here.  /* #neg=68 */
 
 
 % Clauses:
 
-advisedby(A, B, -0.07877675473109161) :- 
-     student(B), 
+advisedby(A, B, 0) :- 
+     professor(B), 
+     student(A), 
+     advisedby(C, A), 
+     tempadvisedby(C, B), 
      !. // Clause #1.
 
-advisedby(A, B, -0.07877675473109173) :- 
-     professor(A), 
+advisedby(A, B, 0.2059559107439094) :- 
+     professor(B), 
+     student(A), 
      !. // Clause #2.
 
-advisedby(A, B, 0.17051505636407485) :- 
-     student(A), 
-     !. // Clause #3.
-
-advisedby(A, B, 0) :- !. // Clause #4.
+advisedby(A, B, -0.10600575567921348) :- !. // Clause #3.
 
 
 % The flattened versions of these clauses:
 
-flattened_advisedby(underscore, a, -0.07877675473109161) :-  /* #neg=90 */ 
+flattened_advisedby(a, b, 0) :- 
+   professor(b),
    student(a),
+   advisedby(uniqueVar7, a),
+   tempadvisedby(uniqueVar7, b),
    !. // Flattened version of clause #1.
 
-flattened_advisedby(a, underscore, -0.07877675473109173) :-  /* #neg=9 */ 
-   professor(a),
+flattened_advisedby(a, b, 0.2059559107439094) :-  /* #neg=10 #pos=78 */ 
+   professor(b),
+   student(a),
    !. // Flattened version of clause #2.
 
-flattened_advisedby(a, underscore, 0.17051505636407485) :-  /* #neg=14 #pos=113 */ 
-   student(a),
+flattened_advisedby(underscore, underscore, -0.10600575567921348) :-  /* #neg=68 */ 
    !. // Flattened version of clause #3.
-
-flattened_advisedby(underscore, underscore, 0) :- 
-   !. // Flattened version of clause #4.
 
 
 % The unique flattened literals:
-%   professor(a)
+%   advisedby(uniqueVar7, a)
+%   tempadvisedby(uniqueVar7, b)
+%   professor(b)
 %   student(a)
 
 % Saving model in: train/models/bRDNs/advisedby.model.ckpt
-% Time taken to learn 7 trees is 964 milliseconds.
+% Time taken to learn 7 trees is 1,894 seconds.
 
 %      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
 %         ILP node to extend: null
 %      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.09808419616839237
-Set score:0.0025
-% Only 226 out of 226 converged.
-% Kept 113 of the 113 positive examples.
-% Kept 113 of the 113 negative examples.
-% Dataset size: 226
+Variance:0.1007231404958674
+Set score:-5.204170427930421E-18
+% Only 156 out of 156 converged.
+% Kept 78 of the 78 positive examples.
+% Kept 78 of the 78 negative examples.
+% Dataset size: 156
 Computing probabilities
-prob time:43 milliseconds
+prob time:39 milliseconds
 No hidden examples for : advisedby
-Time to build dataset: 49 milliseconds
+Time to build dataset: 41 milliseconds
 %      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
 %         ILP node to extend: null
 %      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.06604091093430547
-Set score:0.0025
+Variance:0.07340969056920632
+Set score:-5.204170427930421E-18
 % [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
 
-% Have these 8 positive seeds: 29 50 62 78 143 165 182 222
+% Have these 10 positive seeds: 25 58 60 72 77 106 107 110 117 121
 
 % The best node found: null
 
 % target           = advisedby(D, E)
-%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 226,0/226,0 pos, 0,0/0,0 neg]
-%     Score = -12,829617 (regressionFit = 12,829616, penalties=1.12E-6) for clause:  advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 156,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -10,595324 (regressionFit = 10,595323, penalties=1.12E-6) for clause:  advisedby(A, _) :- professor(A).  [covers 31,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -11,187363 (regressionFit = 11,187362, penalties=1.9200000000000003E-6) for clause:  advisedby(A, B) :- professor(A), professor(B).  [covers 8,0/156,0 pos, 0,0/0,0 neg]
 
-% The best node found: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
+% The best node found: advisedby(A, B) :- professor(A), professor(B).  [covers 8,0/156,0 pos, 0,0/0,0 neg]
 
 % Expanding node at Level 0 with score = 1,797693e+308.
-% Will extend: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
+% Will extend: advisedby(A, B) :- professor(A), professor(B).  [covers 8,0/156,0 pos, 0,0/0,0 neg]
 % Path: 7;
-Comparing variance: -8.018277400070574E-18 to score=0.0025 #egs=90.0
-Comparing variance: 0.09433541191648595 to score=0.0025 #egs=136.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 136,0
-%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-0,094335)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 1 and with score = -0,094335) into the LAST position (#1) in the search queue.
+Comparing variance: 3.469446951953614E-18 to score=-5.204170427930421E-18 #egs=8.0
+Comparing variance: 0.07559028083378787 to score=-5.204170427930421E-18 #egs=148.0
+%   Creating a TRUE-branch interior node with wgtedCountTrueBranchPos = 8,0
+%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-3,46945e-18)
+%         ILP node to extend: advisedby(A, B) :- professor(A), professor(B).  [covers 8,0/156,0 pos, 0,0/0,0 neg]
+%      Insert tree-structured search node (@ level = 1 and with score = -3,46945e-18) into the LAST position (#1) in the search queue.
 
-% Time for loop #1: 10 milliseconds.
-% Internal node max length = 1
+% Time for loop #1: 12 milliseconds.
+% Internal node max length = 2
 % Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
 
 % On cycle #1, the best clause found is:
-%      advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-% This clause covers 90 positive examples, of which 90 are newly covered.
+%      advisedby(A, B) :- professor(A), professor(B).  [covers 8,0/156,0 pos, 0,0/0,0 neg]
+% This clause covers 8 positive examples, of which 8 are newly covered.
 % It also covers 0 negative examples, of which 0 are newly covered.
 
-% Have these 10 positive seeds: 16 18 19 25 28 34 64 70 91 97
+% Working on expanding this node: 'advisedby(A, B) :- professor(A), professor(B).  [covers 8,0/8,0 pos, 0,0/0,0 neg]'
+%     Score = -11,187363 (regressionFit = 11,187362, penalties=1.9200000000000003E-6) for clause:  advisedby(A, B) :- professor(A), professor(B).  [covers 8,0/8,0 pos, 0,0/0,0 neg]
+
+***** Warning: % Have only 8 positive examples, so cannot choose 10 of them. *****
+
+
+% Have these 8 positive seeds: 0 1 2 3 4 5 6 7
 
 % The best node found: null
-%     Score = -12,456694 (regressionFit = 12,456693, penalties=1.12E-6) for clause:  advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.0300000000000002E-6) for clause:  advisedby(A, B) :- professor(A), professor(B), tempadvisedby(_, A).  [covers 6,0/8,0 pos, 0,0/0,0 neg]
+% [ LazyGroundClauseIndex ]  Building full index for tempadvisedby/2 with 26 assertions.
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.830000000000001E-6) for clause:  advisedby(A, B) :- professor(A), professor(B), tempadvisedby(C, A), tempadvisedby(C, B).  [covers 0,0/8,0 pos, 0,0/0,0 neg]
 
-% The best node found: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
+% The best node found: advisedby(A, B) :- professor(A), professor(B), tempadvisedby(C, A), tempadvisedby(C, B).  [covers 0,0/8,0 pos, 0,0/0,0 neg]
 
-% Expanding node at Level 1 with score = -0,094.
-% Will extend: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% Path: 7;false
-Comparing variance: 7.709882115452476E-19 to score=0.0025 #egs=9.0
-Comparing variance: 0.09808419616839215 to score=0.0025 #egs=127.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 127,0
-%      addToQueueOfTreeStructuredLearningTasks (level=2; score=-0,098084)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 2 and with score = -0,098084) into the LAST position (#1) in the search queue.
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = advisedby(A, B) :- professor(A), professor(B), tempadvisedby(C, A), tempadvisedby(C, B).  [covers 0,0/8,0 pos, 0,0/0,0 neg] *****
 
-% Time for loop #2: 5 milliseconds.
-% Internal node max length = 1
+
+% Expanding node at Level 1 with score = -3,47e-18.
+% Will extend: advisedby(A, B) :- professor(A), professor(B), tempadvisedby(C, A), tempadvisedby(C, B).  [covers 0,0/8,0 pos, 0,0/0,0 neg]
+% Path: 7;true
+Comparing variance: NaN to score=-5.204170427930421E-18 #egs=0.0
+Comparing variance: 0.0 to score=-5.204170427930421E-18 #egs=8.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+
+% Time for loop #2: 6 milliseconds.
+% Internal node max length = 2
 % Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
 
 % On cycle #2, the best clause found is:
-%      advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% This clause covers 9 positive examples, of which 9 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% Have these 10 positive seeds: 3 4 7 19 21 58 59 80 84 92
-
-% The best node found: null
-%     Score = -Infinity (regressionFit = Infinity, penalties=1.12E-6) for clause:  advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 2 with score = -0,098.
-% Will extend: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% Path: 7;false,false
-Comparing variance: 0.09808419616839215 to score=0.0025 #egs=127.0
-Comparing variance: NaN to score=0.0025 #egs=0.0
-%   Creating a FALSE-branch leaf because wgtedCountFalseBranchPos = 0,0 < 2.1 * minPosCov = 6,3
-
-% Time for loop #3: 4 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #3, the best clause found is:
-%      advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% This clause covers 127 positive examples, of which 127 are newly covered.
+%      advisedby(A, B) :- professor(A), professor(B), tempadvisedby(C, A), tempadvisedby(C, B).  [covers 0,0/8,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
 % It also covers 0 negative examples, of which 0 are newly covered.
 
 % ******************************************
@@ -1345,165 +1208,143 @@ Comparing variance: NaN to score=0.0025 #egs=0.0
 
 % ******************************************
 
-%%%%%  WILL-Produced Tree #8 @ 15:20:53 9/29/20.  [Using 4.024.968 memory cells.]  %%%%%
+%%%%%  WILL-Produced Tree #8 @ 20:41:19 12/15/20.  [Using 3.736.832 memory cells.]  %%%%%
 
 
 % FOR advisedby(A, B):
-%   if ( student(B) )
-%   then return -0.07324622576333707;  // std dev = 0,000, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
-%   else if ( professor(A) )
-%   | then return -0.07324622576333704;  // std dev = 2,63e-09, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
-%   | else if ( student(A) )
-%   | | then return 0.1374011175040191;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
-%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   if ( professor(A), professor(B) )
+%   then if ( tempadvisedby(C, A), tempadvisedby(C, B) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else return -0.12723413100102615;  // std dev = 0,000, 8,000 (wgt'ed) examples reached here.  /* #neg=8 */
+%   else return 0.05946421337295473;  // std dev = 3,345, 148,000 (wgt'ed) examples reached here.  /* #neg=70 #pos=78 */
 
 
 % Clauses:
 
-advisedby(A, B, -0.07324622576333707) :- 
-     student(B), 
+advisedby(A, B, 0) :- 
+     professor(A), 
+     professor(B), 
+     tempadvisedby(C, A), 
+     tempadvisedby(C, B), 
      !. // Clause #1.
 
-advisedby(A, B, -0.07324622576333704) :- 
+advisedby(A, B, -0.12723413100102615) :- 
      professor(A), 
+     professor(B), 
      !. // Clause #2.
 
-advisedby(A, B, 0.1374011175040191) :- 
-     student(A), 
-     !. // Clause #3.
-
-advisedby(A, B, 0) :- !. // Clause #4.
+advisedby(A, B, 0.05946421337295473) :- !. // Clause #3.
 
 
 % The flattened versions of these clauses:
 
-flattened_advisedby(underscore, a, -0.07324622576333707) :-  /* #neg=90 */ 
-   student(a),
+flattened_advisedby(a, b, 0) :- 
+   professor(a),
+   professor(b),
+   tempadvisedby(uniqueVar8, a),
+   tempadvisedby(uniqueVar8, b),
    !. // Flattened version of clause #1.
 
-flattened_advisedby(a, underscore, -0.07324622576333704) :-  /* #neg=9 */ 
+flattened_advisedby(a, b, -0.12723413100102615) :-  /* #neg=8 */ 
    professor(a),
+   professor(b),
    !. // Flattened version of clause #2.
 
-flattened_advisedby(a, underscore, 0.1374011175040191) :-  /* #neg=14 #pos=113 */ 
-   student(a),
+flattened_advisedby(underscore, underscore, 0.05946421337295473) :-  /* #neg=70 #pos=78 */ 
    !. // Flattened version of clause #3.
-
-flattened_advisedby(underscore, underscore, 0) :- 
-   !. // Flattened version of clause #4.
 
 
 % The unique flattened literals:
+%   tempadvisedby(uniqueVar8, b)
+%   professor(b)
 %   professor(a)
-%   student(a)
+%   tempadvisedby(uniqueVar8, a)
 
 % Saving model in: train/models/bRDNs/advisedby.model.ckpt
-% Time taken to learn 8 trees is 1,105 seconds.
+% Time taken to learn 8 trees is 2,154 seconds.
 
 %      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
 %         ILP node to extend: null
 %      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.09808419616839215
-Set score:0.0025
-% Only 226 out of 226 converged.
-% Kept 113 of the 113 positive examples.
-% Kept 113 of the 113 negative examples.
-% Dataset size: 226
+Variance:3.469446951953614E-18
+Set score:-5.204170427930421E-18
+% Only 156 out of 156 converged.
+% Kept 78 of the 78 positive examples.
+% Kept 78 of the 78 negative examples.
+% Dataset size: 156
 Computing probabilities
-prob time:14 milliseconds
+prob time:120 milliseconds
 No hidden examples for : advisedby
-Time to build dataset: 16 milliseconds
+Time to build dataset: 122 milliseconds
 %      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
 %         ILP node to extend: null
 %      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.06319369049581476
-Set score:0.0025
+Variance:0.07226109752110951
+Set score:-5.204170427930421E-18
 % [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
 
-% Have these 6 positive seeds: 24 27 51 102 123 165
+% Have these 5 positive seeds: 13 31 57 137 152
 
 % The best node found: null
 
 % target           = advisedby(D, E)
-%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 226,0/226,0 pos, 0,0/0,0 neg]
-%     Score = -12,732408 (regressionFit = 12,732407, penalties=1.12E-6) for clause:  advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 156,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -9,378835 (regressionFit = 9,378834, penalties=1.12E-6) for clause:  advisedby(_, A) :- professor(A).  [covers 96,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -8,865959 (regressionFit = 8,865957, penalties=2.0200000000000006E-6) for clause:  advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
 
-% The best node found: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
+% The best node found: advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
 
 % Expanding node at Level 0 with score = 1,797693e+308.
-% Will extend: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
+% Will extend: advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
 % Path: 8;
-Comparing variance: 2.0970879354030734E-17 to score=0.0025 #egs=90.0
-Comparing variance: 0.09362064001928772 to score=0.0025 #egs=136.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 136,0
-%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-0,093621)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 1 and with score = -0,093621) into the LAST position (#1) in the search queue.
+Comparing variance: 0.10072314049586778 to score=-5.204170427930421E-18 #egs=88.0
+Comparing variance: 3.412715507489718E-5 to score=-5.204170427930421E-18 #egs=68.0
+%   Creating a TRUE-branch interior node with wgtedCountTrueBranchPos = 88,0
+%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-0,100723)
+%         ILP node to extend: advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+%      Insert tree-structured search node (@ level = 1 and with score = -0,100723) into the LAST position (#1) in the search queue.
 
-% Time for loop #1: 5 milliseconds.
-% Internal node max length = 1
+% Time for loop #1: 13 milliseconds.
+% Internal node max length = 2
 % Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
 
 % On cycle #1, the best clause found is:
-%      advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-% This clause covers 90 positive examples, of which 90 are newly covered.
+%      advisedby(A, B) :- professor(B), student(A).  [covers 88,0/156,0 pos, 0,0/0,0 neg]
+% This clause covers 88 positive examples, of which 88 are newly covered.
 % It also covers 0 negative examples, of which 0 are newly covered.
 
-% Have these 10 positive seeds: 19 40 51 53 54 73 76 79 85 95
+% Working on expanding this node: 'advisedby(A, B) :- professor(B), student(A).  [covers 88,0/88,0 pos, 0,0/0,0 neg]'
+%     Score = -8,865959 (regressionFit = 8,865957, penalties=2.0200000000000006E-6) for clause:  advisedby(A, B) :- professor(B), student(A).  [covers 88,0/88,0 pos, 0,0/0,0 neg]
+
+% Have these 6 positive seeds: 12 22 37 40 65 87
 
 % The best node found: null
-%     Score = -12,456694 (regressionFit = 12,456693, penalties=1.12E-6) for clause:  advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.0300000000000002E-6) for clause:  advisedby(A, B) :- professor(B), student(A), advisedby(_, A).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.9300000000000005E-6) for clause:  advisedby(A, B) :- professor(B), student(A), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
 
-% The best node found: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
+% The best node found: advisedby(A, B) :- professor(B), student(A), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
 
-% Expanding node at Level 1 with score = -0,094.
-% Will extend: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% Path: 8;false
-Comparing variance: 0.0 to score=0.0025 #egs=9.0
-Comparing variance: 0.09808419616839213 to score=0.0025 #egs=127.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 127,0
-%      addToQueueOfTreeStructuredLearningTasks (level=2; score=-0,098084)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 2 and with score = -0,098084) into the LAST position (#1) in the search queue.
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = advisedby(A, B) :- professor(B), student(A), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg] *****
 
-% Time for loop #2: 3 milliseconds.
-% Internal node max length = 1
+
+% Expanding node at Level 1 with score = -0,101.
+% Will extend: advisedby(A, B) :- professor(B), student(A), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+% Path: 8;true
+Comparing variance: NaN to score=-5.204170427930421E-18 #egs=0.0
+Comparing variance: 0.10072314049586778 to score=-5.204170427930421E-18 #egs=88.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+
+% Time for loop #2: 15 milliseconds.
+% Internal node max length = 2
 % Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
 
 % On cycle #2, the best clause found is:
-%      advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% This clause covers 9 positive examples, of which 9 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% Have these 8 positive seeds: 0 5 30 41 72 77 78 116
-
-% The best node found: null
-%     Score = -Infinity (regressionFit = Infinity, penalties=1.12E-6) for clause:  advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 2 with score = -0,098.
-% Will extend: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% Path: 8;false,false
-Comparing variance: 0.09808419616839213 to score=0.0025 #egs=127.0
-Comparing variance: NaN to score=0.0025 #egs=0.0
-%   Creating a FALSE-branch leaf because wgtedCountFalseBranchPos = 0,0 < 2.1 * minPosCov = 6,3
-
-% Time for loop #3: 2 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #3, the best clause found is:
-%      advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% This clause covers 127 positive examples, of which 127 are newly covered.
+%      advisedby(A, B) :- professor(B), student(A), advisedby(C, A), tempadvisedby(C, B).  [covers 0,0/88,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
 % It also covers 0 negative examples, of which 0 are newly covered.
 
 % ******************************************
@@ -1512,165 +1353,144 @@ Comparing variance: NaN to score=0.0025 #egs=0.0
 
 % ******************************************
 
-%%%%%  WILL-Produced Tree #9 @ 15:20:53 9/29/20.  [Using 4.063.984 memory cells.]  %%%%%
+%%%%%  WILL-Produced Tree #9 @ 20:41:19 12/15/20.  [Using 3.777.872 memory cells.]  %%%%%
 
 
 % FOR advisedby(A, B):
-%   if ( student(B) )
-%   then return -0.06842697784420265;  // std dev = 4,34e-08, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
-%   else if ( professor(A) )
-%   | then return -0.06842697784420272;  // std dev = 0,000, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
-%   | else if ( student(A) )
-%   | | then return 0.11269695940364122;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
-%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   if ( professor(B), student(A) )
+%   then if ( advisedby(C, A), tempadvisedby(C, B) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else return 0.15118338696528708;  // std dev = 2,977, 88,000 (wgt'ed) examples reached here.  /* #neg=10 #pos=78 */
+%   else return -0.09930303010077766;  // std dev = 0,048, 68,000 (wgt'ed) examples reached here.  /* #neg=68 */
 
 
 % Clauses:
 
-advisedby(A, B, -0.06842697784420265) :- 
-     student(B), 
+advisedby(A, B, 0) :- 
+     professor(B), 
+     student(A), 
+     advisedby(C, A), 
+     tempadvisedby(C, B), 
      !. // Clause #1.
 
-advisedby(A, B, -0.06842697784420272) :- 
-     professor(A), 
+advisedby(A, B, 0.15118338696528708) :- 
+     professor(B), 
+     student(A), 
      !. // Clause #2.
 
-advisedby(A, B, 0.11269695940364122) :- 
-     student(A), 
-     !. // Clause #3.
-
-advisedby(A, B, 0) :- !. // Clause #4.
+advisedby(A, B, -0.09930303010077766) :- !. // Clause #3.
 
 
 % The flattened versions of these clauses:
 
-flattened_advisedby(underscore, a, -0.06842697784420265) :-  /* #neg=90 */ 
+flattened_advisedby(a, b, 0) :- 
+   professor(b),
    student(a),
+   advisedby(uniqueVar9, a),
+   tempadvisedby(uniqueVar9, b),
    !. // Flattened version of clause #1.
 
-flattened_advisedby(a, underscore, -0.06842697784420272) :-  /* #neg=9 */ 
-   professor(a),
+flattened_advisedby(a, b, 0.15118338696528708) :-  /* #neg=10 #pos=78 */ 
+   professor(b),
+   student(a),
    !. // Flattened version of clause #2.
 
-flattened_advisedby(a, underscore, 0.11269695940364122) :-  /* #neg=14 #pos=113 */ 
-   student(a),
+flattened_advisedby(underscore, underscore, -0.09930303010077766) :-  /* #neg=68 */ 
    !. // Flattened version of clause #3.
-
-flattened_advisedby(underscore, underscore, 0) :- 
-   !. // Flattened version of clause #4.
 
 
 % The unique flattened literals:
-%   professor(a)
+%   professor(b)
+%   tempadvisedby(uniqueVar9, b)
 %   student(a)
+%   advisedby(uniqueVar9, a)
 
 % Saving model in: train/models/bRDNs/advisedby.model.ckpt
-% Time taken to learn 9 trees is 1,185 seconds.
+% Time taken to learn 9 trees is 2,468 seconds.
 
 %      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
 %         ILP node to extend: null
 %      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.09808419616839213
-Set score:0.0025
-% Only 226 out of 226 converged.
-% Kept 113 of the 113 positive examples.
-% Kept 113 of the 113 negative examples.
-% Dataset size: 226
+Variance:0.10072314049586778
+Set score:-5.204170427930421E-18
+% Only 156 out of 156 converged.
+% Kept 78 of the 78 positive examples.
+% Kept 78 of the 78 negative examples.
+% Dataset size: 156
 Computing probabilities
-prob time:15 milliseconds
+prob time:94 milliseconds
 No hidden examples for : advisedby
-Time to build dataset: 16 milliseconds
+Time to build dataset: 96 milliseconds
 %      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
 %         ILP node to extend: null
 %      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
-Variance:0.06126147736129472
-Set score:0.0025
+Variance:0.06804784750235707
+Set score:-5.204170427930421E-18
 % [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
 
-% Have these 8 positive seeds: 59 99 102 107 111 145 156 169
+% Have these 5 positive seeds: 0 99 105 121 122
 
 % The best node found: null
 
 % target           = advisedby(D, E)
-%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 226,0/226,0 pos, 0,0/0,0 neg]
-%     Score = -12,666439 (regressionFit = 12,666438, penalties=1.12E-6) for clause:  advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  advisedby(_, _).  [covers 156,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -10,055583 (regressionFit = 10,055582, penalties=1.12E-6) for clause:  advisedby(A, _) :- professor(A).  [covers 31,0/156,0 pos, 0,0/0,0 neg]
+%     Score = -10,464415 (regressionFit = 10,464413, penalties=1.9200000000000003E-6) for clause:  advisedby(A, B) :- professor(A), professor(B).  [covers 8,0/156,0 pos, 0,0/0,0 neg]
 
-% The best node found: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
+% The best node found: advisedby(A, B) :- professor(A), professor(B).  [covers 8,0/156,0 pos, 0,0/0,0 neg]
 
 % Expanding node at Level 0 with score = 1,797693e+308.
-% Will extend: advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
+% Will extend: advisedby(A, B) :- professor(A), professor(B).  [covers 8,0/156,0 pos, 0,0/0,0 neg]
 % Path: 9;
-Comparing variance: -1.295260195396016E-17 to score=0.0025 #egs=90.0
-Comparing variance: 0.09313557338051207 to score=0.0025 #egs=136.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 136,0
-%      addToQueueOfTreeStructuredLearningTasks (level=1; score=-0,093136)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 1 and with score = -0,093136) into the LAST position (#1) in the search queue.
+Comparing variance: -8.673617379884035E-18 to score=-5.204170427930421E-18 #egs=8.0
+Comparing variance: 0.07070549166390724 to score=-5.204170427930421E-18 #egs=148.0
+%   Creating a TRUE-branch interior node with wgtedCountTrueBranchPos = 8,0
+%      addToQueueOfTreeStructuredLearningTasks (level=1; score=8,67362e-18)
+%         ILP node to extend: advisedby(A, B) :- professor(A), professor(B).  [covers 8,0/156,0 pos, 0,0/0,0 neg]
+%      Insert tree-structured search node (@ level = 1 and with score = 8,67362e-18) into the LAST position (#1) in the search queue.
 
-% Time for loop #1: 5 milliseconds.
-% Internal node max length = 1
+% Time for loop #1: 13 milliseconds.
+% Internal node max length = 2
 % Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
 
 % On cycle #1, the best clause found is:
-%      advisedby(_, A) :- student(A).  [covers 90,0/226,0 pos, 0,0/0,0 neg]
-% This clause covers 90 positive examples, of which 90 are newly covered.
+%      advisedby(A, B) :- professor(A), professor(B).  [covers 8,0/156,0 pos, 0,0/0,0 neg]
+% This clause covers 8 positive examples, of which 8 are newly covered.
 % It also covers 0 negative examples, of which 0 are newly covered.
 
-% Have these 5 positive seeds: 38 76 105 110 132
+% Working on expanding this node: 'advisedby(A, B) :- professor(A), professor(B).  [covers 8,0/8,0 pos, 0,0/0,0 neg]'
+%     Score = -10,464415 (regressionFit = 10,464413, penalties=1.9200000000000003E-6) for clause:  advisedby(A, B) :- professor(A), professor(B).  [covers 8,0/8,0 pos, 0,0/0,0 neg]
+
+% Have these 8 positive seeds: 0 1 2 3 4 5 6 7
 
 % The best node found: null
-%     Score = -12,456694 (regressionFit = 12,456693, penalties=1.12E-6) for clause:  advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.0300000000000002E-6) for clause:  advisedby(A, B) :- professor(A), professor(B), sameperson(_, A).  [covers 8,0/8,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=3.9300000000000005E-6) for clause:  advisedby(A, B) :- professor(A), professor(B), sameperson(C, A), tempadvisedby(C, B).  [covers 0,0/8,0 pos, 0,0/0,0 neg]
 
-% The best node found: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
+% The best node found: advisedby(A, B) :- professor(A), professor(B), sameperson(C, A), tempadvisedby(C, B).  [covers 0,0/8,0 pos, 0,0/0,0 neg]
 
-% Expanding node at Level 1 with score = -0,093.
-% Will extend: advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% Path: 9;false
-Comparing variance: 7.709882115452476E-19 to score=0.0025 #egs=9.0
-Comparing variance: 0.09808419616839216 to score=0.0025 #egs=127.0
-%   Creating a TRUE-branch leaf because good enough fit since score < 0.0025
-%   Creating a FALSE-branch interior node with wgtedCountFalseBranchPos = 127,0
-%      addToQueueOfTreeStructuredLearningTasks (level=2; score=-0,098084)
-%         ILP node to extend: null
-%      Insert tree-structured search node (@ level = 2 and with score = -0,098084) into the LAST position (#1) in the search queue.
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = advisedby(A, B) :- professor(A), professor(B), sameperson(C, A), tempadvisedby(C, B).  [covers 0,0/8,0 pos, 0,0/0,0 neg] *****
 
-% Time for loop #2: 2 milliseconds.
-% Internal node max length = 1
+
+% Expanding node at Level 1 with score = 8,67e-18.
+% Will extend: advisedby(A, B) :- professor(A), professor(B), sameperson(C, A), tempadvisedby(C, B).  [covers 0,0/8,0 pos, 0,0/0,0 neg]
+% Path: 9;true
+Comparing variance: NaN to score=-5.204170427930421E-18 #egs=0.0
+Comparing variance: -8.673617379884035E-18 to score=-5.204170427930421E-18 #egs=8.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+%   Creating a FALSE-branch leaf because good enough fit since score < -5.204170427930421E-18
+
+% Time for loop #2: 23 milliseconds.
+% Internal node max length = 2
 % Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
 
 % On cycle #2, the best clause found is:
-%      advisedby(A, _) :- professor(A).  [covers 9,0/136,0 pos, 0,0/0,0 neg]
-% This clause covers 9 positive examples, of which 9 are newly covered.
-% It also covers 0 negative examples, of which 0 are newly covered.
-
-% Have these 10 positive seeds: 8 13 21 25 26 34 39 43 45 60
-
-% The best node found: null
-%     Score = -Infinity (regressionFit = Infinity, penalties=1.12E-6) for clause:  advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% The best node found: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-
-% Expanding node at Level 2 with score = -0,098.
-% Will extend: advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% Path: 9;false,false
-Comparing variance: 0.09808419616839216 to score=0.0025 #egs=127.0
-Comparing variance: NaN to score=0.0025 #egs=0.0
-%   Creating a FALSE-branch leaf because wgtedCountFalseBranchPos = 0,0 < 2.1 * minPosCov = 6,3
-
-% Time for loop #3: 2 milliseconds.
-% Internal node max length = 1
-% Max tree depth in lits   = 12
-% Max tree depth in nodes  = 5
-% Max number of clauses    = 12
-
-% On cycle #3, the best clause found is:
-%      advisedby(A, _) :- student(A).  [covers 127,0/127,0 pos, 0,0/0,0 neg]
-% This clause covers 127 positive examples, of which 127 are newly covered.
+%      advisedby(A, B) :- professor(A), professor(B), sameperson(C, A), tempadvisedby(C, B).  [covers 0,0/8,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
 % It also covers 0 negative examples, of which 0 are newly covered.
 
 % ******************************************
@@ -1679,57 +1499,57 @@ Comparing variance: NaN to score=0.0025 #egs=0.0
 
 % ******************************************
 
-%%%%%  WILL-Produced Tree #10 @ 15:20:53 9/29/20.  [Using 4.103.616 memory cells.]  %%%%%
+%%%%%  WILL-Produced Tree #10 @ 20:41:19 12/15/20.  [Using 3.817.032 memory cells.]  %%%%%
 
 
 % FOR advisedby(A, B):
-%   if ( student(B) )
-%   then return -0.06419184008202626;  // std dev = 0,000, 90,000 (wgt'ed) examples reached here.  /* #neg=90 */
-%   else if ( professor(A) )
-%   | then return -0.0641918400820262;  // std dev = 2,63e-09, 9,000 (wgt'ed) examples reached here.  /* #neg=9 */
-%   | else if ( student(A) )
-%   | | then return 0.09378456109669607;  // std dev = 3,529, 127,000 (wgt'ed) examples reached here.  /* #neg=14 #pos=113 */
-%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   if ( professor(A), professor(B) )
+%   then if ( sameperson(C, A), tempadvisedby(C, B) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else return -0.10412810119108215;  // std dev = 0,000, 8,000 (wgt'ed) examples reached here.  /* #neg=8 */
+%   else return 0.03694651870663026;  // std dev = 3,235, 148,000 (wgt'ed) examples reached here.  /* #neg=70 #pos=78 */
 
 
 % Clauses:
 
-advisedby(A, B, -0.06419184008202626) :- 
-     student(B), 
+advisedby(A, B, 0) :- 
+     professor(A), 
+     professor(B), 
+     sameperson(C, A), 
+     tempadvisedby(C, B), 
      !. // Clause #1.
 
-advisedby(A, B, -0.0641918400820262) :- 
+advisedby(A, B, -0.10412810119108215) :- 
      professor(A), 
+     professor(B), 
      !. // Clause #2.
 
-advisedby(A, B, 0.09378456109669607) :- 
-     student(A), 
-     !. // Clause #3.
-
-advisedby(A, B, 0) :- !. // Clause #4.
+advisedby(A, B, 0.03694651870663026) :- !. // Clause #3.
 
 
 % The flattened versions of these clauses:
 
-flattened_advisedby(underscore, a, -0.06419184008202626) :-  /* #neg=90 */ 
-   student(a),
+flattened_advisedby(a, b, 0) :- 
+   professor(a),
+   professor(b),
+   sameperson(uniqueVar10, a),
+   tempadvisedby(uniqueVar10, b),
    !. // Flattened version of clause #1.
 
-flattened_advisedby(a, underscore, -0.0641918400820262) :-  /* #neg=9 */ 
+flattened_advisedby(a, b, -0.10412810119108215) :-  /* #neg=8 */ 
    professor(a),
+   professor(b),
    !. // Flattened version of clause #2.
 
-flattened_advisedby(a, underscore, 0.09378456109669607) :-  /* #neg=14 #pos=113 */ 
-   student(a),
+flattened_advisedby(underscore, underscore, 0.03694651870663026) :-  /* #neg=70 #pos=78 */ 
    !. // Flattened version of clause #3.
-
-flattened_advisedby(underscore, underscore, 0) :- 
-   !. // Flattened version of clause #4.
 
 
 % The unique flattened literals:
+%   professor(b)
+%   sameperson(uniqueVar10, a)
+%   tempadvisedby(uniqueVar10, b)
 %   professor(a)
-%   student(a)
 
 % Saving model in: train/models/bRDNs/advisedby.model.ckpt
 % Saving model in: train/models/bRDNs/advisedby.model
@@ -1801,12 +1621,34 @@ getScore_advisedby_tree9(D, E, TreesToUse, Total9) :- advisedby_tree9(D, E, Tota
 getScore_advisedby_tree10(D, E, TreesToUse, 0.0) :- 10 > TreesToUse, !.
 getScore_advisedby_tree10(D, E, TreesToUse, Total10) :- advisedby_tree10(D, E, Total), stepLength_tree10(StepLen), Total10 is Total * StepLen.
 
-flattenedLiteralsInThisSetOfTrees(advisedby, 2, [
+flattenedLiteralsInThisSetOfTrees(advisedby, 24, [
+   advisedby(uniqueVar7, a),
+   tempadvisedby(uniqueVar1, b),
+   tempadvisedby(uniqueVar8, a),
+   tempadvisedby(uniqueVar9, b),
+   tempadvisedby(uniqueVar1, a),
+   advisedby(uniqueVar4, a),
+   tempadvisedby(uniqueVar6, b),
+   student(a),
+   advisedby(uniqueVar9, a),
+   tempadvisedby(uniqueVar10, b),
+   student(b),
+   tempadvisedby(uniqueVar7, b),
+   sameperson(uniqueVar4, b),
+   advisedby(uniqueVar2, a),
+   advisedby(uniqueVar5, b),
+   tempadvisedby(uniqueVar8, b),
+   professor(b),
+   sameperson(uniqueVar10, a),
+   advisedby(uniqueVar3, b),
+   tempadvisedby(uniqueVar5, a),
+   sameperson(uniqueVar3, a),
    professor(a),
-   student(a)]).
-% Time taken to learn model for 'advisedby': 1,280 seconds.
+   tempadvisedby(uniqueVar2, b),
+   advisedby(uniqueVar6, a)]).
+% Time taken to learn model for 'advisedby': 2,801 seconds.
 % Saving model in: train/models/bRDNs/advisedby.model
 cached groundings hit: 0
 Misses: 0
 
-% Total learning time (10 trees): 2,008 seconds.
+% Total learning time (10 trees): 3,907 seconds.

@@ -1,3 +1,6 @@
+setParam: maxTreeDepth=3.
+setParam: nodeSize=2.
+setParam: numOfClauses=8.
 mode: professor(+person).
 mode: student(+person).
 mode: advisedby(+person,+person).

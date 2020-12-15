@@ -194,79 +194,79 @@ class datasets:
                         neg[i] = datasets.generate_all_neg(target, value)
         return [facts, pos, neg]
 
-    def save():
+    def save(path_json):
         import time
         start = time.time()
         data = datasets.get_imdb_dataset()
         print('%s seconds generating %s' % (time.time() - start, 'imdb'))
-        with open('files/json/imdb.json', 'w') as outfile:
+        with open(f'{path_json}/imdb.json', 'w') as outfile:
             json.dump(data, outfile)
 
         start = time.time()
         data = datasets.get_cora_dataset()
         print('%s seconds generating %s' % (time.time() - start, 'cora'))
-        with open('files/json/cora.json', 'w') as outfile:
+        with open(f'{path_json}/cora.json', 'w') as outfile:
             json.dump(data, outfile)
 
         start = time.time()
         data = datasets.get_uwcse_dataset()
         print('%s seconds generating %s' % (time.time() - start, 'uwcse'))
-        with open('files/json/uwcse.json', 'w') as outfile:
+        with open(f'{path_json}/uwcse.json', 'w') as outfile:
             json.dump(data, outfile)
 
         start = time.time()
         data = datasets.get_webkb2_dataset()
         print('%s seconds generating %s' % (time.time() - start, 'webkb'))
-        with open('files/json/webkb.json', 'w') as outfile:
+        with open(f'{path_json}/webkb.json', 'w') as outfile:
             json.dump(data, outfile)
 
         start = time.time()
         data = datasets.get_nell_sports_dataset()
         print('%s seconds generating %s' % (time.time() - start, 'nell_sports'))
-        with open('files/json/nell_sports.json', 'w') as outfile:
+        with open(f'{path_json}/nell_sports.json', 'w') as outfile:
             json.dump(data, outfile)
 
         start = time.time()
         data = datasets.get_nell_finances_dataset()
         print('%s seconds generating %s' % (time.time() - start, 'nell_finances'))
-        with open('files/json/nell_finances.json', 'w') as outfile:
+        with open(f'{path_json}/nell_finances.json', 'w') as outfile:
             json.dump(data, outfile)
 
-        start = time.time()
-        data = datasets.get_yago2s_dataset()
-        print('%s seconds generating %s' % (time.time() - start, 'yago2s'))
-        with open('files/json/yago2s.json', 'w') as outfile:
-            json.dump(data, outfile)
+        # start = time.time()
+        # data = datasets.get_yago2s_dataset()
+        # print('%s seconds generating %s' % (time.time() - start, 'yago2s'))
+        # with open(f'{path_json}/yago2s.json', 'w') as outfile:
+        #     json.dump(data, outfile)
 
         start = time.time()
         data = datasets.get_twitter_dataset()
         print('%s seconds generating %s' % (time.time() - start, 'twitter'))
-        with open('files/json/twitter.json', 'w') as outfile:
+        with open(f'{path_json}/twitter.json', 'w') as outfile:
             json.dump(data, outfile)
 
         start = time.time()
         data = datasets.get_yeast_dataset()
         print('%s seconds generating %s' % (time.time() - start, 'yeast'))
-        with open('files/json/yeast.json', 'w') as outfile:
+        with open(f'{path_json}/yeast.json', 'w') as outfile:
             json.dump(data, outfile)
 
-        start = time.time()
-        data = datasets.get_facebook_dataset()
-        print('%s seconds generating %s' % (time.time() - start, 'facebook'))
-        with open('files/json/facebook.json', 'w') as outfile:
-            json.dump(data, outfile)
+        # start = time.time()
+        # data = datasets.get_facebook_dataset()
+        # print('%s seconds generating %s' % (time.time() - start, 'facebook'))
+        # with open(f'{path_json}/facebook.json', 'w') as outfile:
+        #     json.dump(data, outfile)
 
-        start = time.time()
-        data = datasets.get_movielens_dataset()
-        print('%s seconds generating %s' % (time.time() - start, 'movielens'))
-        with open('files/json/movielens.json', 'w') as outfile:
-            json.dump(data, outfile)
+        # start = time.time()
+        # data = datasets.get_movielens_dataset()
+        # print('%s seconds generating %s' % (time.time() - start, 'movielens'))
+        # with open(f'{path_json}/movielens.json', 'w') as outfile:
+        #     json.dump(data, outfile)
 
-        start = time.time()
-        data = datasets.get_carcinogenesis_dataset()
-        print('%s seconds generating %s' % (time.time() - start, 'carcinogenesis'))
-        with open('files/json/carcinogenesis.json', 'w') as outfile:
-            json.dump(data, outfile)
+        # start = time.time()
+        # data = datasets.get_carcinogenesis_dataset()
+        # print('%s seconds generating %s' % (time.time() - start, 'carcinogenesis'))
+        # with open(f'{path_json}/carcinogenesis.json', 'w') as outfile:
+        #     json.dump(data, outfile)
 
     '''
     workedunder(person,person)

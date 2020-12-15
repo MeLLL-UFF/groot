@@ -1,30 +1,20 @@
-0;;workedunder(A, B) :- actor(B).;false;true
-0;false;female(A).;false;true
-0;false,false;actor(A).;false;false
-1;;workedunder(A, B) :- actor(B).;false;true
-1;false;female(A).;false;true
-1;false,false;actor(A).;false;false
-2;;workedunder(A, B) :- actor(B).;false;true
-2;false;director(A).;false;true
-2;false,false;female(A).;false;false
-3;;workedunder(A, B) :- actor(B).;false;true
-3;false;female(A).;false;true
-3;false,false;actor(A).;false;false
-4;;workedunder(A, B) :- actor(B).;false;true
-4;false;female(A).;false;true
-4;false,false;actor(A).;false;false
-5;;workedunder(A, B) :- actor(B).;false;true
-5;false;female(A).;false;true
-5;false,false;actor(A).;false;false
-6;;workedunder(A, B) :- actor(B).;false;true
-6;false;female(A).;false;true
-6;false,false;actor(A).;false;false
-7;;workedunder(A, B) :- actor(B).;false;true
-7;false;female(A).;false;true
-7;false,false;actor(A).;false;false
-8;;workedunder(A, B) :- actor(B).;false;true
-8;false;female(A).;false;true
-8;false,false;actor(A).;false;false
-9;;workedunder(A, B) :- actor(B).;false;true
-9;false;female(A).;false;true
-9;false,false;actor(A).;false;false
+0;;advisedby00(A,B):- professor00(B), student00(A);true;false
+0;true;tempadvisedby01(C, A), sameperson01(C, B).;false;false
+1;;advisedby10(A,B):- professor10(B), student10(A);true;false
+1;true;advisedby11(C, A), tempadvisedby11(C, B).;false;false
+2;;advisedby20(A,B):- student20(B), professor20(A);true;false
+2;true;sameperson21(C, A), advisedby21(C, B).;false;false
+3;;advisedby30(A,B):- professor30(B), student30(A);true;false
+3;true;advisedby31(C, A), sameperson31(C, B).;false;false
+4;;advisedby40(A,B):- student40(A), professor40(B);true;false
+4;true;tempadvisedby41(C, A), advisedby41(C, B).;false;false
+5;;advisedby50(A,B):- student50(A), professor50(B);true;false
+5;true;advisedby51(C, A), tempadvisedby51(C, B).;false;false
+6;;advisedby60(A,B):- professor60(B), student60(A);true;false
+6;true;advisedby61(C, A), tempadvisedby61(C, B).;false;false
+7;;advisedby70(A,B):- professor70(A), professor70(B);true;false
+7;true;tempadvisedby71(C, A), tempadvisedby71(C, B).;false;false
+8;;advisedby80(A,B):- student80(B), professor80(A);true;false
+8;true;sameperson81(C, A), tempadvisedby81(C, B).;false;false
+9;;advisedby90(A,B):- professor90(A), professor90(B);true;false
+9;true;sameperson91(C, A), tempadvisedby91(C, B).;false;false

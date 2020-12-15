@@ -1,4 +1,4 @@
-////// Learned from a dataset containing 127 positive (127,0 weighted sum) and 0 negative (0,0 wgt'ed) examples.
+////// Learned from a dataset containing 8 positive (8,0 weighted sum) and 0 negative (0,0 wgt'ed) examples.
 ////// The minimal (wgt'ed) coverage = 3,000, the maximal (wgt'ed) NEG coverage = 0,499, and the minimal (wgt'ed) precision = 0,001 (using m = 0,1)
 
 usePrologVariables: true.
@@ -21,13 +21,6 @@ usePrologVariables: true.
 ////////////////////////////////////////////////////////////////////////////////
 ////
 ////     Gleaner for: outerLoop #2, null
-////
-////////////////////////////////////////////////////////////////////////////////
-
-
-////////////////////////////////////////////////////////////////////////////////
-////
-////     Gleaner for: outerLoop #3, null
 ////
 ////////////////////////////////////////////////////////////////////////////////
 

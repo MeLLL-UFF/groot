@@ -1,9 +1,0 @@
-setParam: stringsAreCaseSensitive = true.
-
-usePrologVariables: true.
-
-
-(workedunder(_, A, -0.08518475138839678) :-  /* #neg=319 */ actor(A)).
-(workedunder(A, _, 0.20667581577304148) :-  /* #neg=28 #pos=170 */ female(A)).
-(workedunder(A, _, 0.21529024890425333) :-  /* #neg=27 #pos=212 */ actor(A)).
-workedunder(_, _, -0.08518475138839687) /* #neg=8 */ .
