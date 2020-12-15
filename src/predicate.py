@@ -45,7 +45,6 @@ class Predicate:
 
     def get_modes(self, individual_tree, pred_source):
         #LEVA EM CONSIDERAÇAO QUE SÓ HÁ UM PREDICADO EM CADA NÓ
-        # print(pred_source, individual_tree)
         pred_source = pred_source.split('), ')
         predicate = []
         for pred in pred_source:
@@ -70,15 +69,11 @@ class Predicate:
     def define_mapping(self, pred_source, pred_target):
         pred_source = pred_source.split('(')[1].split(',')
         pred_target = pred_target.split('(')[1].split(',')
-        # print("DEFINE MAPPING: ")
-        # print(pred_source, pred_target)
+
         for i in range(0, len(pred_source)):
             self.mapping_var[pred_source[i].replace(').', '')] = pred_target[i].replace(').', '')
-        # print(self.mapping_var)
-        # print("------------------")
-
+       
     def _get_valid_map(self, complete_source, list_pos_target):
-        # print("COMPLETE SOURCE: ", complete_source)
         pred_var = []
         list_vars = complete_source.split('(')[1].split(',')
         for i in list_vars:
@@ -87,23 +82,13 @@ class Predicate:
                 pred_var.append(self.mapping_var[tmp])
             else:
                 pred_var.append('')
-        # print(pred_var, len(f'({",".join(pred_var)}).'), self.mapping_var)
-        # print(len(f'({",".join(pred_var)}).') == 4)
         if len(f'({",".join(pred_var)}).') == 4:
-            # print("ENTREI AQUI")
             return list(range(0, len(list_pos_target)))
         else:
             pred_var = f'({",".join(pred_var)}).'
-        # print(pred_var, pred_var.replace('(', ''))
 
         index_target = []
         for var_target in range(0, len(list_pos_target)):
-            # print("PREDICADO A SER TESTADO: ")
-            # print(list_pos_target[var_target])
-            # print("TESTE 1: ")
-            # print(list_pos_target[var_target].endswith(pred_var.replace('(', '')))
-            # print("TESTE 2: ")
-            # print(list_pos_target[var_target].split('(')[1].startswith(pred_var.replace(').', '').replace('(', '')))
             if list_pos_target[var_target].endswith(pred_var.replace('(', '')):
                 index_target.append(var_target)
             elif list_pos_target[var_target].split('(')[1].startswith(pred_var.replace(').', '').replace('(', '')):
@@ -120,8 +105,6 @@ class Predicate:
         #list_pred é : list_pred = [('movie', '+,-'), ('director', '+'),...]
         #pred_source é: 'movie(+person,-person).' --> NAO VEM ASSIM: verificar quais variáveis já estão na árvore, se já tiver a variável, é +, cc -
         #VERIFICAR CASO ONDE HÁ DOIS PREDICADOS NO PRED_SOURCE
-        # print("PRED SOURCE: ", pred_source)
-
         occur_modes = ','.join([pred_source[occur.start()] 
                            for occur in re.finditer('[+\-]', pred_source)])
         valid_pred = []
@@ -138,10 +121,8 @@ class Predicate:
                 break
         occur_modes = ','.join([pred_source[occur.start()] 
                            for occur in re.finditer('[+\-]', pred_source)])
-        # print(occur_modes)
 
         for pred in self.new_bk_source:
-            # print(pred, new_pred_source)
             if new_pred_source in pred:
                 complete_pred_source = pred
                 break
@@ -154,10 +135,6 @@ class Predicate:
                     complete_valid_pred.append(pred)
                     break
         valid_index = self._get_valid_map(complete_pred_source, complete_valid_pred)
-        # print("TESTE: ", pred_source, valid_index, valid_pred)
-        # print("-------------------------------")
-        # print("MAPPING: ", self.mapping_var)
-        # print("--------------------------------")
         return complete_pred_source, [valid_pred[index] for index in valid_index], [complete_valid_pred[index] for index in valid_index]
 
     def get_complete_pred(self, pred, bk):
@@ -170,17 +147,12 @@ class Predicate:
         return f'{target_pred.split("(")[0]}({source_pred.split("(")[1]}'
 
     def change_pred(self, source, target, pred, pred_source):
-        # print(pred)
         split_pred = pred.split(";")
         has_target = len(split_pred[2].split(":-")) > 1
         if has_target: 
             target_pred = split_pred[2].split(":- ")[1]
-            # print(source)
             complete_source = self.get_complete_pred(source,self.new_bk_source)
             complete_target = self.get_complete_pred(target,self.new_bk_target)
-            # print("COMPLETE SOURCE AND TARGET: ")
-            # print(complete_source, complete_target)
-            # print("-------------------------------")
             self.define_mapping(complete_source, complete_target)
         else: target_pred = split_pred[2]
 
@@ -188,35 +160,21 @@ class Predicate:
         final_pred = []
         qtd_preds = 0
         for pred in pred_source:
-            # print(split_pred)
             complete_source, valid_preds, complete_valid = self.get_valid_predicates(pred)
-            # print(pred, valid_preds)
             index_choice = randint(0, len(valid_preds)-1)
-            # print("ESCOLHIDO: ", valid_preds[index_choice])
-            # print("COMPLETO: ", complete_valid[index_choice])
-            # print("--------------------------------")
-            # final_pred.append(valid_preds[index_choice])
-            # print("TIPO: ")
             if has_target:
                 pp = split_pred[2].split(':-')[1].split(')')
-                # print(pp[qtd_preds])
                 types = f"({pp[qtd_preds].strip().split('(')[1]})"
                 final_pred.append(f"{complete_valid[index_choice].split('(')[0]}{types}")
 
             else:
                 pp = split_pred[2].split(')')
-                # print(pp[qtd_preds])
                 types = f"({pp[qtd_preds].strip().split('(')[1]})"
                 final_pred.append(f"{complete_valid[index_choice].split('(')[0]}{types}")
             qtd_preds += 1
             self.define_mapping(complete_source, complete_valid[index_choice])
-            # print("COMPLETE SOURCE AND TARGET: ")
-            # print(complete_source, complete_valid[index_choice])
-            # print("-------------------------------")
         if has_target: 
             split_pred[2] =  f"{split_pred[2].split(':-')[0]} :- {', '.join(final_pred)}"
         else: split_pred[2] = ', '.join(final_pred)
         split_pred[2] = f"{split_pred[2]}."
-        # print("RETURN: ")
-        # print(";".join(split_pred))
         return ";".join(split_pred)

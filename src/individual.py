@@ -1,8 +1,14 @@
 from boostsrl import boostsrl
 import copy
+import numpy as np
 from random import randint
+from random import random
 import re
 import string
+import shutil
+import os
+
+from src.transfer import Transfer
 
 
 class Individual:
@@ -21,7 +27,6 @@ class Individual:
     def generate_random_individual(self, src_tree, tree_number):
         new_individual_tree = []
         for line_index in range(0, len(src_tree)):
-            # self.predicate_inst.mapping_var = {}
             if line_index == 0:
                 new_src_pred = src_tree[line_index].split(";")
                 src_pred = src_tree[line_index].split(':-')[0].split(";")[2]
@@ -80,25 +85,17 @@ class Individual:
 
     def evaluate(self, ind, pos_target, neg_target, facts_target):
         self.transfer = Transfer(ind.predicate_inst, ind.target)
-        # print(self.transfer.predicate_inst.bk_source)
-        # print("ESTOU EM evaluate")
         # shutil.rmtree('boostsrl/train')
         # os.remove('boostsrl/train_output.txt')
         # shutil.rmtree('boostsrl/test')
         # os.remove('boostsrl/test_output.txt')
         # os.remove('boostsrl/refine.txt')
         # os.remove('boostsrl/transfer.txt')
-        # print(ind.source_tree)
-        # print(ind.individual_trees)
-        # print(ind.source_tree)
+
         ind.modified_src_tree = ind.transfer.mapping_all_trees(ind.individual_trees, ind.source_tree)
         refine = []
         for tree in ind.modified_src_tree:
             refine.extend(tree)
-        # f.save()
-        # print(refine)
-        # print('============')
-        # print(self.transfer.transfer)
         background_train = boostsrl.modes(ind.predicate_inst.bk_target, [ind.target], useStdLogicVariables=False, 
                                           maxTreeDepth=3, nodeSize=2, numOfClauses=8)
         results = []
@@ -129,7 +126,6 @@ class Individual:
     def mutate_pred(self, individual_tree, mut_rate):
         new_individual_tree = []
         for pred in individual_tree:
-            # self.predicate_inst.mapping_var = {}
             if random() < mut_rate:
                 if len(pred.split(":-")) > 1:
                     pred_source = self.predicate_inst.get_modes(individual_tree, 

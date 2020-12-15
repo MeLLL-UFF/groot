@@ -33,10 +33,9 @@ def genetic(src_struct, target, source, pred_inst, pos_target,
             ind.predicate_inst.bk_source = ind.predicate_inst.bk_target
             ind.source = ind.target
             ind.predicate_inst.mapping_var = {}
-        # print(pop.population[0].predicate_inst.bk_source)
+      
             # ind.transfer.predicate_inst = ind.predicate_inst
         best_individuals = pop.toolbox.selBest(pop.population, 1)
-        # print(best_individuals, best_individuals[0].fitness.values)
 
         best_evaluates.append(pop.best_result())
        
