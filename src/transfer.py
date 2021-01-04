@@ -4,15 +4,45 @@ import string
 class Transfer:
 
     def __init__(self, predicate_instance, target):
+        """
+            Constructor
+            
+            Parameters
+            ----------
+            predicate_instance: 
+            target: string
+        """
         self.predicate_inst = predicate_instance #<---- Predicate(...)
         self.transfer = []
         self.transfer_variables = {}
         self.target = target
 
     def _generate_new_pred(self, no_var):
+        """
+            Generate predicate according to the arity
+
+            Parameters
+            ----------
+            no_var: int
+
+            Returns
+            ----------
+            predicate: string
+        """
         return '({})'.format(",".join(list(string.ascii_uppercase)[0:no_var]))
 
     def _count_vars(self, pred):
+        """
+            Counting the arity of predicate
+
+            Parameters
+            ----------
+            pred: string
+
+            Returns
+            ----------
+            arity: int
+        """
         if len(pred.split(":-")) > 1:
             #retorna o principal e o que vem a seguir
             return (len(pred.split(";")[2].split(":-")[0].split('(')[1].split(',')),

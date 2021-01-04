@@ -1,10 +1,6 @@
 from deap import tools
 from deap import base
 from deap import creator
-#for graphic
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-import matplotlib.colors as colors
 
 from src.individual import *
 from src.population import *
@@ -34,7 +30,6 @@ def genetic(src_struct, target, source, pred_inst, pos_target,
             ind.source = ind.target
             ind.predicate_inst.mapping_var = {}
       
-            # ind.transfer.predicate_inst = ind.predicate_inst
         best_individuals = pop.toolbox.selBest(pop.population, 1)
 
         best_evaluates.append(pop.best_result())
@@ -46,12 +41,9 @@ def genetic(src_struct, target, source, pred_inst, pos_target,
 
         #crossover
         pop_next = pop.crossover(pop_next, crossover)
-        
-
 
         #mutating the population
         pop_next = pop.mutation(pop_next, mutation)
-        # pop.printPop(pop_next)
 
         # evaluating new population
         pop.evaluation(pop_next, pos_target, 
@@ -65,4 +57,5 @@ def genetic(src_struct, target, source, pred_inst, pos_target,
 
         pop.population[:] = pop_next
     best_evaluates.append(pop.best_result())
+
     return pop, best_evaluates

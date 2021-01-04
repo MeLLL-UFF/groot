@@ -6,6 +6,9 @@ import re
 class Predicate:
 
     def __init__(self, bk_source, bk_target, pred_target):
+        """
+            Constructor
+        """
         self.bk_source = bk_source
         self.bk_target = bk_target
         self.pred_target = pred_target
