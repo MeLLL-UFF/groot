@@ -5,49 +5,73 @@ import re
 
 class Predicate:
 
-    def __init__(self, bk_source, bk_target, pred_target):
+    def __init__(self, kb_source, kb_target, target_pred):
         """
             Constructor
+
+            Parameters
+            ----------
+            kb_source: list
+            kb_target: list
+            target_pred: list with tuples containing the predicates and theirs modes
+                        example:
+                        [('movie', '+,-'), ('director', '+'),...]
         """
-        self.bk_source = bk_source
-        self.bk_target = bk_target
-        self.pred_target = pred_target
-        self.new_bk_source = []
-        self.new_bk_target = []
+        self.kb_source = kb_source
+        self.kb_target = kb_target
+        self.target_pred = target_pred
+        self.new_kb_source = []
+        self.new_kb_target = []
         self.variables = []
         self.mapping_var = {}
 
-    def compare_predicates(self, bk, pred_source, pred_target):
-        for pred in bk:
-            if pred_target in pred:
-                if len(pred.split('(')[1].split(',')) == len(pred_source.split('(')[1].split(',')):
-                    return '({}'.format(pred_source.split('(')[1])
-                else:
-                    #COLOCAR MENSAGEM DE ERRO
-                    return False
-        #COLOCAR MENSAGEM DE ERRO
-        return False 
-
     def change_predicate(self, pred, new_info, var):
+        """
+            Define new types for the predicate and add additional infos (as tree number)
+
+            Parameters
+            ----------
+            pred: string
+            new_info: list
+            var: string
+
+            Returns
+            ----------
+            new_pred: string
+        """
         #new_info é uma lista com o que se quer colocar entre pred e as variáveis
         #pred é do tipo: predicado(A)
         new_info = "".join(str(x) for x in new_info)
         return '{}{}{}'.format(pred.split('(')[0], new_info, var)
 
     def generate_new_preds(self):
-        self.new_bk_source = copy.deepcopy(self.bk_source)
-        self.new_bk_target =copy.deepcopy(self.bk_target)
+        """ 
+            Generate useful predicates from the knowledge base
+        """
+        self.new_kb_source = copy.deepcopy(self.kb_source)
+        self.new_kb_target =copy.deepcopy(self.kb_target)
 
-        for index in range(0, len(self.new_bk_source)):
-            self.new_bk_source[index] = self.new_bk_source[index].replace('+', '')
-            self.new_bk_source[index] = self.new_bk_source[index].replace('-', '')
+        for index in range(0, len(self.new_kb_source)):
+            self.new_kb_source[index] = self.new_kb_source[index].replace('+', '')
+            self.new_kb_source[index] = self.new_kb_source[index].replace('-', '')
 
-        for index in range(0, len(self.new_bk_target)):
-            self.new_bk_target[index] = self.new_bk_target[index].replace('+', '')
-            self.new_bk_target[index] = self.new_bk_target[index].replace('-', '')
+        for index in range(0, len(self.new_kb_target)):
+            self.new_kb_target[index] = self.new_kb_target[index].replace('+', '')
+            self.new_kb_target[index] = self.new_kb_target[index].replace('-', '')
 
     def get_modes(self, individual_tree, pred_source):
-        #LEVA EM CONSIDERAÇAO QUE SÓ HÁ UM PREDICADO EM CADA NÓ
+        """
+            Get the modes of the predicate
+
+            Parameters
+            ----------
+            individual_tree: list
+            pred_source: string
+
+            Returns
+            ----------
+            modes: string
+        """
         pred_source = pred_source.split('), ')
         predicate = []
         for pred in pred_source:
@@ -69,14 +93,34 @@ class Predicate:
             predicate.append(f'{new_pred_source})')
         return  ', '.join(predicate)
 
-    def define_mapping(self, pred_source, pred_target):
-        pred_source = pred_source.split('(')[1].split(',')
-        pred_target = pred_target.split('(')[1].split(',')
+    def define_mapping(self, source_pred, target_pred):
+        """
+            Define the transfer between source and target types
+            
+            Parameters
+            ----------
+            source_pred: string
+            target_pred: string
+        """
+        source_pred = source_pred.split('(')[1].split(',')
+        target_pred = target_pred.split('(')[1].split(',')
 
-        for i in range(0, len(pred_source)):
-            self.mapping_var[pred_source[i].replace(').', '')] = pred_target[i].replace(').', '')
+        for i in range(0, len(source_pred)):
+            self.mapping_var[source_pred[i].replace(').', '')] = target_pred[i].replace(').', '')
        
     def _get_valid_map(self, complete_source, list_pos_target):
+        """
+            Get the possible mappings between types
+
+            Parameters
+            ----------
+            complete_source: string
+            list_pos_target: list
+
+            Returns
+            ----------
+            index_target: list with indexes
+        """
         pred_var = []
         list_vars = complete_source.split('(')[1].split(',')
         for i in list_vars:
@@ -104,65 +148,109 @@ class Predicate:
                         return [index]
         return index_target
 
-    def get_valid_predicates(self, pred_source):
-        #list_pred é : list_pred = [('movie', '+,-'), ('director', '+'),...]
-        #pred_source é: 'movie(+person,-person).' --> NAO VEM ASSIM: verificar quais variáveis já estão na árvore, se já tiver a variável, é +, cc -
-        #VERIFICAR CASO ONDE HÁ DOIS PREDICADOS NO PRED_SOURCE
-        occur_modes = ','.join([pred_source[occur.start()] 
-                           for occur in re.finditer('[+\-]', pred_source)])
+    def get_valid_predicates(self, source_pred):
+        """
+            Get the possible predicates to be transfer with source_pred
+
+            Parameters
+            ----------
+            source_pred: string
+
+            Returns
+            ----------
+            complete_source_pred: string
+            list_valid_index: list
+            list_complete_valid_pred: list
+        """
+        occur_modes = ','.join([source_pred[occur.start()] 
+                           for occur in re.finditer('[+\-]', source_pred)])
         valid_pred = []
         complete_valid_pred = []
-        complete_pred_source = ''
+        complete_source_pred = ''
         
-        new_pred_source = pred_source.split('(')[0].strip()
-        if ';' in new_pred_source:
-            new_pred_source = new_pred_source.split(';')[2]
+        new_source_pred = source_pred.split('(')[0].strip()
+        if ';' in new_source_pred:
+            new_source_pred = new_source_pred.split(';')[2]
 
-        for pred in self.bk_source:
-            if new_pred_source in pred:
-                pred_source = pred
+        for pred in self.kb_source:
+            if new_source_pred in pred:
+                source_pred = pred
                 break
-        occur_modes = ','.join([pred_source[occur.start()] 
-                           for occur in re.finditer('[+\-]', pred_source)])
+        occur_modes = ','.join([source_pred[occur.start()] 
+                           for occur in re.finditer('[+\-]', source_pred)])
 
-        for pred in self.new_bk_source:
-            if new_pred_source in pred:
-                complete_pred_source = pred
+        for pred in self.new_kb_source:
+            if new_source_pred in pred:
+                complete_source_pred = pred
                 break
-        for pred, mode in self.pred_target:
+        for pred, mode in self.target_pred:
             if mode == occur_modes: valid_pred.append(f'{pred}({mode})')
 
         for target in valid_pred:
-            for pred in self.new_bk_target:
+            for pred in self.new_kb_target:
                 if target.split('(')[0].strip() in pred:
                     complete_valid_pred.append(pred)
                     break
-        valid_index = self._get_valid_map(complete_pred_source, complete_valid_pred)
-        return complete_pred_source, [valid_pred[index] for index in valid_index], [complete_valid_pred[index] for index in valid_index]
+        valid_index = self._get_valid_map(complete_source_pred, complete_valid_pred)
+        return complete_source_pred, [valid_pred[index] for index in valid_index], [complete_valid_pred[index] for index in valid_index]
 
-    def get_complete_pred(self, pred, bk):
+    def get_complete_pred(self, pred, kb):
+        """
+            Get complete predicate from kb, with the types
+
+            Parameters
+            ----------
+            pred: string
+            kb: list
+
+            Returns
+            ----------
+            complete_predicate: string
+        """
         # pred é da forma: pred(A, B) ou pred
-        for i in bk:
+        for i in kb:
             if pred.split('(')[0] in i:
                 return i
 
     def new_pred(self, source_pred, target_pred):
+        """
+            Returns the target predicate with the source types
+
+            Returns
+            ----------
+            predicate: string
+        """
         return f'{target_pred.split("(")[0]}({source_pred.split("(")[1]}'
 
-    def change_pred(self, source, target, pred, pred_source):
+    def change_pred(self, source, target, pred, source_pred):
+        """
+            Change the predicate pred with the random predicates from source_pred
+            If the predicate is the main predicate (source), it will be changed with target
+
+            Parameters
+            ----------
+            source: string
+            target: string
+            pred: string
+            source_pred: string
+
+            Returns
+            ----------
+            predicate: string
+        """
         split_pred = pred.split(";")
         has_target = len(split_pred[2].split(":-")) > 1
         if has_target: 
             target_pred = split_pred[2].split(":- ")[1]
-            complete_source = self.get_complete_pred(source,self.new_bk_source)
-            complete_target = self.get_complete_pred(target,self.new_bk_target)
+            complete_source = self.get_complete_pred(source,self.new_kb_source)
+            complete_target = self.get_complete_pred(target,self.new_kb_target)
             self.define_mapping(complete_source, complete_target)
         else: target_pred = split_pred[2]
 
-        pred_source = pred_source.split('), ')
+        source_pred = source_pred.split('), ')
         final_pred = []
         qtd_preds = 0
-        for pred in pred_source:
+        for pred in source_pred:
             complete_source, valid_preds, complete_valid = self.get_valid_predicates(pred)
             index_choice = randint(0, len(valid_preds)-1)
             if has_target:
