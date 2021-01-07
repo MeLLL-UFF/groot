@@ -122,7 +122,7 @@ class Transfer:
             new_target_pred = target_pred[index].split('(')[0].rstrip('0123456789')
             no_var = self._count_vars(source_pred[index])
             var_pred = self._generate_new_pred(no_var)
-            for pred in self.predicate_inst.new_bk_source:
+            for pred in self.predicate_inst.new_kb_source:
                 if new_source_pred in pred: 
                     real_predicate = '({}'.format(pred.split('(')[1])
                     source = 'source: {}'.format(self.predicate_inst.change_predicate(pred, 
@@ -131,7 +131,7 @@ class Transfer:
                     if source not in self.transfer:
                         self.transfer.append(source)
                     break
-            for pred in self.predicate_inst.new_bk_target:
+            for pred in self.predicate_inst.new_kb_target:
                 if new_target_pred in pred: 
                     target = 'target: {}'.format(pred)
                     if target not in self.transfer:

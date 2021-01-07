@@ -21,12 +21,12 @@ def genetic(src_struct, target, source, pred_inst, pos_target,
 
     
     for generation in range(NUM_GEN):
-        pred_inst.bk_source = pred_inst.bk_target
+        pred_inst.kb_source = pred_inst.kb_target
         pred_inst.generate_new_preds()
 
         for ind in pop.population:
             ind.source_tree = ind.individual_trees
-            ind.predicate_inst.bk_source = ind.predicate_inst.bk_target
+            ind.predicate_inst.kb_source = ind.predicate_inst.kb_target
             ind.source = ind.target
             ind.predicate_inst.mapping_var = {}
       

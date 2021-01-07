@@ -198,7 +198,7 @@ class Individual:
         refine = []
         for tree in ind.modified_src_tree:
             refine.extend(tree)
-        background_train = boostsrl.modes(ind.predicate_inst.bk_target, [ind.target], useStdLogicVariables=False, 
+        background_train = boostsrl.modes(ind.predicate_inst.kb_target, [ind.target], useStdLogicVariables=False, 
                                           maxTreeDepth=3, nodeSize=2, numOfClauses=8)
         results = []
         for i in range(0, len(pos_target)):
