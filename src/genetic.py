@@ -13,6 +13,7 @@ def genetic(src_struct, target, source, pred_inst, pos_target,
     pop = Population(pop_size)
     best_evaluates = []
 
+    has_same_best_value = 0
     
     pop.construct_population(src_struct, target, source, pred_inst)
     
@@ -21,6 +22,7 @@ def genetic(src_struct, target, source, pred_inst, pos_target,
 
     
     for generation in range(NUM_GEN):
+        print("GENERATION: ", generation)
         pred_inst.kb_source = pred_inst.kb_target
         pred_inst.generate_new_preds()
 
@@ -28,11 +30,18 @@ def genetic(src_struct, target, source, pred_inst, pos_target,
             ind.source_tree = ind.individual_trees
             ind.predicate_inst.kb_source = ind.predicate_inst.kb_target
             ind.source = ind.target
-            ind.predicate_inst.mapping_var = {}
+            # ind.predicate_inst.mapping_var = {}
       
         best_individuals = pop.toolbox.selBest(pop.population, 1)
 
+        if len(best_evaluates) > 0 and pop.best_result() == best_evaluates[-1]:
+            has_same_best_value += 1
+        else:
+            has_same_best_value = 0
         best_evaluates.append(pop.best_result())
+
+        if has_same_best_value == 10:
+            return pop, best_evaluates
        
         pop_next = pop.selection(pop.population)
         
