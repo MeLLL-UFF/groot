@@ -30,6 +30,7 @@ class Individual:
             source: string
             predicate_instance: instance of the class Predicate
         """
+        self.first_source_tree = source_tree
         self.source_tree = source_tree
         self.modified_src_tree = []
         self.target = target
@@ -194,10 +195,13 @@ class Individual:
         # os.remove('boostsrl/refine.txt')
         # os.remove('boostsrl/transfer.txt')
 
-        ind.modified_src_tree = ind.transfer.mapping_all_trees(ind.individual_trees, ind.source_tree)
+        ind.modified_src_tree = ind.transfer.mapping_all_trees(ind.individual_trees, self.first_source_tree)
         refine = []
         for tree in ind.modified_src_tree:
             refine.extend(tree)
+        # print(refine)
+        # print('--------------')
+        # print(ind.transfer.transfer)
         background_train = boostsrl.modes(ind.predicate_inst.kb_target, [ind.target], useStdLogicVariables=False, 
                                           maxTreeDepth=3, nodeSize=2, numOfClauses=8)
         results = []

@@ -17,11 +17,13 @@ class Predicate:
                         example:
                         [('movie', '+,-'), ('director', '+'),...]
         """
+        self.first_kb_source = kb_source
         self.kb_source = kb_source
         self.kb_target = kb_target
         self.target_pred = target_pred
         self.new_kb_source = []
         self.new_kb_target = []
+        self.new_first_kb_source = []
         self.variables = []
         self.mapping_var = {}
 
@@ -58,6 +60,12 @@ class Predicate:
         for index in range(0, len(self.new_kb_target)):
             self.new_kb_target[index] = self.new_kb_target[index].replace('+', '')
             self.new_kb_target[index] = self.new_kb_target[index].replace('-', '')
+
+        if len(self.new_first_kb_source) == 0:
+            self.new_first_kb_source =copy.deepcopy(self.first_kb_source)
+            for index in range(0, len(self.first_kb_source)):
+                self.new_first_kb_source[index] = self.new_first_kb_source[index].replace('+', '')
+                self.new_first_kb_source[index] = self.new_first_kb_source[index].replace('-', '')
 
     def get_modes(self, individual_tree, pred_source):
         """
