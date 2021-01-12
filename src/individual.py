@@ -292,10 +292,10 @@ class Individual:
         """
         new_tree = []
         for index in div:
-            if index-1 < threshold:
-                new_tree.append(tree_one[(index-1)%10])
+            if index < threshold:
+                new_tree.append(tree_one[(index)%10])
             else:
-                new_tree.append(tree_two[(index-1)%10])
+                new_tree.append(tree_two[(index)%10])
         return new_tree
 
     def crossover(self, tree_one, tree_two, div_one, div_two):
