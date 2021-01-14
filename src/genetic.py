@@ -6,16 +6,18 @@ from src.individual import *
 from src.population import *
 from src.transfer import *
 
-def genetic(src_struct, target, source, pred_inst, pos_target, 
-            neg_target, facts_target, NUM_GEN=600, 
-            pop_size=10, crossover=0.6, mutation=0.3):
+def genetic(src_struct, target, source, pos_target, 
+            neg_target, facts_target, kb_source, kb_target,
+            target_pred, NUM_GEN=600, pop_size=10, 
+            crossover=0.6, mutation=0.3):
 
     pop = Population(pop_size)
     best_evaluates = []
 
     has_same_best_value = 0
     
-    pop.construct_population(src_struct, target, source, pred_inst)
+    pop.construct_population(src_struct, target, source, kb_source,
+                            kb_target, target_pred)
     
     pop.evaluation(pop.population, pos_target, 
                    neg_target, facts_target)
@@ -23,14 +25,13 @@ def genetic(src_struct, target, source, pred_inst, pos_target,
     
     for generation in range(NUM_GEN):
         print("GENERATION: ", generation)
-        pred_inst.kb_source = pred_inst.kb_target
-        pred_inst.generate_new_preds()
 
         for ind in pop.population:
             ind.source_tree = ind.individual_trees
             ind.predicate_inst.kb_source = ind.predicate_inst.kb_target
             ind.source = ind.target
-            # ind.predicate_inst.mapping_var = {}
+            ind.predicate_inst.generate_new_preds()
+            ind.predicate_inst.mapping_var = {}
       
         best_individuals = pop.toolbox.selBest(pop.population, 1)
 

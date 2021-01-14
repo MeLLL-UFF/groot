@@ -27,6 +27,80 @@ class Predicate:
         self.variables = []
         self.mapping_var = {}
 
+    def check_tree(self, individual_tree, first_source_tree, ind):
+        valid_tree = []
+        first_source_pred = first_source_tree[0].split(';')[2].split(':-')[0].split('(')[0]
+        first_target_pred = individual_tree[0].split(';')[2].split(':-')[0].split('(')[0]
+
+        for line in range(0, len(individual_tree)):
+            target_pred = individual_tree[line]
+            source_pred = first_source_tree[line]
+            everything_ok = True
+            if line == 0:
+                #verifica os predicados junto ao target
+                target = target_pred.split(';')[2].split(':-')[1].strip().split('),')
+                source = source_pred.split(';')[2].split(':-')[1].strip().split('),')
+                for idx in range(0, len(source)):
+                    if not self.check_predicates(source[idx], target[idx], ind):
+                        new_pred = self.get_modes(first_source_tree, 
+                                                  first_source_tree[line].split(":- ")[1])
+                        res = self.change_pred(first_source_pred, first_target_pred, 
+                                                            first_source_tree[line], new_pred, ind)
+                        everything_ok = False
+                        break
+                if everything_ok:
+                    valid_tree.append(individual_tree[line])
+            else:
+                target = target_pred.split(';')[2].split('),')
+                source = source_pred.split(';')[2].split('),')
+                for idx in range(0, len(source)):
+                    if not self.check_predicates(source[idx], target[idx], ind):
+                        new_pred = self.get_modes(first_source_tree, first_source_tree[line])
+                        res = self.change_pred(first_source_pred, first_target_pred, 
+                                                            first_source_tree[line], new_pred, ind)
+                        valid_tree.append(res)
+                        everything_ok = False
+                        break
+                if everything_ok:
+                    valid_tree.append(individual_tree[line])
+        return valid_tree
+
+    def check_trees(self, ind):
+        valid_trees = []
+        for idx in range(0, len(ind.individual_trees)):
+            valid_trees.append(self.check_tree(ind.individual_trees[idx], ind.first_source_tree[idx], ind))
+        return valid_trees
+
+    def check_predicates(self, source_pred, target_pred, ind=None):
+        # predicado deve ficar como pred(A,B)
+        only_source = source_pred.split('(')[0].strip()
+        only_target = target_pred.split('(')[0].strip()
+        mapping_var = self.mapping_var
+        if ind:
+            mapping_var = ind.predicate_inst.mapping_var
+        for pred in self.new_first_kb_source:
+            if only_source in pred:
+                source_pred = pred
+                break
+
+        for pred in self.new_kb_target:
+            if only_target in pred:
+                target_pred = pred
+                break
+
+        source_types = source_pred.split('(')[1].split(')')[0].split(',')
+        target_types = target_pred.split('(')[1].split(')')[0].split(',')
+
+        for idx in range(0, len(source_types)):
+            source_type = source_types[idx].strip()
+            target_type = target_types[idx].strip()
+            if source_type in list(mapping_var.keys()):
+                if mapping_var[source_type] != target_type:
+                    return False
+            else:
+                mapping_var[source_type] = target_type
+        return True
+
     def change_predicate(self, pred, new_info, var):
         """
             Define new types for the predicate and add additional infos (as tree number)
@@ -156,7 +230,7 @@ class Predicate:
                         return [index]
         return index_target
 
-    def get_valid_predicates(self, source_pred):
+    def get_valid_predicates(self, source_pred, individual=None):
         """
             Get the possible predicates to be transfer with source_pred
 
@@ -175,27 +249,41 @@ class Predicate:
         valid_pred = []
         complete_valid_pred = []
         complete_source_pred = ''
+
+        kb_source = self.kb_source
+        new_kb_source = self.new_kb_source
+        new_kb_target = self.new_kb_target
+        if individual:
+            kb_source = individual.predicate_inst.first_kb_source
+            new_kb_source = individual.predicate_inst.new_first_kb_source
+            new_kb_target = individual.predicate_inst.new_kb_target
         
         new_source_pred = source_pred.split('(')[0].strip()
         if ';' in new_source_pred:
             new_source_pred = new_source_pred.split(';')[2]
 
-        for pred in self.kb_source:
+        for pred in kb_source:
             if new_source_pred in pred:
                 source_pred = pred
                 break
         occur_modes = ','.join([source_pred[occur.start()] 
                            for occur in re.finditer('[+\-]', source_pred)])
 
-        for pred in self.new_kb_source:
+        for pred in new_kb_source:
             if new_source_pred in pred:
                 complete_source_pred = pred
                 break
+
+        if complete_source_pred == '':
+            print(new_source_pred)
+            print("KB: ", new_kb_source)
+            print(individual.individual_trees)
+
         for pred, mode in self.target_pred:
             if mode == occur_modes: valid_pred.append(f'{pred}({mode})')
 
         for target in valid_pred:
-            for pred in self.new_kb_target:
+            for pred in new_kb_target:
                 if target.split('(')[0].strip() in pred:
                     complete_valid_pred.append(pred)
                     break
@@ -230,7 +318,7 @@ class Predicate:
         """
         return f'{target_pred.split("(")[0]}({source_pred.split("(")[1]}'
 
-    def change_pred(self, source, target, pred, source_pred):
+    def change_pred(self, source, target, pred, source_pred, individual=None):
         """
             Change the predicate pred with the random predicates from source_pred
             If the predicate is the main predicate (source), it will be changed with target
@@ -246,12 +334,18 @@ class Predicate:
             ----------
             predicate: string
         """
+        new_kb_source = self.new_kb_source
+        new_kb_target = self.new_kb_target
+        if individual:
+            new_kb_source = individual.predicate_inst.new_first_kb_source
+            new_kb_target = individual.predicate_inst.new_kb_target
+
         split_pred = pred.split(";")
         has_target = len(split_pred[2].split(":-")) > 1
         if has_target: 
             target_pred = split_pred[2].split(":- ")[1]
-            complete_source = self.get_complete_pred(source,self.new_kb_source)
-            complete_target = self.get_complete_pred(target,self.new_kb_target)
+            complete_source = self.get_complete_pred(source, new_kb_source)
+            complete_target = self.get_complete_pred(target, new_kb_target)
             self.define_mapping(complete_source, complete_target)
         else: target_pred = split_pred[2]
 
@@ -259,7 +353,7 @@ class Predicate:
         final_pred = []
         qtd_preds = 0
         for pred in source_pred:
-            complete_source, valid_preds, complete_valid = self.get_valid_predicates(pred)
+            complete_source, valid_preds, complete_valid = self.get_valid_predicates(pred, individual)
             index_choice = randint(0, len(valid_preds)-1)
             if has_target:
                 pp = split_pred[2].split(':-')[1].split(')')
@@ -273,7 +367,7 @@ class Predicate:
             qtd_preds += 1
             self.define_mapping(complete_source, complete_valid[index_choice])
         if has_target: 
-            split_pred[2] =  f"{split_pred[2].split(':-')[0]} :- {', '.join(final_pred)}"
+            split_pred[2] =  f"{target}({split_pred[2].split(':-')[0].split('(')[1].strip()} :- {', '.join(final_pred)}"
         else: split_pred[2] = ', '.join(final_pred)
         split_pred[2] = f"{split_pred[2]}."
         return ";".join(split_pred)

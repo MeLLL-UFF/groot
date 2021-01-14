@@ -3,6 +3,7 @@ from deap import tools
 from deap import base
 from deap import creator
 from random import random
+from src.predicate import *
 
 
 class Population:
@@ -23,7 +24,8 @@ class Population:
         self.toolbox.register("selBest", tools.selBest)
         self.toolbox.register("selWorst", tools.selWorst)
 
-    def construct_population(self, source_tree, target, source, predicate_inst):
+    def construct_population(self, source_tree, target, source, kb_source,
+                            kb_target, target_pred):
         """
             Construct the first population
 
@@ -42,9 +44,9 @@ class Population:
 
             creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
             creator.create("Individual", Individual, fitness=creator.FitnessMin)
+            predicate_inst = Predicate(kb_source, kb_target, target_pred)
             tmp = creator.Individual(source_tree, target, source, predicate_inst)
 
-            # self.toolbox.register("function", tmp.constructIndividual, list_flags)
             self.toolbox.register("function", tmp.generate_individuals)
             self.toolbox.function()
             self.population.append(tmp)

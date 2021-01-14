@@ -194,14 +194,11 @@ class Individual:
         # os.remove('boostsrl/test_output.txt')
         # os.remove('boostsrl/refine.txt')
         # os.remove('boostsrl/transfer.txt')
-
-        ind.modified_src_tree = ind.transfer.mapping_all_trees(ind.individual_trees, self.first_source_tree)
+        ind.individual_trees = ind.predicate_inst.check_trees(ind)
+        ind.modified_src_tree, ind.transfer.transfer = ind.transfer.mapping_all_trees(ind.individual_trees, self.first_source_tree, ind)
         refine = []
         for tree in ind.modified_src_tree:
             refine.extend(tree)
-        # print(refine)
-        # print('--------------')
-        # print(ind.transfer.transfer)
         background_train = boostsrl.modes(ind.predicate_inst.kb_target, [ind.target], useStdLogicVariables=False, 
                                           maxTreeDepth=3, nodeSize=2, numOfClauses=8)
         results = []
@@ -250,8 +247,8 @@ class Individual:
                                                                 pred.split(":- ")[1])
                 else:
                     pred_source = self.predicate_inst.get_modes(individual_tree, pred)
-
-                new_individual_tree.append(self.predicate_inst.change_pred(self.source, self.target, pred, pred_source))
+                res = self.predicate_inst.change_pred(self.source, self.target, pred, pred_source)
+                new_individual_tree.append(res)
             else:
                 new_individual_tree.append(pred)
         return new_individual_tree

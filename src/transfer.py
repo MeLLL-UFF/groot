@@ -50,7 +50,7 @@ class Transfer:
         else:
             return len(pred.split('(')[1].split(','))
 
-    def mapping_principal_pred(self, source_pred, target_pred, tree_number):
+    def mapping_principal_pred(self, source_pred, target_pred, tree_number, transfer, ind):
         """
             Mapping the transfer for the first predicate in the tree
             The tree structure has, at first, the target predicate and the immediate predicate
@@ -78,32 +78,59 @@ class Transfer:
         #principal
         self.mapping_transfer(source_pred[0].split(";")[2].split(" :-")[0], 
                               self.target, 
-                              tree_number, 0)
+                              tree_number, 0, transfer)
         new_pred_prc = self.predicate_inst.change_predicate(source_pred[0].split(";")[2].split(":-")[0], 
                                                             [tree_number, 0], 
                                                             var_prc)
+
+        res = ind.predicate_inst.check_predicates(source_pred[0].split(";")[2].split(" :-")[0], self.target, ind)
+        if not res:
+            print(f'{ind.predicate_inst.mapping_var}')
+            print('=================================')
+            print(f'{source_pred[0].split(";")[2].split(" :-")[0]} & {self.target} == {res}')
+            print('=================================')
+            exit()
         #predicado que está junto ao target
         self.mapping_transfer(source_pred[0].split(";")[2].split(":- ")[1], 
                               target_pred[0].split(";")[2].split(":- ")[1],
-                              tree_number, 1)
+                              tree_number, 1, transfer)
 
         new_pred_sec.append(self.predicate_inst.change_predicate(source_pred[0].split(";")[2].split(":-")[1], 
                                                             [tree_number, 1], 
                                                             var_sec))
-        for index in range(1, len(source_pred)):
-          #pego os outros predicados
-          self.mapping_transfer(source_pred[index].split(";")[0], 
-                                target_pred[index].split(";")[0], 
-                                tree_number, index)
 
-          no_var = self._count_vars(source_pred[index])
-          var_pred = f"({source_pred[index].split('(')[1].split(').')[0].split(')')[0]})"
-          new_pred_sec.append(self.predicate_inst.change_predicate(source_pred[index].split(";")[0], 
+        res = ind.predicate_inst.check_predicates(source_pred[0].split(";")[2].split(" :-")[1], 
+                                                   target_pred[0].split(";")[2].split(":- ")[1],
+                                                   ind)
+        if not res:
+            print(f'{ind.predicate_inst.mapping_var}')
+            print('=================================')
+            print(f'{source_pred[0].split(";")[2].split(" :-")[1]} & {target_pred[0].split(";")[2].split(":- ")[1]} == {res}')
+            print('=================================')
+            exit()
+        for index in range(1, len(source_pred)):
+            #pego os outros predicados
+            self.mapping_transfer(source_pred[index].split(";")[0], 
+                                target_pred[index].split(";")[0], 
+                                tree_number, index, transfer)
+
+            res = ind.predicate_inst.check_predicates(source_pred[index].split(";")[0], 
+                                                   target_pred[index].split(";")[0],
+                                                   ind)
+            if not res:
+                print(f'{ind.predicate_inst.mapping_var}')
+                print('=================================')
+                print(f'{source_pred[index].split(";")[0]} & {target_pred[index].split(";")[0]} == {res}')
+                print('=================================')
+                exit()
+            no_var = self._count_vars(source_pred[index])
+            var_pred = f"({source_pred[index].split('(')[1].split(').')[0].split(')')[0]})"
+            new_pred_sec.append(self.predicate_inst.change_predicate(source_pred[index].split(";")[0], 
                                                         [tree_number, index], 
                                                         var_pred))
-        return new_pred_prc, ", ".join(new_pred_sec)
+        return new_pred_prc, ", ".join(new_pred_sec), transfer
 
-    def mapping_transfer(self, source_pred, target_pred, tree_number, index_node):
+    def mapping_transfer(self, source_pred, target_pred, tree_number, index_node, transfer):
         """
             Mapping the transfer of the predicate in the tree
 
@@ -128,8 +155,8 @@ class Transfer:
                     source = 'source: {}'.format(self.predicate_inst.change_predicate(pred, 
                                                                                       [tree_number, index_node], 
                                                                                       real_predicate))
-                    if source not in self.transfer:
-                        self.transfer.append(source)
+                    if source not in transfer:
+                        transfer.append(source)
                     break
             for pred in self.predicate_inst.new_first_kb_source:
                 if new_source_pred in pred: 
@@ -137,33 +164,35 @@ class Transfer:
                     source = 'source: {}'.format(self.predicate_inst.change_predicate(pred, 
                                                                                       [tree_number, index_node], 
                                                                                       real_predicate))
-                    if source not in self.transfer:
-                        self.transfer.append(source)
+                    if source not in transfer:
+                        transfer.append(source)
                     break
 
             for pred in self.predicate_inst.new_kb_target:
                 if new_target_pred in pred: 
                     target = 'target: {}'.format(pred)
-                    if target not in self.transfer:
-                        self.transfer.append(target)
+                    if target not in transfer:
+                        transfer.append(target)
                     break
 
             setMap = 'setMap: {}={}{}.'.format(self.predicate_inst.change_predicate(new_source_pred, 
                                                [tree_number, index_node], var_pred),
                                                 new_target_pred, 
                                                 var_pred)
-            if setMap not in self.transfer:
-                self.transfer.append(setMap)
+            if setMap not in transfer:
+                transfer.append(setMap)
+        return transfer
         
-    def include_parameters(self):
+    def include_parameters(self, transfer):
         """
             Include additional parameters to the transfer
         """
-        self.transfer.append('setParam: searchArgPermutation=true.')
-        self.transfer.append('setParam: searchEmpty=false.')
-        self.transfer.append('setParam: allowSameTargetMap=false.')
+        transfer.append('setParam: searchArgPermutation=true.')
+        transfer.append('setParam: searchEmpty=false.')
+        transfer.append('setParam: allowSameTargetMap=false.')
+        return transfer
 
-    def mapping_tree(self, individual_tree, source_tree, tree_number):
+    def mapping_tree(self, individual_tree, source_tree, tree_number, transfer, ind):
         """
             Mapping the transfer between the source and target tree
             It also returns the tree modified with the predicates which will be used in the transfer
@@ -185,9 +214,10 @@ class Transfer:
             pred_target = individual_tree[line]
             pred_source = source_tree[line]
             if line == 0:
-                new_pred_prc, new_pred_sec = self.mapping_principal_pred(pred_source, 
-                                                                         pred_target, 
-                                                                         tree_number)
+                new_pred_prc, new_pred_sec, transfer = self.mapping_principal_pred(pred_source, 
+                                                                                     pred_target, 
+                                                                                     tree_number, transfer,
+                                                                                     ind)
                 pred_source = pred_source.replace(pred_source.split(";")[2].split(":-")[0],
                                                    new_pred_prc)
 
@@ -199,10 +229,19 @@ class Transfer:
                 pred_target = pred_target.split(';')[2].split('), ')
                 new_pred = []
                 for index in range(0, len(predicates)):
-                    self.mapping_transfer(predicates[index], 
-                                      pred_target[index],
-                                      tree_number, 
-                                      line+index+1)
+                    res = ind.predicate_inst.check_predicates(predicates[index], pred_target[index], ind)
+                    if not res:
+                        print(f'{ind.predicate_inst.mapping_var}')
+                        print('=================================')
+                        print(f'{predicates[index]} & {pred_target[index]} == {res}')
+                        print('=================================')
+                        print(predicates, pred_source)
+                        exit()
+                    tranfer = self.mapping_transfer(predicates[index], 
+                                                      pred_target[index],
+                                                      tree_number, 
+                                                      line+index+1, 
+                                                      transfer)
                     no_var = self._count_vars(predicates[index])
                     var_pred = f"({predicates[index].split('(')[1].split(').')[0].split(')')[0]}"
                     new_src = self.predicate_inst.change_predicate(predicates[index], 
@@ -216,9 +255,9 @@ class Transfer:
                     new_pred.append(new_src)
                 pred_source[2] = pred_source[2].replace(pred_source[2],f'{", ".join(new_pred)}')
                 modf_src_tree.append(";".join(pred_source))
-        return modf_src_tree
+        return modf_src_tree, transfer
 
-    def mapping_all_trees(self, individual_trees, source_trees):
+    def mapping_all_trees(self, individual_trees, source_trees, ind):
         """
             Make the transfer mapping of all trees
 
@@ -232,11 +271,12 @@ class Transfer:
             modified_src_tree: list of lists
         """
         self.predicate_inst.generate_new_preds()
-        self.transfer = []
+        transfer = []
         modified_src_tree = []
         for i in range(0, len(individual_trees)):
-            modified_src_tree.append(self.mapping_tree(individual_trees[i],
+            mod_src_tree, transfer = self.mapping_tree(individual_trees[i],
                                                        source_trees[i], 
-                                                       i))
-        self.include_parameters()
-        return modified_src_tree
+                                                       i, transfer, ind)
+            modified_src_tree.append(mod_src_tree)
+        transfer = self.include_parameters(transfer)
+        return modified_src_tree, transfer
