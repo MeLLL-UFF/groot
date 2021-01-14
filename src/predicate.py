@@ -46,6 +46,7 @@ class Predicate:
                                                   first_source_tree[line].split(":- ")[1])
                         res = self.change_pred(first_source_pred, first_target_pred, 
                                                             first_source_tree[line], new_pred, ind)
+                        valid_tree.append(res)
                         everything_ok = False
                         break
                 if everything_ok:
