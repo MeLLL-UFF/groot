@@ -38,6 +38,7 @@ class Individual:
         self.predicate_inst = predicate_instance #<--- Predicate(...)
         self.transfer = Transfer(predicate_instance, target)
         self.individual_trees = []
+        self.results = []
 
     def generate_random_individual(self, src_tree, tree_number):
         """
@@ -223,6 +224,10 @@ class Individual:
         m_f1, s_auc_pr, s_auc_roc, s_cll, s_prec, s_rec, s_f1 = self.get_results(results)
         self.print_results(m_auc_pr, m_auc_roc, m_cll, m_prec, m_rec, m_f1)
         self.print_results(s_auc_pr, s_auc_roc, s_cll, s_prec, s_rec, s_f1, type='STD')
+        ind.results.append({'m_auc_pr': m_auc_pr, 'm_auc_roc': m_auc_roc,
+                            'm_cll': m_cll, 'm_rec': m_rec, 'm_f1': m_f1,
+                            's_auc_pr': s_auc_pr, 's_auc_roc': s_auc_roc,
+                            's_cll': s_cll, 's_rec': s_rec, 's_f1': s_f1})
         return -m_cll,
 
     def mutate_pred(self, individual_tree, mut_rate):
