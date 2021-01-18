@@ -155,3 +155,15 @@ class Population:
         print(f"bestResult: {result}")
         return result
 
+    def get_all_best_results(self):
+        result_cll = self.population[0].fitness.values[0]
+        result = self.population[0].results[-1]
+        for indice in range(self.pop_size):
+            fit = self.population[indice].fitness.values
+            # print(fit, fit[0] < result)
+            if fit[0] < result_cll:
+                result = self.population[indice].results[-1]
+                result_cll = fit[0]
+        # print(f"bestResult: {result}")
+        return result
+
