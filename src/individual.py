@@ -171,6 +171,23 @@ class Individual:
         print("F1: ", f1)
         print("-------------------")
 
+    def delete_files(self):
+        try:
+            shutil.rmtree('boostsrl/train')
+            os.remove('boostsrl/train_output.txt')
+        except:
+            pass
+        try:
+            shutil.rmtree('boostsrl/test')
+            os.remove('boostsrl/test_output.txt')
+        except:
+            pass
+        try:
+            os.remove('boostsrl/refine.txt')
+            os.remove('boostsrl/transfer.txt')
+        except: 
+            pass
+
 
     def evaluate(self, ind, pos_target, neg_target, facts_target):
         """
@@ -189,12 +206,7 @@ class Individual:
             -m_cll: tuple (the cll is a negative value; the objetive is to minimize the -mean(cll))
         """
         self.transfer = Transfer(ind.predicate_inst, ind.target)
-        # shutil.rmtree('boostsrl/train')
-        # os.remove('boostsrl/train_output.txt')
-        # shutil.rmtree('boostsrl/test')
-        # os.remove('boostsrl/test_output.txt')
-        # os.remove('boostsrl/refine.txt')
-        # os.remove('boostsrl/transfer.txt')
+        self.delete_files()
         ind.individual_trees = ind.predicate_inst.check_trees(ind)
         ind.modified_src_tree, ind.transfer.transfer = ind.transfer.mapping_all_trees(ind.individual_trees, self.first_source_tree, ind)
         refine = []
