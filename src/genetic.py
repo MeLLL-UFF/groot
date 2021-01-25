@@ -1,6 +1,7 @@
 from deap import tools
 from deap import base
 from deap import creator
+import time
 
 from src.individual import *
 from src.population import *
@@ -16,14 +17,13 @@ def genetic(src_struct, target, source, pos_target,
     all_best_results = []
 
     has_same_best_value = 0
-    
     pop.construct_population(src_struct, target, source, kb_source,
                             kb_target, target_pred)
     
     pop.evaluation(pop.population, pos_target, 
                    neg_target, facts_target)
 
-    
+
     for generation in range(NUM_GEN):
         print("GENERATION: ", generation)
 
@@ -45,7 +45,7 @@ def genetic(src_struct, target, source, pos_target,
         best_evaluates.append(pop.best_result())
 
         if has_same_best_value == ((NUM_GEN)/2)+1:
-            return pop, best_evaluates
+            return pop, best_evaluates, all_best_results
        
         pop_next = pop.selection(pop.population)
         
