@@ -7,8 +7,11 @@ import re
 import string
 import shutil
 import os
-
+import time
 from src.transfer import Transfer
+import sys
+import multiprocessing
+# from multiprocessing.managers import BaseManager
 
 
 class Individual:
@@ -79,7 +82,8 @@ class Individual:
         for tree_index in range(0, len(self.source_tree)):
             self.individual_trees.append(self.generate_random_individual(self.source_tree[tree_index], tree_index))
 
-    def define_splits(self, pos_target, neg_target, facts_target, fold_test_number):
+    @staticmethod
+    def define_splits(pos_target, neg_target, facts_target, fold_test_number):
         """
             Defining folds to the train and test, according to the fold test number
 
@@ -114,7 +118,8 @@ class Individual:
         return train_pos_target, train_neg_target, train_facts_target, \
                test_pos_target, test_neg_target, test_facts_target
 
-    def get_results(self, results):
+    @staticmethod
+    def get_results(results):
         """
             Get results from dictionary
 
@@ -188,8 +193,25 @@ class Individual:
         except: 
             pass
 
+    @staticmethod
+    def _create_new_folder(idx):
+        if not os.path.exists(f'individual_{idx}/boostsrl'):
+            os.makedirs(f'individual_{idx}/boostsrl')
+        shutil.copy('boostsrl/auc.jar', f'individual_{idx}/boostsrl/')
+        shutil.copy('boostsrl/v1-0.jar', f'individual_{idx}/boostsrl/')
 
-    def evaluate(self, ind, pos_target, neg_target, facts_target):
+    @staticmethod
+    def _delete_folder(idx):
+        shutil.rmtree(f'individual_{idx}', ignore_errors=True)
+
+    def before_evaluate(self, ind):
+        ind.transfer = Transfer(ind.predicate_inst, ind.target)
+        ind.individual_trees = ind.predicate_inst.check_trees(ind)
+        ind.modified_src_tree, ind.transfer.transfer = ind.transfer.mapping_all_trees(ind.individual_trees, ind.first_source_tree, ind)
+        return ind.individual_trees, ind.modified_src_tree, ind.transfer
+
+    @staticmethod
+    def evaluate(args):
         """
             Evaluating the individual called ind
             The method also receives the data to train and test the transfer
@@ -204,23 +226,27 @@ class Individual:
             Returns
             ----------
             -m_cll: tuple (the cll is a negative value; the objetive is to minimize the -mean(cll))
-        """
-        self.transfer = Transfer(ind.predicate_inst, ind.target)
-        self.delete_files()
-        ind.individual_trees = ind.predicate_inst.check_trees(ind)
-        ind.modified_src_tree, ind.transfer.transfer = ind.transfer.mapping_all_trees(ind.individual_trees, self.first_source_tree, ind)
+        """        
+        pos_target = args['pos_target']
+        neg_target = args['neg_target']
+        facts_target = args['facts_target']
+        transfer = args['transfer']
+
+        os.chdir(f'individual_{args["idx"]}')
+# 
         refine = []
-        for tree in ind.modified_src_tree:
+        for tree in args['modified_src_tree']:
             refine.extend(tree)
-        background_train = boostsrl.modes(ind.predicate_inst.kb_target, [ind.target], useStdLogicVariables=False, 
+
+        background_train = boostsrl.modes(args['kb_target'], [args['target']], useStdLogicVariables=False, 
                                           maxTreeDepth=3, nodeSize=2, numOfClauses=8)
         results = []
         for i in range(0, len(pos_target)):
             train_pos_target, train_neg_target, train_facts_target, \
-            test_pos_target, test_neg_target, test_facts_target = self.define_splits(pos_target, neg_target, 
+            test_pos_target, test_neg_target, test_facts_target = Individual.define_splits(pos_target, neg_target, 
                                                                                      facts_target, i)
             model_tr = boostsrl.train(background_train, train_pos_target, train_neg_target, 
-                                      train_facts_target, refine=refine, transfer=ind.transfer.transfer, 
+                                      train_facts_target, refine=refine, transfer=transfer, 
                                       trees=10)
             structured_src = []
             for j in range(0, 10):
@@ -233,14 +259,50 @@ class Individual:
                                        test_facts_target, trees=10)
             results.append(test_model.summarize_results())
         m_auc_pr, m_auc_roc, m_cll, m_prec, m_rec, \
-        m_f1, s_auc_pr, s_auc_roc, s_cll, s_prec, s_rec, s_f1 = self.get_results(results)
-        self.print_results(m_auc_pr, m_auc_roc, m_cll, m_prec, m_rec, m_f1)
-        self.print_results(s_auc_pr, s_auc_roc, s_cll, s_prec, s_rec, s_f1, type='STD')
-        ind.results.append({'m_auc_pr': m_auc_pr, 'm_auc_roc': m_auc_roc,
-                            'm_cll': m_cll, 'm_rec': m_rec, 'm_f1': m_f1,
-                            's_auc_pr': s_auc_pr, 's_auc_roc': s_auc_roc,
-                            's_cll': s_cll, 's_rec': s_rec, 's_f1': s_f1})
-        return -m_cll,
+        m_f1, s_auc_pr, s_auc_roc, s_cll, s_prec, s_rec, s_f1 = Individual.get_results(results)
+        # self.print_results(m_auc_pr, m_auc_roc, m_cll, m_prec, m_rec, m_f1)
+        # self.print_results(s_auc_pr, s_auc_roc, s_cll, s_prec, s_rec, s_f1, type='STD')
+        results = {'m_auc_pr': m_auc_pr, 'm_auc_roc': m_auc_roc,
+                   'm_cll': m_cll, 'm_rec': m_rec, 'm_pred': m_prec, 'm_f1': m_f1,
+                   's_auc_pr': s_auc_pr, 's_auc_roc': s_auc_roc,
+                   's_cll': s_cll, 's_rec': s_rec, 's_prec': s_prec, 's_f1': s_f1}
+        os.chdir('..')
+        return -m_cll, results
+
+    def _input_list(self, population, pos_target, neg_target, facts_target):
+        input_list = []
+        for i in range(len(population)):
+            input_list.append({'idx': i,
+                               'transfer': population[i].transfer.transfer,
+                               'kb_target': population[i].predicate_inst.kb_target,
+                               'pos_target': pos_target,
+                               'neg_target': neg_target,
+                               'facts_target': facts_target,
+                               'target': population[i].target,
+                               'modified_src_tree': population[i].modified_src_tree})
+        return input_list
+
+    def run_evaluate(self, population, pos_target, neg_target, facts_target):
+        pool = multiprocessing.Pool()
+        
+        res = pool.map(self._create_new_folder, range(len(population)))
+        pool.terminate()
+        pool.join()
+
+        input_list = self._input_list(population, pos_target, neg_target, facts_target)
+        pool = multiprocessing.Pool()
+        results = pool.map(self.evaluate, input_list)
+        
+        pool.terminate()
+        pool.join()
+        
+        pool = multiprocessing.Pool()
+        
+        res = pool.map(self._delete_folder, range(len(population)))
+        pool.terminate()
+        pool.join()
+
+        return results
 
     def mutate_pred(self, individual_tree, mut_rate):
         """

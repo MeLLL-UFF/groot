@@ -4,7 +4,11 @@ from deap import base
 from deap import creator
 from random import random
 from src.predicate import *
+import multiprocessing
+import time
+import pickle
 
+pool = multiprocessing.Pool(multiprocessing.cpu_count() - 1)
 
 class Population:
 
@@ -19,10 +23,12 @@ class Population:
         self.population = []
         self.pop_size = pop_size
         self.toolbox = base.Toolbox()
+        # self.pool = multiprocessing.Pool(multiprocessing.cpu_count() - 1)
         self.toolbox.register("mate", tools.cxOnePoint) 
         self.toolbox.register("select", tools.selTournament, tournsize=3)
         self.toolbox.register("selBest", tools.selBest)
         self.toolbox.register("selWorst", tools.selWorst)
+        self.toolbox.register("pool_map", pool.map)
 
     def construct_population(self, source_tree, target, source, kb_source,
                             kb_target, target_pred):
@@ -129,12 +135,21 @@ class Population:
             facts_target: list of lists
 
         """
-        self.toolbox.register("evaluate", population[0].evaluate, pos_target=pos_target, 
-                        neg_target=neg_target, facts_target=facts_target)
-        fitnesses = map(self.toolbox.evaluate, population) #<--- problema
-        
-        for ind, fit in zip(population, fitnesses):
-            ind.fitness.values = fit
+
+        self.toolbox.register("before_evaluate", population[0].before_evaluate)
+
+        trees = map(self.toolbox.before_evaluate, population)
+
+        for ind, tree in zip(population, trees):
+            ind.individual_trees = tree[0]
+            ind.modified_src_tree = tree[1]
+            ind.transfer = tree[2]
+
+        results = population[0].run_evaluate(population, pos_target, neg_target, facts_target)
+        for ind, result in zip(population, results):
+            ind.fitness.values = result[0],
+            ind.results.append(result[1])    
+    
 
     def best_result(self):
         """
@@ -149,10 +164,10 @@ class Population:
         result = self.population[0].fitness.values[0]
         for indice in range(self.pop_size):
             fit = self.population[indice].fitness.values
-            print(fit, fit[0] < result)
+            # print(fit, fit[0] < result)
             if fit[0] < result:
                 result = fit[0]
-        print(f"bestResult: {result}")
+        # print(f"bestResult: {result}")
         return result
 
     def get_all_best_results(self):
