@@ -1,11 +1,10 @@
-from deap import tools
-from deap import base
-from deap import creator
-import time
+from deap import tools, base, creator
+
 
 from src.individual import *
 from src.population import *
 from src.transfer import *
+
 
 def genetic(src_struct, target, source, pos_target, 
             neg_target, facts_target, kb_source, kb_target,

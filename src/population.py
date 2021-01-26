@@ -1,14 +1,10 @@
-from src.individual import *
-from deap import tools
-from deap import base
-from deap import creator
+from deap import tools, base, creator
 from random import random
-from src.predicate import *
-import multiprocessing
-import time
-import pickle
 
-pool = multiprocessing.Pool(multiprocessing.cpu_count() - 1)
+
+from src.individual import *
+from src.predicate import *
+
 
 class Population:
 
@@ -23,7 +19,6 @@ class Population:
         self.population = []
         self.pop_size = pop_size
         self.toolbox = base.Toolbox()
-        # self.pool = multiprocessing.Pool(multiprocessing.cpu_count() - 1)
         self.toolbox.register("mate", tools.cxOnePoint) 
         self.toolbox.register("select", tools.selTournament, tournsize=3)
         self.toolbox.register("selBest", tools.selBest)
@@ -171,6 +166,15 @@ class Population:
         return result
 
     def get_all_best_results(self):
+        """
+            Find the best result in population, with all components (cll, precision, auc roc etc)
+            The best result depends on the goal 
+            Here, the goal is minimize the evaluate of the individual
+
+            Returns
+            ----------
+            result: float
+        """
         result_cll = self.population[0].fitness.values[0]
         result = self.population[0].results[-1]
         for indice in range(self.pop_size):

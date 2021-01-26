@@ -1,17 +1,16 @@
 from boostsrl import boostsrl
 import copy
-import numpy as np
-from random import randint
-from random import random
-import re
-import string
-import shutil
-import os
-import time
-from src.transfer import Transfer
-import sys
 import multiprocessing
-# from multiprocessing.managers import BaseManager
+import numpy as np
+import os
+from random import randint, random
+import re
+import shutil
+import string
+import sys
+
+
+from src.transfer import Transfer
 
 
 class Individual:
@@ -176,25 +175,18 @@ class Individual:
         print("F1: ", f1)
         print("-------------------")
 
-    def delete_files(self):
-        try:
-            shutil.rmtree('boostsrl/train')
-            os.remove('boostsrl/train_output.txt')
-        except:
-            pass
-        try:
-            shutil.rmtree('boostsrl/test')
-            os.remove('boostsrl/test_output.txt')
-        except:
-            pass
-        try:
-            os.remove('boostsrl/refine.txt')
-            os.remove('boostsrl/transfer.txt')
-        except: 
-            pass
-
     @staticmethod
     def _create_new_folder(idx):
+        """
+            Creating folders to run the individual of index idx
+
+            It's necessary when doing training and testing in parallel
+
+            Parameters
+            ----------
+            idx: int
+
+        """
         if not os.path.exists(f'individual_{idx}/boostsrl'):
             os.makedirs(f'individual_{idx}/boostsrl')
         shutil.copy('boostsrl/auc.jar', f'individual_{idx}/boostsrl/')
@@ -202,9 +194,31 @@ class Individual:
 
     @staticmethod
     def _delete_folder(idx):
+        """
+            Deleting folder created in create_new_folder method
+
+            It's necessary when doing training and testing in parallel
+
+            Parameters
+            ----------
+            idx: int
+        """
         shutil.rmtree(f'individual_{idx}', ignore_errors=True)
 
     def before_evaluate(self, ind):
+        """
+            Checking if the transfer is reasonable
+
+            Parameters
+            ----------
+            ind: Individual instance
+
+            Returns
+            ----------
+            individual_trees: list of lists
+            modified_src_tree: list of lists
+            transfer: list
+        """
         ind.transfer = Transfer(ind.predicate_inst, ind.target)
         ind.individual_trees = ind.predicate_inst.check_trees(ind)
         ind.modified_src_tree, ind.transfer.transfer = ind.transfer.mapping_all_trees(ind.individual_trees, ind.first_source_tree, ind)
@@ -213,19 +227,27 @@ class Individual:
     @staticmethod
     def evaluate(args):
         """
-            Evaluating the individual called ind
+            Evaluating the individual 
+            This method will run in parallel
             The method also receives the data to train and test the transfer
 
             Parameters
             ----------
-            ind: Individual instance
-            pos_target: list of lists
-            neg_target: list of lists
-            facts_target: list of lists
+            args: dictionary
+                  The keys need to be:
+                  idx: Individual index in the population (int)
+                  transfer: the mapping between source and target (list)
+                  modified_src_tree: list of lists
+                  pos_target: list of lists
+                  neg_target: list of lists
+                  facts_target: list of lists
+                  target: target predicate to test (string)
+                  kb_target: list
 
             Returns
             ----------
             -m_cll: tuple (the cll is a negative value; the objetive is to minimize the -mean(cll))
+            results: dictionary
         """        
         pos_target = args['pos_target']
         neg_target = args['neg_target']
@@ -270,6 +292,19 @@ class Individual:
         return -m_cll, results
 
     def _input_list(self, population, pos_target, neg_target, facts_target):
+        """
+            Input list to pass to evaluate
+            Parameters
+            ----------
+            population: list
+            pos_target: list
+            neg_target: list
+            facts_target: list
+
+            Returns
+            ----------
+            input_list: list with dictionaries
+        """   
         input_list = []
         for i in range(len(population)):
             input_list.append({'idx': i,
@@ -283,6 +318,22 @@ class Individual:
         return input_list
 
     def run_evaluate(self, population, pos_target, neg_target, facts_target):
+        """
+            Run evaluation in parallel
+            Before running the evaluation, create a folder for each individual
+            After, delete all folders 
+
+            Parameters
+            ----------
+            population: list
+            pos_target: list
+            neg_target: list
+            facts_target: list
+
+            Returns
+            ----------
+            results: list with tuples
+        """  
         pool = multiprocessing.Pool()
         
         res = pool.map(self._create_new_folder, range(len(population)))

@@ -269,6 +269,7 @@ class Transfer:
             Returns
             ----------
             modified_src_tree: list of lists
+            transfer: list
         """
         self.predicate_inst.generate_new_preds()
         transfer = []
