@@ -36,6 +36,7 @@ class Predicate:
             target_pred = individual_tree[line]
             source_pred = first_source_tree[line]
             everything_ok = True
+
             if line == 0:
                 #verifica os predicados junto ao target
                 target = target_pred.split(';')[2].split(':-')[1].strip().split('),')
@@ -69,6 +70,7 @@ class Predicate:
     def check_trees(self, ind):
         valid_trees = []
         for idx in range(0, len(ind.individual_trees)):
+            ind = self.mapping_vars(ind.individual_trees[idx], ind.first_source_tree[idx], ind)
             valid_trees.append(self.check_tree(ind.individual_trees[idx], ind.first_source_tree[idx], ind))
         return valid_trees
 
@@ -187,10 +189,36 @@ class Predicate:
         """
         source_pred = source_pred.split('(')[1].split(',')
         target_pred = target_pred.split('(')[1].split(',')
-
         for i in range(0, len(source_pred)):
-            self.mapping_var[source_pred[i].replace(').', '')] = target_pred[i].replace(').', '')
-       
+            if source_pred[i].replace(').', '') not in list(self.mapping_var.keys()):
+                self.mapping_var[source_pred[i].replace(').', '')] = target_pred[i].replace(').', '')
+
+    def mapping_vars(self, individual_tree, first_source_tree, ind):
+        first_source_pred = first_source_tree[0].split(';')[2].split(':-')[0].split('(')[0]
+        first_target_pred = individual_tree[0].split(';')[2].split(':-')[0].split('(')[0]
+
+        complete_source = self.get_complete_pred(first_source_pred, ind.predicate_inst.new_first_kb_source)
+        complete_target = self.get_complete_pred(first_target_pred, ind.predicate_inst.new_kb_target)
+        self.define_mapping(complete_source, complete_target)
+
+        for line in range(0, len(individual_tree)):
+            target_pred = individual_tree[line]
+            source_pred = first_source_tree[line]
+            
+            if line == 0:
+                #verifica os predicados junto ao target
+                target = target_pred.split(';')[2].split(':-')[1].strip().split('),')
+                source = source_pred.split(';')[2].split(':-')[1].strip().split('),')
+            else:
+                target = target_pred.split(';')[2].split('),')
+                source = source_pred.split(';')[2].split('),')
+
+            for idx in range(0, len(source)):
+                complete_source = self.get_complete_pred(source[idx], ind.predicate_inst.new_first_kb_source)
+                complete_target = self.get_complete_pred(target[idx], ind.predicate_inst.new_kb_target)
+                ind.predicate_inst.define_mapping(complete_source, complete_target)
+        return ind
+
     def _get_valid_map(self, complete_source, list_pos_target):
         """
             Get the possible mappings between types
@@ -306,7 +334,7 @@ class Predicate:
         """
         # pred é da forma: pred(A, B) ou pred
         for i in kb:
-            if pred.split('(')[0] in i:
+            if pred.split('(')[0].strip() in i:
                 return i
 
     def new_pred(self, source_pred, target_pred):
@@ -345,9 +373,6 @@ class Predicate:
         has_target = len(split_pred[2].split(":-")) > 1
         if has_target: 
             target_pred = split_pred[2].split(":- ")[1]
-            complete_source = self.get_complete_pred(source, new_kb_source)
-            complete_target = self.get_complete_pred(target, new_kb_target)
-            self.define_mapping(complete_source, complete_target)
         else: target_pred = split_pred[2]
 
         source_pred = source_pred.split('), ')
@@ -366,7 +391,6 @@ class Predicate:
                 types = f"({pp[qtd_preds].strip().split('(')[1]})"
                 final_pred.append(f"{complete_valid[index_choice].split('(')[0]}{types}")
             qtd_preds += 1
-            self.define_mapping(complete_source, complete_valid[index_choice])
         if has_target: 
             split_pred[2] =  f"{target}({split_pred[2].split(':-')[0].split('(')[1].strip()} :- {', '.join(final_pred)}"
         else: split_pred[2] = ', '.join(final_pred)
