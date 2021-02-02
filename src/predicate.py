@@ -25,7 +25,7 @@ class Predicate:
         self.new_kb_target = []
         self.new_first_kb_source = []
         self.variables = []
-        self.mapping_var = {}
+        self.mapping_type = {}
 
     def check_tree(self, individual_tree, first_source_tree, ind):
         valid_tree = []
@@ -70,7 +70,7 @@ class Predicate:
     def check_trees(self, ind):
         valid_trees = []
         for idx in range(0, len(ind.individual_trees)):
-            ind = self.mapping_vars(ind.individual_trees[idx], ind.first_source_tree[idx], ind)
+            ind = self.mapping_types(ind.individual_trees[idx], ind.first_source_tree[idx], ind)
             valid_trees.append(self.check_tree(ind.individual_trees[idx], ind.first_source_tree[idx], ind))
         return valid_trees
 
@@ -78,9 +78,9 @@ class Predicate:
         # predicado deve ficar como pred(A,B)
         only_source = source_pred.split('(')[0].strip()
         only_target = target_pred.split('(')[0].strip()
-        mapping_var = self.mapping_var
+        mapping_type = self.mapping_type
         if ind:
-            mapping_var = ind.predicate_inst.mapping_var
+            mapping_type = ind.predicate_inst.mapping_type
         for pred in self.new_first_kb_source:
             if only_source in pred:
                 source_pred = pred
@@ -97,11 +97,11 @@ class Predicate:
         for idx in range(0, len(source_types)):
             source_type = source_types[idx].strip()
             target_type = target_types[idx].strip()
-            if source_type in list(mapping_var.keys()):
-                if mapping_var[source_type] != target_type:
+            if source_type in list(mapping_type.keys()):
+                if mapping_type[source_type] != target_type:
                     return False
             else:
-                mapping_var[source_type] = target_type
+                mapping_type[source_type] = target_type
         return True
 
     def change_predicate(self, pred, new_info, var):
@@ -190,10 +190,10 @@ class Predicate:
         source_pred = source_pred.split('(')[1].split(',')
         target_pred = target_pred.split('(')[1].split(',')
         for i in range(0, len(source_pred)):
-            if source_pred[i].replace(').', '') not in list(self.mapping_var.keys()):
-                self.mapping_var[source_pred[i].replace(').', '')] = target_pred[i].replace(').', '')
+            if source_pred[i].replace(').', '') not in list(self.mapping_type.keys()):
+                self.mapping_type[source_pred[i].replace(').', '')] = target_pred[i].replace(').', '')
 
-    def mapping_vars(self, individual_tree, first_source_tree, ind):
+    def mapping_types(self, individual_tree, first_source_tree, ind):
         first_source_pred = first_source_tree[0].split(';')[2].split(':-')[0].split('(')[0]
         first_target_pred = individual_tree[0].split(';')[2].split(':-')[0].split('(')[0]
 
@@ -236,8 +236,8 @@ class Predicate:
         list_vars = complete_source.split('(')[1].split(',')
         for i in list_vars:
             tmp = i.replace(').', '')
-            if tmp in self.mapping_var.keys():
-                pred_var.append(self.mapping_var[tmp])
+            if tmp in self.mapping_type.keys():
+                pred_var.append(self.mapping_type[tmp])
             else:
                 pred_var.append('')
         if len(f'({",".join(pred_var)}).') == 4:

@@ -33,7 +33,7 @@ def genetic(src_struct, target, source, pos_target,
             ind.predicate_inst.generate_new_preds()
             if len(ind.results) < NUM_GEN:
                 ind.results.append(ind.results[-1])
-            ind.predicate_inst.mapping_var = {}
+            ind.predicate_inst.mapping_type = {}
       
         best_individuals = pop.toolbox.selBest(pop.population, 1)
 

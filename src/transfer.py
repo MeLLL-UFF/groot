@@ -85,7 +85,7 @@ class Transfer:
 
         res = ind.predicate_inst.check_predicates(source_pred[0].split(";")[2].split(" :-")[0], self.target, ind)
         if not res:
-            print(f'{ind.predicate_inst.mapping_var}')
+            print(f'{ind.predicate_inst.mapping_type}')
             print('=================================')
             print(f'{source_pred[0].split(";")[2].split(" :-")[0]} & {self.target} == {res}')
             print('=================================')
@@ -103,7 +103,7 @@ class Transfer:
                                                    target_pred[0].split(";")[2].split(":- ")[1],
                                                    ind)
         if not res:
-            print(f'{ind.predicate_inst.mapping_var}')
+            print(f'{ind.predicate_inst.mapping_type}')
             print('=================================')
             print(f'{source_pred[0].split(";")[2].split(" :-")[1]} & {target_pred[0].split(";")[2].split(":- ")[1]} == {res}')
             print('=================================')
@@ -118,7 +118,7 @@ class Transfer:
                                                    target_pred[index].split(";")[0],
                                                    ind)
             if not res:
-                print(f'{ind.predicate_inst.mapping_var}')
+                print(f'{ind.predicate_inst.mapping_type}')
                 print('=================================')
                 print(f'{source_pred[index].split(";")[0]} & {target_pred[index].split(";")[0]} == {res}')
                 print('=================================')
@@ -231,7 +231,7 @@ class Transfer:
                 for index in range(0, len(predicates)):
                     res = ind.predicate_inst.check_predicates(predicates[index], pred_target[index], ind)
                     if not res:
-                        print(f'{ind.predicate_inst.mapping_var}')
+                        print(f'{ind.predicate_inst.mapping_type}')
                         print('=================================')
                         print(f'{predicates[index]} & {pred_target[index]} == {res}')
                         print('=================================')
