@@ -23,7 +23,6 @@ class Population:
         self.toolbox.register("select", tools.selTournament, tournsize=3)
         self.toolbox.register("selBest", tools.selBest)
         self.toolbox.register("selWorst", tools.selWorst)
-        self.toolbox.register("pool_map", pool.map)
 
     def construct_population(self, source_tree, target, source, kb_source,
                             kb_target, target_pred):
