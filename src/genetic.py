@@ -37,15 +37,15 @@ def genetic(src_struct, target, source, pos_target,
       
         best_individuals = pop.toolbox.selBest(pop.population, 1)
 
-        # if len(best_evaluates) > 0 and pop.best_result() == best_evaluates[-1]:
-        #     has_same_best_value += 1
-        # else:
-        #     has_same_best_value = 0
+        if len(best_evaluates) > 0 and pop.best_result() == best_evaluates[-1]:
+            has_same_best_value += 1
+        else:
+            has_same_best_value = 0
         best_evaluates.append(pop.best_result())
         print('MELHOR RESULTADO: ', pop.best_result())
 
-        # if has_same_best_value == ((NUM_GEN)/2)+1:
-        #     return pop, best_evaluates, all_best_results
+        if has_same_best_value == ((NUM_GEN)/2)+1:
+            return pop, best_evaluates, all_best_results
        
         pop_next = pop.selection(pop.population)
         
