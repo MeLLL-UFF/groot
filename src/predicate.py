@@ -55,23 +55,43 @@ class Predicate:
             else:
                 target = target_pred.split(';')[2].split('),')
                 source = source_pred.split(';')[2].split('),')
+                
+                res = individual_tree[line]
                 for idx in range(0, len(source)):
+                   
                     if not self.check_predicates(source[idx], target[idx], ind):
+                        
                         new_pred = self.get_modes(first_source_tree, first_source_tree[line])
                         res = self.change_pred(first_source_pred, first_target_pred, 
                                                             first_source_tree[line], new_pred, ind)
-                        valid_tree.append(res)
+                        new_target = res.split(';')[2].split('),')[idx]
+                        complete_source = self.get_complete_pred(source[idx], ind.predicate_inst.new_first_kb_source)
+                        complete_target = self.get_complete_pred(new_target, ind.predicate_inst.new_kb_target)
+                        ind.predicate_inst.define_mapping(complete_source, complete_target)
+
                         everything_ok = False
-                        break
-                if everything_ok:
-                    valid_tree.append(individual_tree[line])
-        return valid_tree
+                    else:
+                        
+                        tmp_res = res.split(';')
+                        tmp = tmp_res[2].split('),')
+                        tmp[idx] = target[idx]
+                        tmp_res[2] = '),'.join(tmp)
+                        res = ";".join(tmp_res)
+                        
+                valid_tree.append(res)
+        ind = self.mapping_types(valid_tree, first_source_tree, ind)
+        return valid_tree, ind
 
     def check_trees(self, ind):
+        complete_source = self.get_complete_pred(ind.source, ind.predicate_inst.new_first_kb_source)
+        complete_target = self.get_complete_pred(ind.target, ind.predicate_inst.new_kb_target)
+        ind.predicate_inst.define_mapping(complete_source, complete_target)
         valid_trees = []
         for idx in range(0, len(ind.individual_trees)):
+            valid_tree, ind = (self.check_tree(ind.individual_trees[idx], ind.first_source_tree[idx], ind))
+            valid_trees.append(valid_tree)
             ind = self.mapping_types(ind.individual_trees[idx], ind.first_source_tree[idx], ind)
-            valid_trees.append(self.check_tree(ind.individual_trees[idx], ind.first_source_tree[idx], ind))
+
         return valid_trees
 
     def check_predicates(self, source_pred, target_pred, ind=None):
@@ -100,8 +120,9 @@ class Predicate:
             if source_type in list(mapping_type.keys()):
                 if mapping_type[source_type] != target_type:
                     return False
-            else:
-                mapping_type[source_type] = target_type
+        for idx in range(0, len(source_types)):
+            if source_types[idx] not in list(mapping_type.keys()):
+                self.mapping_type[source_types[idx]] = target_types[idx]
         return True
 
     def change_predicate(self, pred, new_info, var):
