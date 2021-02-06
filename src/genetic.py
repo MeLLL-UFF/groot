@@ -29,7 +29,6 @@ def genetic(src_struct, target, source, pos_target,
         for ind in pop.population:
             ind.source_tree = ind.individual_trees
             ind.predicate_inst.kb_source = ind.predicate_inst.kb_target
-            ind.source = ind.target
             ind.predicate_inst.generate_new_preds()
             if len(ind.results) < NUM_GEN:
                 ind.results.append(ind.results[-1])
