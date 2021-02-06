@@ -1,8 +1,0 @@
-setParam: stringsAreCaseSensitive = true.
-
-usePrologVariables: true.
-
-
-(advisedby(A, B, 0) :- professor(B), student(A), advisedby(UniqueVar2, A), tempadvisedby(UniqueVar2, B)).
-(advisedby(A, B, 0.6281908794091159) :-  /* #neg=10 #pos=78 */ professor(B), student(A)).
-advisedby(_, _, -0.1254446385283916) /* #neg=68 */ .

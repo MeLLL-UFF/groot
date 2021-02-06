@@ -72,14 +72,15 @@ def get_branch(curr_value, next_value):
 
 def define_individual(structured_tree, tree_number):
     individual_tree = []
+    forceLearning=True
     target = structured_tree[0]
     nodes = structured_tree[1]
     for values, node in nodes.items():
         if values == '': 
             branch = '{} :- {}.'.format(target, node)
         else: branch = '{}.'.format(node)
-        left_branch = 'true' if get_branch(values, 'true') in nodes  else 'false'
-        right_branch = 'true' if get_branch(values, 'false') in nodes else 'false'
+        left_branch = 'true' if get_branch(values, 'true') in nodes or forceLearning else 'false'
+        right_branch = 'true' if get_branch(values, 'false') in nodes or forceLearning else 'false'
         individual_tree.append('{};{};{};{};{}'.format(tree_number, values, 
                                                   branch, left_branch, right_branch))
     return individual_tree
@@ -95,7 +96,7 @@ def create_structured_trees(model):
             
     src_struct = copy.deepcopy(structured_src)
     new_src_struct = []
-    for i in range(0, len(src_struct)): 
+    for i in range(0, len(src_struct)):
         new_src_struct.append(define_individual(src_struct[i], i))  
     
     return structured_src, new_src_struct
@@ -202,5 +203,5 @@ def save_results(final_results, source, target, kb_source, kb_target):
         f.write('\n')
         f.write(json.dumps(final_results[f'tree_test:{source}->{target}'][2]))
         f.write('\n')
-        f.write(json.dumps(final_results[f'tree_test:{source}->{target}'][2]))
+        f.write(json.dumps(final_results[f'tree_test:{source}->{target}'][3]))
         f.close()
