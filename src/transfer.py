@@ -89,6 +89,7 @@ class Transfer:
             print('=================================')
             print(f'{source_pred[0].split(";")[2].split(" :-")[0]} & {self.target} == {res}')
             print('=================================')
+            print(target_pred, source_pred)
             exit()
         #predicado que está junto ao target
         self.mapping_transfer(source_pred[0].split(";")[2].split(":- ")[1], 
@@ -107,6 +108,7 @@ class Transfer:
             print('=================================')
             print(f'{source_pred[0].split(";")[2].split(" :-")[1]} & {target_pred[0].split(";")[2].split(":- ")[1]} == {res}')
             print('=================================')
+            print(target_pred, source_pred)
             exit()
         for index in range(1, len(source_pred)):
             #pego os outros predicados
@@ -122,6 +124,7 @@ class Transfer:
                 print('=================================')
                 print(f'{source_pred[index].split(";")[0]} & {target_pred[index].split(";")[0]} == {res}')
                 print('=================================')
+                print(target_pred, source_pred)
                 exit()
             no_var = self._count_vars(source_pred[index])
             var_pred = f"({source_pred[index].split('(')[1].split(').')[0].split(')')[0]})"
@@ -144,13 +147,15 @@ class Transfer:
         #source é do tipo: pred(A) e target é pred(A)
         source_pred = source_pred.split('), ')
         target_pred = target_pred.split('), ')
-        for index in range(0, len(source_pred)):
-            new_source_pred = source_pred[index].split('(')[0].rstrip('0123456789')
-            new_target_pred = target_pred[index].split('(')[0].rstrip('0123456789')
+        for index in range(0, len(target_pred)):
+            if target_pred[index] == '':
+                return transfer
+            new_source_pred = source_pred[index].split('(')[0].rstrip('0123456789').lower().strip()
+            new_target_pred = target_pred[index].split('(')[0].rstrip('0123456789').lower().strip()
             no_var = self._count_vars(source_pred[index])
             var_pred = self._generate_new_pred(no_var)
             for pred in self.predicate_inst.new_kb_source or pred in self.predicate_inst.new_first_kb_source:
-                if new_source_pred in pred: 
+                if new_source_pred == pred.split('(')[0].lower().strip(): 
                     real_predicate = '({}'.format(pred.split('(')[1])
                     source = 'source: {}'.format(self.predicate_inst.change_predicate(pred, 
                                                                                       [tree_number, index_node], 
@@ -159,7 +164,7 @@ class Transfer:
                         transfer.append(source)
                     break
             for pred in self.predicate_inst.new_first_kb_source:
-                if new_source_pred in pred: 
+                if new_source_pred == pred.split('(')[0].lower().strip():  
                     real_predicate = '({}'.format(pred.split('(')[1])
                     source = 'source: {}'.format(self.predicate_inst.change_predicate(pred, 
                                                                                       [tree_number, index_node], 
@@ -169,7 +174,7 @@ class Transfer:
                     break
 
             for pred in self.predicate_inst.new_kb_target:
-                if new_target_pred in pred: 
+                if new_target_pred == pred.split('(')[0].lower().strip(): 
                     target = 'target: {}'.format(pred)
                     if target not in transfer:
                         transfer.append(target)
@@ -228,31 +233,36 @@ class Transfer:
                 predicates = pred_source[2].split('), ')
                 pred_target = pred_target.split(';')[2].split('), ')
                 new_pred = []
-                for index in range(0, len(predicates)):
-                    res = ind.predicate_inst.check_predicates(predicates[index], pred_target[index], ind)
-                    if not res:
-                        print(f'{ind.predicate_inst.mapping_type}')
-                        print('=================================')
-                        print(f'{predicates[index]} & {pred_target[index]} == {res}')
-                        print('=================================')
-                        print(predicates, pred_source)
-                        exit()
-                    tranfer = self.mapping_transfer(predicates[index], 
-                                                      pred_target[index],
-                                                      tree_number, 
-                                                      line+index+1, 
-                                                      transfer)
-                    no_var = self._count_vars(predicates[index])
-                    var_pred = f"({predicates[index].split('(')[1].split(').')[0].split(')')[0]}"
-                    new_src = self.predicate_inst.change_predicate(predicates[index], 
-                                                             [tree_number, line+index+1], 
-                                                             var_pred)
-
-                    new_src = f'{new_src.split("(")[0]}({predicates[index].split("(")[1]}'
-                    if ')' not in new_src:
-                        new_src = f'{new_src})'
+                start = predicates
+                if len(pred_target) < len(predicates): start = pred_target
+                for index in range(0, len(start)):
                     
-                    new_pred.append(new_src)
+                    if predicates[index].split('(')[1] == pred_target[index].split('(')[1]:
+                        
+                        res = ind.predicate_inst.check_predicates(predicates[index], pred_target[index], ind)
+                        if not res:
+                            print(f'{ind.predicate_inst.mapping_type}')
+                            print('=================================')
+                            print(f'{predicates[index]} & {pred_target[index]} == {res}')
+                            print('=================================')
+                            print(predicates, pred_source)
+                            exit()
+                        tranfer = self.mapping_transfer(predicates[index], 
+                                                          pred_target[index],
+                                                          tree_number, 
+                                                          line+index+1, 
+                                                          transfer)
+                        no_var = self._count_vars(predicates[index])
+                        var_pred = f"({predicates[index].split('(')[1].split(').')[0].split(')')[0]}"
+                        new_src = self.predicate_inst.change_predicate(predicates[index], 
+                                                                 [tree_number, line+index+1], 
+                                                                 var_pred)
+
+                        new_src = f'{new_src.split("(")[0]}({predicates[index].split("(")[1]}'
+                        if ')' not in new_src:
+                            new_src = f'{new_src})'
+                        
+                        new_pred.append(new_src)
                 pred_source[2] = pred_source[2].replace(pred_source[2],f'{", ".join(new_pred)}')
                 modf_src_tree.append(";".join(pred_source))
         return modf_src_tree, transfer
