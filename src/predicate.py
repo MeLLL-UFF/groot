@@ -35,7 +35,7 @@ class Predicate:
         for line in range(0, len(individual_tree)):
             target_pred = individual_tree[line]
             source_pred = first_source_tree[line]
-            everything_ok = True
+            res = individual_tree[line]
 
             if line == 0:
                 #verifica os predicados junto ao target
@@ -47,11 +47,22 @@ class Predicate:
                                                   first_source_tree[line].split(":- ")[1])
                         res = self.change_pred(first_source_pred, first_target_pred, 
                                                             first_source_tree[line], new_pred, ind)
-                        valid_tree.append(res)
-                        everything_ok = False
-                        break
-                if everything_ok:
-                    valid_tree.append(individual_tree[line])
+                        new_target = res.split(';')[2].split('),')[idx]
+                        complete_source = self.get_complete_pred(source[idx], ind.predicate_inst.new_first_kb_source)
+                        complete_target = self.get_complete_pred(new_target, ind.predicate_inst.new_kb_target)
+                        ind.predicate_inst.define_mapping(complete_source, complete_target)
+
+                    else:
+
+                        tmp_res = res.split(';')
+                        tmp_target = tmp_res[2].split(':-')
+                        tmp_pred = tmp_target[1].strip().split('),')
+                        tmp_pred[idx] = target[idx]
+                        tmp_target[1] = '),'.join(tmp_pred)
+                        tmp_res[2] = ':- '.join(tmp_target)
+                        res = ";".join(tmp_res)
+                valid_tree.append(res)
+
             else:
                 target = target_pred.split(';')[2].split('),')
                 source = source_pred.split(';')[2].split('),')
@@ -68,8 +79,7 @@ class Predicate:
                         complete_source = self.get_complete_pred(source[idx], ind.predicate_inst.new_first_kb_source)
                         complete_target = self.get_complete_pred(new_target, ind.predicate_inst.new_kb_target)
                         ind.predicate_inst.define_mapping(complete_source, complete_target)
-
-                        everything_ok = False
+                        
                     else:
                         
                         tmp_res = res.split(';')
@@ -95,22 +105,20 @@ class Predicate:
         return valid_trees
 
     def check_predicates(self, source_pred, target_pred, ind=None):
-        # predicado deve ficar como pred(A,B)
-        only_source = source_pred.split('(')[0].strip()
-        only_target = target_pred.split('(')[0].strip()
+        only_source = source_pred.split('(')[0].strip().lower()
+        only_target = target_pred.split('(')[0].strip().lower()
         mapping_type = self.mapping_type
         if ind:
             mapping_type = ind.predicate_inst.mapping_type
         for pred in self.new_first_kb_source:
-            if only_source in pred:
+            if only_source == pred.split('(')[0].strip().lower():
                 source_pred = pred
                 break
 
         for pred in self.new_kb_target:
-            if only_target in pred:
+            if only_target == pred.split('(')[0].strip().lower():
                 target_pred = pred
                 break
-
         source_types = source_pred.split('(')[1].split(')')[0].split(',')
         target_types = target_pred.split('(')[1].split(')')[0].split(',')
 
@@ -355,7 +363,7 @@ class Predicate:
         """
         # pred é da forma: pred(A, B) ou pred
         for i in kb:
-            if pred.split('(')[0].strip() in i:
+            if pred.split('(')[0].strip().lower() == i.split('(')[0].strip().lower():
                 return i
 
     def new_pred(self, source_pred, target_pred):
