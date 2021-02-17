@@ -47,7 +47,8 @@ class Predicate:
                                                   first_source_tree[line].split(":- ")[1])
                         res = self.change_pred(first_source_pred, first_target_pred, 
                                                             first_source_tree[line], new_pred, ind)
-                        new_target = res.split(';')[2].split('),')[idx]
+
+                        new_target = res.split(';')[2].split(':-')[1].strip().split('),')[idx]
                         complete_source = self.get_complete_pred(source[idx], ind.predicate_inst.new_first_kb_source)
                         complete_target = self.get_complete_pred(new_target, ind.predicate_inst.new_kb_target)
                         ind.predicate_inst.define_mapping(complete_source, complete_target)
@@ -62,7 +63,6 @@ class Predicate:
                         tmp_res[2] = ':- '.join(tmp_target)
                         res = ";".join(tmp_res)
                 valid_tree.append(res)
-
             else:
                 target = target_pred.split(';')[2].split('),')
                 source = source_pred.split(';')[2].split('),')
