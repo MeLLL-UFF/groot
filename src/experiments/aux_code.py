@@ -36,22 +36,35 @@ def split_train_test(dataset, test_size=0.3):
     return X_train, X_test
 
 def get_train_test(dataset):
+    test_index = random.randint(0, len(dataset[0]))
     if len(dataset[0]) >= 3:
-        train_facts = dataset[0][1:]
-        train_pos = dataset[1][1:]
-        train_neg = dataset[2][1:]
+        test_facts = dataset[0][test_index]
+        test_pos = dataset[1][test_index]
+        test_neg = dataset[2][test_index]
 
-        test_facts = dataset[0][0]
-        test_pos = dataset[1][0]
-        test_neg = dataset[2][0]
+        dataset[0].remove(dataset[0][test_index])
+        dataset[1].remove(dataset[1][test_index])
+        dataset[2].remove(dataset[2][test_index])
+
+        train_facts = dataset[0]
+        train_pos = dataset[1]
+        train_neg = dataset[2]
+
+        # test_facts = dataset[0][0]
+        # test_pos = dataset[1][0]
+        # test_neg = dataset[2][0]
     elif len(dataset[0]) == 2:
-        test_facts = dataset[0][0]
-        test_pos = dataset[1][0]
-        test_neg = dataset[2][0]
+        test_facts = dataset[0][test_index]
+        test_pos = dataset[1][test_index]
+        test_neg = dataset[2][test_index]
 
-        train_facts = split_folds(dataset[0][1], 2)
-        train_pos = split_folds(dataset[1][1], 2)
-        train_neg = split_folds(dataset[2][1], 2)
+        dataset[0].remove(dataset[0][test_index])
+        dataset[1].remove(dataset[0][test_index])
+        dataset[2].remove(dataset[0][test_index])
+
+        train_facts = split_folds(dataset[0], 2)
+        train_pos = split_folds(dataset[1], 2)
+        train_neg = split_folds(dataset[2], 2)
     else:
         train_facts, test_facts = split_train_test(dataset[0][0])
         train_pos, test_pos = split_train_test(dataset[1][0])
