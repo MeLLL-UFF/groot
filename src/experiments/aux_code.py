@@ -36,7 +36,7 @@ def split_train_test(dataset, test_size=0.3):
     return X_train, X_test
 
 def get_train_test(dataset):
-    test_index = random.randint(0, len(dataset[0]))
+    test_index = random.randint(0, len(dataset[0])-1)
     if len(dataset[0]) >= 3:
         test_facts = dataset[0][test_index]
         test_pos = dataset[1][test_index]
@@ -59,12 +59,12 @@ def get_train_test(dataset):
         test_neg = dataset[2][test_index]
 
         dataset[0].remove(dataset[0][test_index])
-        dataset[1].remove(dataset[0][test_index])
-        dataset[2].remove(dataset[0][test_index])
+        dataset[1].remove(dataset[1][test_index])
+        dataset[2].remove(dataset[2][test_index])
 
-        train_facts = split_folds(dataset[0], 2)
-        train_pos = split_folds(dataset[1], 2)
-        train_neg = split_folds(dataset[2], 2)
+        train_facts = split_folds(dataset[0][0], 2)
+        train_pos = split_folds(dataset[1][0], 2)
+        train_neg = split_folds(dataset[2][0], 2)
     else:
         train_facts, test_facts = split_train_test(dataset[0][0])
         train_pos, test_pos = split_train_test(dataset[1][0])
@@ -85,7 +85,7 @@ def get_branch(curr_value, next_value):
 
 def define_individual(structured_tree, tree_number):
     individual_tree = []
-    forceLearning=True
+    forceLearning=False
     target = structured_tree[0]
     nodes = structured_tree[1]
     for values, node in nodes.items():
@@ -106,8 +106,9 @@ def create_structured_trees(model):
             structured_src.append(model.get_structured_tree(treenumber=i+1).copy())
         except:
             structured_src.append(model.get_structured_tree(treenumber='combine').copy())
-            
+           
     src_struct = copy.deepcopy(structured_src)
+    print(src_struct)
     new_src_struct = []
     for i in range(0, len(src_struct)):
         new_src_struct.append(define_individual(src_struct[i], i))  
