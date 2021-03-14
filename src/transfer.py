@@ -109,6 +109,8 @@ class Transfer:
             print(f'{source_pred[0].split(";")[2].split(" :-")[1]} & {target_pred[0].split(";")[2].split(":- ")[1]} == {res}')
             print('=================================')
             print(target_pred, source_pred)
+            print('=================================')
+            print(ind.predicate_inst.mapping_type)
             exit()
         for index in range(1, len(source_pred)):
             #pego os outros predicados
@@ -152,6 +154,8 @@ class Transfer:
                 return transfer
             new_source_pred = source_pred[index].split('(')[0].rstrip('0123456789').lower().strip()
             new_target_pred = target_pred[index].split('(')[0].rstrip('0123456789').lower().strip()
+            if len(new_target_pred) == 0:
+                continue
             no_var = self._count_vars(source_pred[index])
             var_pred = self._generate_new_pred(no_var)
             for pred in self.predicate_inst.new_kb_source or pred in self.predicate_inst.new_first_kb_source:
@@ -173,6 +177,7 @@ class Transfer:
                         transfer.append(source)
                     break
 
+            # if len(new_target_pred) > 0:
             for pred in self.predicate_inst.new_kb_target:
                 if new_target_pred == pred.split('(')[0].lower().strip(): 
                     target = 'target: {}'.format(pred)
