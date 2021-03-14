@@ -105,6 +105,7 @@ class Predicate:
         return valid_trees
 
     def check_predicates(self, source_pred, target_pred, ind=None):
+        has_target = False
         only_source = source_pred.split('(')[0].strip().lower()
         only_target = target_pred.split('(')[0].strip().lower()
         mapping_type = self.mapping_type
@@ -118,7 +119,10 @@ class Predicate:
         for pred in self.new_kb_target:
             if only_target == pred.split('(')[0].strip().lower():
                 target_pred = pred
+                has_target = True
                 break
+        if not has_target:
+            return True
         source_types = source_pred.split('(')[1].split(')')[0].split(',')
         target_types = target_pred.split('(')[1].split(')')[0].split(',')
 
@@ -216,11 +220,12 @@ class Predicate:
             source_pred: string
             target_pred: string
         """
-        source_pred = source_pred.split('(')[1].split(',')
-        target_pred = target_pred.split('(')[1].split(',')
-        for i in range(0, len(source_pred)):
-            if source_pred[i].replace(').', '') not in list(self.mapping_type.keys()):
-                self.mapping_type[source_pred[i].replace(').', '')] = target_pred[i].replace(').', '')
+        if source_pred and target_pred:
+            source_pred = source_pred.split('(')[1].split(',')
+            target_pred = target_pred.split('(')[1].split(',')
+            for i in range(0, len(source_pred)):
+                if source_pred[i].replace(').', '') not in list(self.mapping_type.keys()):
+                    self.mapping_type[source_pred[i].replace(').', '')] = target_pred[i].replace(').', '')
 
     def mapping_types(self, individual_tree, first_source_tree, ind):
         first_source_pred = first_source_tree[0].split(';')[2].split(':-')[0].split('(')[0]
@@ -245,7 +250,8 @@ class Predicate:
             for idx in range(0, len(source)):
                 complete_source = self.get_complete_pred(source[idx], ind.predicate_inst.new_first_kb_source)
                 complete_target = self.get_complete_pred(target[idx], ind.predicate_inst.new_kb_target)
-                ind.predicate_inst.define_mapping(complete_source, complete_target)
+                if complete_source is not None and complete_target is not None:
+                    ind.predicate_inst.define_mapping(complete_source, complete_target)
         return ind
 
     def _get_valid_map(self, complete_source, list_pos_target):
@@ -409,6 +415,10 @@ class Predicate:
         qtd_preds = 0
         for pred in source_pred:
             complete_source, valid_preds, complete_valid = self.get_valid_predicates(pred, individual)
+            ### VERIFICAR DEPOIS ###
+            if not len(valid_preds):
+                final_pred.append('(A,B)')
+                continue
             index_choice = randint(0, len(valid_preds)-1)
             if has_target:
                 pp = split_pred[2].split(':-')[1].split(')')
