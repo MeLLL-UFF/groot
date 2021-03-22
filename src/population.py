@@ -116,7 +116,7 @@ class Population:
                 part1, part2 = part1.crossover(part1, part2, div_part1, div_part2)
         return population
 
-    def evaluation(self, population, pos_target, 
+    def evaluation(self, population, trees, pos_target, 
                    neg_target, facts_target):
         """
             Evaluating all population
@@ -124,6 +124,7 @@ class Population:
             Parameters
             ----------
             population: list with Individual instances
+            trees: int
             pos_target: list of lists
             neg_target: list of lists
             facts_target: list of lists
