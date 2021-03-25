@@ -2,7 +2,7 @@ from deap import tools, base, creator
 
 
 from src.individual import *
-from src.population import *
+from src.brkga_variation.population import *
 from src.transfer import *
 
 
@@ -34,7 +34,8 @@ def genetic(src_struct, target, source, pos_target,
                 ind.results.append(ind.results[-1])
             ind.predicate_inst.mapping_type = {}
       
-        best_individuals = pop.toolbox.selBest(pop.population, 1)
+        top = pop.toolbox.selBest(pop.population, 10)
+        bottom = pop.toolbox.selWorst(pop.population, 10)
 
         if len(best_evaluates) > 0 and pop.best_result() == best_evaluates[-1]:
             has_same_best_value += 1
@@ -46,29 +47,25 @@ def genetic(src_struct, target, source, pos_target,
         if has_same_best_value == ((NUM_GEN)/2)+1:
             return pop, best_evaluates, all_best_results
        
-        pop_next = pop.selection(pop.population)
-        
-        pop_next = list(map(pop.toolbox.clone, pop_next))
-       
+        pop_next = [individual for individual in pop.population 
+                    if individual not in top 
+                    and individual not in bottom]
 
         #crossover
-        pop_next = pop.crossover(pop_next, crossover)
-
+        pop_next = pop.crossover(pop_next, top, 10, crossover)
+    
         #mutating the population
-        pop_next = pop.mutation(pop_next, mutation)
+        pop_next.extend(pop.mutation(bottom, mutation))
+
+        pop_next.extend(top)
 
         # evaluating new population
         pop.evaluation(pop_next, trees, pos_target, 
                        neg_target, facts_target)
 
-        worst_individuals = pop.toolbox.selWorst(pop_next, 1)
-        for ind in worst_individuals:
-            pop_next.remove(ind)
-
-        all_best_results.append(pop.get_all_best_results())
-        pop_next.extend(best_individuals)
 
         pop.population[:] = pop_next
+        # pop.print_pop()
     all_best_results.append(pop.get_all_best_results())
     best_evaluates.append(pop.best_result())
 

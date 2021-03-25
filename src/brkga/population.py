@@ -1,5 +1,6 @@
+import copy
 from deap import tools, base, creator
-from random import random
+from random import random, randint, uniform
 
 
 from src.individual import *
@@ -59,7 +60,8 @@ class Population:
         """
         print ('['),
         for ind in self.population:
-            print (ind.individual_trees)
+            print(ind.individual_trees)
+            print(ind.fitness)
         print (']')
 
     def selection(self, population):
@@ -76,7 +78,8 @@ class Population:
         """
         return self.toolbox.select(population, self.pop_size)
 
-    def mutation(self, population, mutation_rate):
+    def mutation(self, len_pop, mutation_rate, source_tree, target, source, kb_source,
+                            kb_target, target_pred):
         """
             Making mutation in the population
 
@@ -90,12 +93,37 @@ class Population:
             pop: list with Individual instances
         """
         pop = []
-        for individual in population:
-            individual_aux = individual.mutation(individual, mutation_rate)
-            pop.append(individual_aux)
+        for index in range(len_pop):
+            creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
+            creator.create("Individual", Individual, fitness=creator.FitnessMin)
+            predicate_inst = Predicate(kb_source, kb_target, target_pred)
+            tmp = creator.Individual(source_tree, target, source, predicate_inst)
+
+            self.toolbox.register("function", tmp.generate_individuals)
+            self.toolbox.function()
+            pop.append(tmp)
         return pop
 
-    def crossover(self, population, cross_rate):
+    def _get_genes(self, individual_pop, individual_elite, crossover_rate):
+        positions = []
+        new_ind = copy.deepcopy(individual_elite)
+        for i in range(0, len(individual_pop.individual_trees)):
+            positions.append(uniform(0.0, 1.0))
+
+        new_ind.individual_trees = []
+        new_ind.source_tree = []
+        for idx in range(0, len(positions)):
+            if positions[idx] <= crossover_rate:
+                new_ind.individual_trees.append(individual_elite.individual_trees[idx])
+                new_ind.source_tree.append(individual_elite.source_tree[idx])
+            else:
+                new_ind.individual_trees.append(individual_pop.individual_trees[idx])
+                new_ind.source_tree.append(individual_pop.source_tree[idx])
+        new_ind.need_evaluation = True
+        return new_ind
+
+
+    def crossover(self, population, elite, len_pop, cross_rate):
         """
             Making crossover between individuals from the same population
 
@@ -108,13 +136,25 @@ class Population:
             ----------
             population: list with Individual instances
         """
-        for part1, part2 in zip(population[::2], population[1::2]):
-            if random() < cross_rate:     
-                part1_range = list(range(0, 10))
-                part2_range = list(map(lambda x:x+10, part1_range))
-                div_part1, div_part2 = self.toolbox.mate(part1_range, part2_range)
-                part1, part2 = part1.crossover(part1, part2, div_part1, div_part2)
-        return population
+        new_population = copy.deepcopy(population)
+        new_elite = copy.deepcopy(elite)
+        new_pop = []
+        while len(new_pop) < len_pop:
+            # if random() < cross_rate: 
+            pos_population = randint(0, len(new_population)-1)
+            pos_elite = randint(0, len(new_elite)-1)  
+            new_pop.append(self._get_genes(new_population[pos_population], 
+                                           new_elite[pos_elite], 
+                                           cross_rate))
+            # part1_range = list(range(0, 10))
+            # part2_range = list(map(lambda x:x+10, part1_range))
+            # div_part1, div_part2 = self.toolbox.mate(part1_range, part2_range)
+            # new_ind1, new_ind2 = new_population[pos_population].crossover(new_population[pos_population], new_elite[pos_elite], div_part1, div_part2)
+            # new_ind1.need_evaluation = True
+            # new_ind2.need_evaluation = True
+            # new_pop.append(new_ind1)
+            # new_pop.append(new_ind2)
+        return new_pop
 
     def evaluation(self, population, trees, pos_target, 
                    neg_target, facts_target):
@@ -130,18 +170,28 @@ class Population:
             facts_target: list of lists
 
         """
+        evaluate_pop = [] 
+        i = 0
+        for individual in population:
+            if individual.need_evaluation:
+                evaluate_pop.append(individual)
 
-        self.toolbox.register("before_evaluate", population[0].before_evaluate)
+        for individual in population:
+            individual.need_evaluation = False
 
-        trees = map(self.toolbox.before_evaluate, population)
+        self.toolbox.register("before_evaluate", evaluate_pop[0].before_evaluate)
 
-        for ind, tree in zip(population, trees):
+        trees = map(self.toolbox.before_evaluate, evaluate_pop)
+
+        for ind, tree in zip(evaluate_pop, trees):
             ind.individual_trees = tree[0]
             ind.modified_src_tree = tree[1]
             ind.transfer = tree[2]
 
-        results = population[0].run_evaluate(population, pos_target, neg_target, facts_target)
-        for ind, result in zip(population, results):
+        
+
+        results = evaluate_pop[0].run_evaluate(evaluate_pop, pos_target, neg_target, facts_target)
+        for ind, result in zip(evaluate_pop, results):
             ind.fitness.values = result[0],
             ind.results.append(result[1])    
     
