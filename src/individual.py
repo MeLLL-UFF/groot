@@ -1,5 +1,5 @@
 from boostsrl import boostsrl
-import copy
+# import copy
 import multiprocessing
 import numpy as np
 import os
@@ -40,6 +40,7 @@ class Individual:
         self.predicate_inst = predicate_instance #<--- Predicate(...)
         self.transfer = Transfer(predicate_instance, target)
         self.individual_trees = []
+        self.need_evaluation = True
         self.results = []
 
     def generate_random_individual(self, src_tree, tree_number):
@@ -253,6 +254,7 @@ class Individual:
         neg_target = args['neg_target']
         facts_target = args['facts_target']
         transfer = args['transfer']
+        # trees = args['trees']
 
         os.chdir(f'individual_{args["idx"]}')
 # 
@@ -282,8 +284,25 @@ class Individual:
             results.append(test_model.summarize_results())
         m_auc_pr, m_auc_roc, m_cll, m_prec, m_rec, \
         m_f1, s_auc_pr, s_auc_roc, s_cll, s_prec, s_rec, s_f1 = Individual.get_results(results)
-        # self.print_results(m_auc_pr, m_auc_roc, m_cll, m_prec, m_rec, m_f1)
-        # self.print_results(s_auc_pr, s_auc_roc, s_cll, s_prec, s_rec, s_f1, type='STD')
+        
+        # print('MEDIA')
+        # print("AUC PR: ", m_auc_pr)
+        # print("AUC ROC: ", m_auc_roc)
+        # print("CLL: ", m_cll)
+        # print("PREC: ", m_prec)
+        # print("RECALL: ", m_rec)
+        # print("F1: ", m_f1)
+        # print("-------------------")
+        # print('STD')
+        # print("AUC PR: ", s_auc_pr)
+        # print("AUC ROC: ", s_auc_roc)
+        # print("CLL: ", s_cll)
+        # print("PREC: ", s_prec)
+        # print("RECALL: ", s_rec)
+        # print("F1: ", s_f1)
+        # print("-------------------")
+
+
         results = {'m_auc_pr': m_auc_pr, 'm_auc_roc': m_auc_roc,
                    'm_cll': m_cll, 'm_rec': m_rec, 'm_pred': m_prec, 'm_f1': m_f1,
                    's_auc_pr': s_auc_pr, 's_auc_roc': s_auc_roc,
@@ -326,6 +345,7 @@ class Individual:
             Parameters
             ----------
             population: list
+            trees: int
             pos_target: list
             neg_target: list
             facts_target: list
@@ -371,7 +391,7 @@ class Individual:
         """
         new_individual_tree = []
         for pred in individual_tree:
-            if random() < mut_rate:
+            if random() <= mut_rate:
                 if len(pred.split(":-")) > 1:
                     pred_source = self.predicate_inst.get_modes(individual_tree, 
                                                                 pred.split(":- ")[1])
