@@ -45,6 +45,7 @@ class Predicate:
                     if not self.check_predicates(source[idx], target[idx], ind):
                         new_pred = self.get_modes(first_source_tree, 
                                                   first_source_tree[line].split(":- ")[1])
+    
                         res = self.change_pred(first_source_pred, first_target_pred, 
                                                             first_source_tree[line], new_pred, ind)
 
@@ -73,21 +74,26 @@ class Predicate:
                     if not self.check_predicates(source[idx], target[idx], ind):
                         
                         new_pred = self.get_modes(first_source_tree, first_source_tree[line])
+                    
                         res = self.change_pred(first_source_pred, first_target_pred, 
                                                             first_source_tree[line], new_pred, ind)
                         new_target = res.split(';')[2].split('),')[idx]
-                        complete_source = self.get_complete_pred(source[idx], ind.predicate_inst.new_first_kb_source)
-                        complete_target = self.get_complete_pred(new_target, ind.predicate_inst.new_kb_target)
-                        ind.predicate_inst.define_mapping(complete_source, complete_target)
+
+                        if "none" not in new_target:
+                            complete_source = self.get_complete_pred(source[idx], ind.predicate_inst.new_first_kb_source)
+                            complete_target = self.get_complete_pred(new_target, ind.predicate_inst.new_kb_target)
+                            ind.predicate_inst.define_mapping(complete_source, complete_target)
                         
                     else:
-                        
                         tmp_res = res.split(';')
                         tmp = tmp_res[2].split('),')
                         tmp[idx] = target[idx]
                         tmp_res[2] = '),'.join(tmp)
                         res = ";".join(tmp_res)
-                        
+                    
+                if not 'none(none)' in res:
+                    res = res.replace('(none)', 'none(none)')
+                    
                 valid_tree.append(res)
         ind = self.mapping_types(valid_tree, first_source_tree, ind)
         return valid_tree, ind
@@ -101,7 +107,6 @@ class Predicate:
             valid_tree, ind = (self.check_tree(ind.individual_trees[idx], ind.first_source_tree[idx], ind))
             valid_trees.append(valid_tree)
             ind = self.mapping_types(ind.individual_trees[idx], ind.first_source_tree[idx], ind)
-
         return valid_trees
 
     def check_predicates(self, source_pred, target_pred, ind=None):
@@ -286,12 +291,13 @@ class Predicate:
                 index_target.append(var_target)
             elif list_pos_target[var_target].split('(')[1].startswith(pred_var.replace(').', '').replace('(', '')):
                 index_target.append(var_target)
-        if len(index_target) == 0:
+        if len(index_target) == 0 and len(pred_var) == 3:
             pred_var = pred_var.replace('(', '').replace(').', '')
             for index in range(0, len(list_pos_target)):
                 for i in pred_var:
                     if i in list_pos_target[index]:
                         return [index]
+
         return index_target
 
     def get_valid_predicates(self, source_pred, individual=None):
@@ -338,7 +344,11 @@ class Predicate:
                 complete_source_pred = pred
                 break
 
+        if new_source_pred == 'none':
+            return '', [], []
+
         if complete_source_pred == '':
+            print(source_pred)
             print(new_source_pred)
             print("KB: ", new_kb_source)
             print(individual.individual_trees)
@@ -415,9 +425,14 @@ class Predicate:
         qtd_preds = 0
         for pred in source_pred:
             complete_source, valid_preds, complete_valid = self.get_valid_predicates(pred, individual)
-            ### VERIFICAR DEPOIS ###
             if not len(valid_preds):
-                final_pred.append('(A,B)')
+                if has_target: 
+                    pp = split_pred[2].split(':-')[1].split(')')
+                    types = f"({pp[qtd_preds].strip().split('(')[1]})"
+                else:
+                    pp = split_pred[2].split(')')
+                    types = f"({pp[qtd_preds].strip().split('(')[1]})"
+                final_pred.append(f'none{types}')
                 continue
             index_choice = randint(0, len(valid_preds)-1)
             if has_target:
