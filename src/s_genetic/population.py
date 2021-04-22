@@ -146,19 +146,20 @@ class Population:
         for individual in population:
             individual.need_evaluation = False
 
-        self.toolbox.register("before_evaluate", evaluate_pop[0].before_evaluate)
+        if len(evaluate_pop) > 0:
+            self.toolbox.register("before_evaluate", evaluate_pop[0].before_evaluate)
 
-        trees = map(self.toolbox.before_evaluate, evaluate_pop)
+            trees = map(self.toolbox.before_evaluate, evaluate_pop)
 
-        for ind, tree in zip(evaluate_pop, trees):
-            ind.individual_trees = tree[0]
-            ind.modified_src_tree = tree[1]
-            ind.transfer = tree[2]
+            for ind, tree in zip(evaluate_pop, trees):
+                ind.individual_trees = tree[0]
+                ind.modified_src_tree = tree[1]
+                ind.transfer = tree[2]
 
-        results = evaluate_pop[0].run_evaluate(evaluate_pop, pos_target, neg_target, facts_target)
-        for ind, result in zip(evaluate_pop, results):
-            ind.fitness.values = result[0],
-            ind.results.append(result[1])    
+            results = evaluate_pop[0].run_evaluate(evaluate_pop, pos_target, neg_target, facts_target)
+            for ind, result in zip(evaluate_pop, results):
+                ind.fitness.values = result[0],
+                ind.results.append(result[1])    
     
 
     def best_result(self):
