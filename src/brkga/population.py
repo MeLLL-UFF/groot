@@ -43,8 +43,8 @@ class Population:
         """
         for index in range(self.pop_size):
 
-            creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
-            creator.create("Individual", Individual, fitness=creator.FitnessMin)
+            creator.create("FitnessMax", base.Fitness, weights=(1.0,))
+            creator.create("Individual", Individual, fitness=creator.FitnessMax)
             predicate_inst = Predicate(kb_source, kb_target, target_pred)
             tmp = creator.Individual(source_tree, target, source, predicate_inst)
 
@@ -179,21 +179,20 @@ class Population:
         for individual in population:
             individual.need_evaluation = False
 
-        self.toolbox.register("before_evaluate", evaluate_pop[0].before_evaluate)
+        if len(evaluate_pop) > 0:
+            self.toolbox.register("before_evaluate", evaluate_pop[0].before_evaluate)
 
-        trees = map(self.toolbox.before_evaluate, evaluate_pop)
+            trees = map(self.toolbox.before_evaluate, evaluate_pop)
 
-        for ind, tree in zip(evaluate_pop, trees):
-            ind.individual_trees = tree[0]
-            ind.modified_src_tree = tree[1]
-            ind.transfer = tree[2]
+            for ind, tree in zip(evaluate_pop, trees):
+                ind.individual_trees = tree[0]
+                ind.modified_src_tree = tree[1]
+                ind.transfer = tree[2]
 
-        
-
-        results = evaluate_pop[0].run_evaluate(evaluate_pop, pos_target, neg_target, facts_target)
-        for ind, result in zip(evaluate_pop, results):
-            ind.fitness.values = result[0],
-            ind.results.append(result[1])    
+            results = evaluate_pop[0].run_evaluate(evaluate_pop, pos_target, neg_target, facts_target)
+            for ind, result in zip(evaluate_pop, results):
+                ind.fitness.values = result[0],
+                ind.results.append(result[1])   
     
 
     def best_result(self):
@@ -210,7 +209,8 @@ class Population:
         for indice in range(self.pop_size):
             fit = self.population[indice].fitness.values
             # print(fit, fit[0] < result)
-            if fit[0] < result:
+            # if fit[0] < result:
+            if fit[0] > result:
                 result = fit[0]
         # print(f"bestResult: {result}")
         return result
@@ -230,7 +230,8 @@ class Population:
         for indice in range(self.pop_size):
             fit = self.population[indice].fitness.values
             # print(fit, fit[0] < result)
-            if fit[0] < result_cll:
+            # if fit[0] < result_cll:
+            if fit[0] > result_cll:
                 result = self.population[indice].results[-1]
                 result_cll = fit[0]
         # print(f"bestResult: {result}")
