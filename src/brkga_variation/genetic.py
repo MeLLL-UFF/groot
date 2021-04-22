@@ -65,6 +65,7 @@ def genetic(src_struct, target, source, pos_target,
 
 
         pop.population[:] = pop_next
+        all_best_results.append(pop.get_all_best_results())
         # pop.print_pop()
     all_best_results.append(pop.get_all_best_results())
     best_evaluates.append(pop.best_result())
