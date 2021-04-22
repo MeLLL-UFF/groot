@@ -285,6 +285,8 @@ class Individual:
         m_auc_pr, m_auc_roc, m_cll, m_prec, m_rec, \
         m_f1, s_auc_pr, s_auc_roc, s_cll, s_prec, s_rec, s_f1 = Individual.get_results(results)
         
+
+
         # print('MEDIA')
         # print("AUC PR: ", m_auc_pr)
         # print("AUC ROC: ", m_auc_roc)
@@ -308,7 +310,7 @@ class Individual:
                    's_auc_pr': s_auc_pr, 's_auc_roc': s_auc_roc,
                    's_cll': s_cll, 's_rec': s_rec, 's_prec': s_prec, 's_f1': s_f1}
         os.chdir('..')
-        return -m_cll, results
+        return m_cll, results
 
     def _input_list(self, population, pos_target, neg_target, facts_target):
         """
