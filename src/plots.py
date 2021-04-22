@@ -29,9 +29,9 @@ class Plots:
 	    for _m_data, _s_data, name in zip(m_data, std_data, data_name):
 	        positions = list(range(len(_m_data)))
 	        plt.errorbar(positions, _m_data, yerr=_s_data,fmt='-o',label=name)
-	        plt.annotate(f'{(round(_m_data[0],2))}', (0+0.1, _m_data[0]), arrowprops=dict(facecolor='black', shrink=100.0),
+	        plt.annotate(f'{(round(_m_data[0],4))}', (0+0.1, _m_data[0]), arrowprops=dict(facecolor='black', shrink=100.0),
 	           ha='left', va='bottom',fontsize=12)
-	        plt.annotate(f'{(round(_m_data[-1],2))}+/-{(round(_s_data[-1],4))}', (positions[-1]+0.1, _m_data[-1]), arrowprops=dict(facecolor='black', shrink=100.0),
+	        plt.annotate(f'{(round(_m_data[-1],4))}+/-{(round(_s_data[-1],4))}', (positions[-1]+0.1, _m_data[-1]), arrowprops=dict(facecolor='black', shrink=100.0),
 	           ha='left', va='bottom',fontsize=12)
 	    plt.legend()
 	    plt.savefig(image_name)
