@@ -92,7 +92,7 @@ class Population:
         pop = []
         for individual in population:
             if random() <= mutation_rate:
-                individual_aux = individual.mutation(individual, mutation_rate)
+                individual_aux = individual.mutation_revision(individual, mutation_rate)
                 individual_aux.need_evaluation = True
                 pop.append(individual_aux)
             else:
