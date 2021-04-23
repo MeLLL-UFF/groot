@@ -1,9 +1,9 @@
 from boostsrl import boostsrl
-# import copy
+import copy
 import multiprocessing
 import numpy as np
 import os
-from random import randint, random
+from random import choice, randint, random
 import re
 import shutil
 import string
@@ -11,6 +11,7 @@ import sys
 
 
 from src.transfer import Transfer
+from src.revision import Revision
 
 
 class Individual:
@@ -42,6 +43,7 @@ class Individual:
         self.individual_trees = []
         self.need_evaluation = True
         self.results = []
+        self.revision = Revision()
 
     def generate_random_individual(self, src_tree, tree_number):
         """
@@ -424,6 +426,35 @@ class Individual:
         ind.individual_trees = new_individual_trees
         return ind
 
+    def mutation_revision(self, ind, mut_rate):
+        """
+            Making mutation in an individual according to the mutation rate
+
+            Parameters
+            ----------
+            ind: Individual instance
+            mut_rate: float
+
+            Returns
+            ----------
+            ind: Individual instance
+        """
+        operators = ['expansion', 'pruning']
+        new_individual_trees = []
+        new_source_tree = []
+        for idx in range(0, len(ind.individual_trees)):
+            operator = choice(operators)
+            new_src, new_ind = ind.revision.modify_tree(ind,
+                                                        ind.individual_trees[idx], 
+                                                        ind.first_source_tree[idx], 
+                                                        operator)
+            new_source_tree.append(new_src)
+            new_individual_trees.append(new_ind)
+        # print("KB: ", ind.predicate_inst.kb_source)
+        ind.individual_trees = new_individual_trees
+        ind.first_source_tree = new_source_tree
+        return ind
+
     def form_individual(self, tree_one, tree_two, div, threshold):
         """
             Combining two individuals according to the threshold
@@ -480,5 +511,21 @@ class Individual:
                                                     tree_two.source_tree, 
                                                     div_two, 
                                                     len(tree_one.source_tree))
+        tree_one.first_source_tree = self.form_individual(tree_one.first_source_tree, 
+                                                    tree_two.first_source_tree, 
+                                                    div_one, 
+                                                    len(tree_one.first_source_tree))
+        tree_two.first_source_tree = self.form_individual(tree_one.first_source_tree, 
+                                                    tree_two.first_source_tree, 
+                                                    div_two, 
+                                                    len(tree_one.first_source_tree))
+        if len(tree_two.predicate_inst.kb_source) >  len(tree_one.predicate_inst.kb_source):
+            tree_one.predicate_inst.kb_source = copy.deepcopy(tree_two.predicate_inst.kb_source)
+            tree_one.predicate_inst.new_kb_source = copy.deepcopy(tree_two.predicate_inst.new_kb_source)
+            tree_one.predicate_inst.new_first_kb_source = copy.deepcopy(tree_two.predicate_inst.new_first_kb_source)
+        else:
+            tree_two.predicate_inst.kb_source = copy.deepcopy(tree_one.predicate_inst.kb_source)
+            tree_two.predicate_inst.new_kb_source = copy.deepcopy(tree_one.predicate_inst.new_kb_source)
+            tree_two.predicate_inst.new_first_kb_source = copy.deepcopy(tree_one.predicate_inst.new_first_kb_source)
         return tree_one, tree_two
 
