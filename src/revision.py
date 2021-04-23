@@ -2,7 +2,7 @@ from boostsrl import boostsrl
 import copy
 import numpy as np
 import os
-from random import randint
+from random import choice, randint
 import re
 import shutil
 import string
@@ -28,7 +28,7 @@ class Revision:
         parent = ','.join(splitted_line[1].split(',')[0:-1])
         parent_line = 0
         for line in range(0, tree_line):
-            if ind_tree[line].split(';')[1].startswith(parent):
+            if individual_tree[line].split(';')[1].startswith(parent):
                 parent_line = line
                 break
         tmp_ind = new_individual_tree[parent_line].split(';')
@@ -47,11 +47,12 @@ class Revision:
             if not individual_tree[line].split(';')[1].startswith(splitted_line[1]):        
                 new_individual_tree.append(individual_tree[line])
                 new_source_tree.append(source_tree[line])
-        return new_individual_tree, new_source_tree
+        return new_source_tree, new_individual_tree
 
-    def predicates(target_pred, kb_source, var_list_plus, var_list_minus, number_pred):
+    def predicates(self, individual, var_list_plus, var_list_minus, number_pred):
         random_pred_target = []
         random_pred_source = []
+        target_pred = individual.predicate_inst.target_pred
         for i in range(0, number_pred):
             #target
             pred = target_pred[randint(0, len(target_pred)-1)]
@@ -67,15 +68,17 @@ class Revision:
             random_pred_target.append(f'{pred[0]}({", ".join(chosen_variables)})')
 
             #adicionando ao kb_source
-            kb_source.append(f'{pred[0]}target({",".join(types_source)}).')
+            individual.predicate_inst.kb_source.append(f'{pred[0]}target({",".join(types_source)}).')
+            individual.predicate_inst.new_kb_source.append(f'{pred[0]}target({",".join(types_source)}).')
+            individual.predicate_inst.new_first_kb_source.append(f'{pred[0]}target({",".join(types_source)}).')
             random_pred_source.append(f'{pred[0]}target({", ".join(chosen_variables)})')
 
         return ', '.join(random_pred_source), ', '.join(random_pred_target)
 
 
-    def add_node(individual_tree, source_tree, tree_line, target_pred, kb_source):
+    def add_node(self, individual_tree, source_tree, tree_line, individual):
         variables_plus = set()
-        for i in individual_tree[0:tree_line]:
+        for i in individual_tree[0:tree_line+1]:
             for char_ in i:
                 if char_.isupper(): variables_plus.add(char_)
 
@@ -83,43 +86,85 @@ class Revision:
         for char_ in list(string.ascii_uppercase):
             if char_ not in variables_plus: variables_minus.add(char_)
                 
-        print(len(variables_plus))
 
         #nodeSize = 2
         number_pred = randint(1, 2)
 
-        pred_source, pred_target = predicates(target_pred, kb_source, variables_plus, variables_minus, number_pred)
+        pred_source, pred_target = self.predicates(individual, variables_plus, variables_minus, number_pred)
 
         new_individual_tree = individual_tree[0:tree_line]
         new_source_tree = source_tree[0:tree_line]
 
         where_false = individual_tree[tree_line].split(';')
+        where_false_src = source_tree[tree_line].split(';')
         new_node = copy.deepcopy(where_false)
+        new_node_src = copy.deepcopy(where_false_src)
         if where_false[-1] == 'false':
             #indica que vai ser adicionado um novo nó no lado direito (quando der falso)
             where_false[-1] = 'true'
-            new_node[1] = f'{where_false[1]},false'
+            where_false_src[-1] = 'true'
+            if len(where_false[1]) > 0:
+                new_node[1] = f'{where_false[1]},false'
+                new_node_src[1] = f'{where_false_src[1]},false'
+            else:
+                new_node[1] = f'false'
+                new_node_src[1] = f'false'
         else:
             #indica que vai ser adicionado um novo nó no lado esquerdo (quando der verdadeiro)
             where_false[-2] = 'true'
-            new_node[1] = f'{where_false[1]},true'
+            where_false_src[-2] = 'true'
+            if len(where_false[1]) > 0:
+                new_node[1] = f'{where_false[1]},true'
+                new_node_src[1] = f'{where_false_src[1]},true'
+            else:
+                new_node[1] = f'true'
+                new_node_src[1] = f'true'
         new_node[-1] = f'false'
         new_node[-2] = f'false'
+        new_node_src[-1] = f'false'
+        new_node_src[-2] = f'false'
         new_node[2] = f'{pred_target}.'
-        print(new_node)
+        new_node_src[2] = f'{pred_source}.'
+        
         new_individual_tree.append(';'.join(where_false))
         new_individual_tree.append(';'.join(new_node))
 
+        new_source_tree.append(';'.join(where_false_src))
+        new_source_tree.append(';'.join(new_node_src))
+
         for line in range(tree_line+1, len(individual_tree)):   
             new_individual_tree.append(individual_tree[line])
-            # new_source_tree.append(source_tree[line])
+            new_source_tree.append(source_tree[line])
+        return new_source_tree, new_individual_tree
 
-        return new_individual_tree, new_source_tree
+    def leafs_to_add(self, individual_tree):
+        possible_add = []
+        for line in range(0, len(individual_tree)):
+            splitted_line = individual_tree[line].split(';')
+            if splitted_line[-1] == 'false' or splitted_line[-2] == 'false':
+                possible_add.append(line)
+        return possible_add
 
-    def choose_node(self, individual_tree, random_line=True):
-        #escolhe nó para ser removido de forma aleatória
+    def choose_node(self, individual_tree, operator, random_line=True):
         if random_line:
-            return randint(1, len(individual_tree)-1)
+            #escolhe nó para ser removido de forma aleatória
+            if operator == 'expansion':
+                return choice(self.leafs_to_add(individual_tree))
+            else: #operator == pruning
+                if len(individual_tree) == 1:
+                    return None
+                return randint(1, len(individual_tree)-1)
+
+    def modify_tree(self, individual, individual_tree, source_tree,
+                    operator, random_line=True):
+        tree_line = self.choose_node(individual_tree, operator, random_line)
+        if not tree_line:
+            return source_tree, individual_tree
+
+        if operator == 'expansion':
+            return self.add_node(individual_tree, source_tree, tree_line, individual)
+        else:
+            return  self.remove_node(individual_tree, source_tree, tree_line)
 
 
 
