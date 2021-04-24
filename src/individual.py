@@ -44,6 +44,7 @@ class Individual:
         self.need_evaluation = True
         self.results = []
         self.revision = Revision()
+        self.variances = None
 
     def generate_random_individual(self, src_tree, tree_number):
         """
@@ -267,6 +268,7 @@ class Individual:
         background_train = boostsrl.modes(args['kb_target'], [args['target']], useStdLogicVariables=False, 
                                           maxTreeDepth=3, nodeSize=2, numOfClauses=8)
         results = []
+        best_cll = 0.0
         for i in range(0, len(pos_target)):
             train_pos_target, train_neg_target, train_facts_target, \
             test_pos_target, test_neg_target, test_facts_target = Individual.define_splits(pos_target, neg_target, 
@@ -274,16 +276,21 @@ class Individual:
             model_tr = boostsrl.train(background_train, train_pos_target, train_neg_target, 
                                       train_facts_target, refine=refine, transfer=transfer, 
                                       trees=10)
-            structured_src = []
-            for j in range(0, 10):
-                try:
-                    structured_src.append(model_tr.get_structured_tree(treenumber=j+1).copy())
-                except:
-                    structured_src.append(model_tr.get_structured_tree(treenumber='combine').copy())
+
+            # structured_src = []
+            # for j in range(0, 10):
+            #     try:
+            #         structured_src.append(model_tr.get_structured_tree(treenumber=j+1).copy())
+            #     except:
+            #         structured_src.append(model_tr.get_structured_tree(treenumber='combine').copy())
             
             test_model = boostsrl.test(model_tr, test_pos_target, test_neg_target, 
                                        test_facts_target, trees=10)
-            results.append(test_model.summarize_results())
+
+            results_fold = test_model.summarize_results()
+            if results_fold['CLL'] < best_cll:
+                variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
+            results.append(results_fold)
         m_auc_pr, m_auc_roc, m_cll, m_prec, m_rec, \
         m_f1, s_auc_pr, s_auc_roc, s_cll, s_prec, s_rec, s_f1 = Individual.get_results(results)
         
@@ -312,7 +319,7 @@ class Individual:
                    's_auc_pr': s_auc_pr, 's_auc_roc': s_auc_roc,
                    's_cll': s_cll, 's_rec': s_rec, 's_prec': s_prec, 's_f1': s_f1}
         os.chdir('..')
-        return m_cll, results
+        return m_cll, results, variances
 
     def _input_list(self, population, pos_target, neg_target, facts_target):
         """
@@ -446,8 +453,10 @@ class Individual:
             operator = choice(operators)
             new_src, new_ind = ind.revision.modify_tree(ind,
                                                         ind.individual_trees[idx], 
+                                                        ind.variances[idx],
                                                         ind.first_source_tree[idx], 
-                                                        operator)
+                                                        operator,
+                                                        False)
             new_source_tree.append(new_src)
             new_individual_trees.append(new_ind)
         # print("KB: ", ind.predicate_inst.kb_source)
@@ -519,13 +528,18 @@ class Individual:
                                                     tree_two.first_source_tree, 
                                                     div_two, 
                                                     len(tree_one.first_source_tree))
-        if len(tree_two.predicate_inst.kb_source) >  len(tree_one.predicate_inst.kb_source):
-            tree_one.predicate_inst.kb_source = copy.deepcopy(tree_two.predicate_inst.kb_source)
-            tree_one.predicate_inst.new_kb_source = copy.deepcopy(tree_two.predicate_inst.new_kb_source)
-            tree_one.predicate_inst.new_first_kb_source = copy.deepcopy(tree_two.predicate_inst.new_first_kb_source)
-        else:
-            tree_two.predicate_inst.kb_source = copy.deepcopy(tree_one.predicate_inst.kb_source)
-            tree_two.predicate_inst.new_kb_source = copy.deepcopy(tree_one.predicate_inst.new_kb_source)
-            tree_two.predicate_inst.new_first_kb_source = copy.deepcopy(tree_one.predicate_inst.new_first_kb_source)
-        return tree_one, tree_two
+        tree_one.predicate_inst.kb_source.extend(tree_two.predicate_inst.kb_source)
+        tree_one.predicate_inst.new_kb_source.extend(tree_two.predicate_inst.new_kb_source)
+        tree_one.predicate_inst.new_first_kb_source.extend(tree_two.predicate_inst.new_first_kb_source)
+        tree_one.predicate_inst.kb_source = list(set(tree_one.predicate_inst.kb_source))
+        tree_one.predicate_inst.new_kb_source = list(set(tree_one.predicate_inst.new_kb_source))
+        tree_one.predicate_inst.new_first_kb_source = list(set(tree_one.predicate_inst.new_first_kb_source))
+        
 
+        tree_two.predicate_inst.kb_source.extend(tree_one.predicate_inst.kb_source)
+        tree_two.predicate_inst.new_kb_source.extend(tree_one.predicate_inst.new_kb_source)
+        tree_two.predicate_inst.new_first_kb_source.extend(tree_one.predicate_inst.new_first_kb_source)
+        tree_two.predicate_inst.kb_source = list(set(tree_two.predicate_inst.kb_source))
+        tree_two.predicate_inst.new_kb_source = list(set(tree_two.predicate_inst.new_kb_source))
+        tree_two.predicate_inst.new_first_kb_source = list(set(tree_two.predicate_inst.new_first_kb_source))
+        return tree_one, tree_two
