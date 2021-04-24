@@ -64,9 +64,8 @@ class Revision:
                     chosen_variables.append(list(var_list_plus)[randint(0, len(var_list_plus)-1)])
                 else:
                     chosen_variables.append(list(var_list_minus)[randint(0, len(var_list_minus)-1)])
-                types_source.append(f'{mode}{pred[0]}type{len(types_source)+1}')
+                types_source.append(f'{mode}{pred[0].replace("+", "").replace("-", "").replace("_","")}type{len(types_source)+1}')
             random_pred_target.append(f'{pred[0]}({", ".join(chosen_variables)})')
-
             #adicionando ao kb_source
             individual.predicate_inst.kb_source.append(f'{pred[0]}target({",".join(types_source)}).')
             individual.predicate_inst.new_kb_source.append(f'{pred[0]}target({",".join(types_source)}).')
@@ -145,7 +144,32 @@ class Revision:
                 possible_add.append(line)
         return possible_add
 
-    def choose_node(self, individual_tree, operator, random_line=True):
+    def chose_leaf_pruning(self, individual_tree, variances):
+        possible_leafs = []
+        for line in range(0, len(individual_tree)):
+            tree = individual_tree[line]
+            if tree.endswith('false;false'):
+                var_true = variances[tree.split(';')[1]][0]
+                var_false = variances[tree.split(';')[1]][1]
+                if var_true > 0.0025 and var_false > 0.0025:
+                    possible_leafs.append(line)
+        return possible_leafs
+
+    def chose_leaf_expansion(self, individual_tree, variances):
+        possible_leafs = []
+        for line in range(0, len(individual_tree)):
+            tree = individual_tree[line].split(';')
+            if tree[-1] == 'false':
+                var_true = variances[tree[1]][0]
+                if var_true > 0.0025:
+                    possible_leafs.append(line)
+            if tree[-2] == 'false':
+                var_false = variances[tree[1]][1]
+                if var_false > 0.0025:
+                    possible_leafs.append(line)
+        return possible_leafs
+
+    def choose_node(self, individual_tree, operator, variances, random_line=True):
         if random_line:
             #escolhe nó para ser removido de forma aleatória
             if operator == 'expansion':
@@ -154,10 +178,22 @@ class Revision:
                 if len(individual_tree) == 1:
                     return None
                 return randint(1, len(individual_tree)-1)
+        else: #not random
+            if operator == 'pruning':
+                res = self.chose_leaf_pruning(individual_tree, variances)
+                if not len(res):
+                    return None
+                return choice(res)
+            else:
+                res = self.chose_leaf_expansion(individual_tree, variances)
+                if not len(res):
+                    return None
+                return choice(res)
 
-    def modify_tree(self, individual, individual_tree, source_tree,
+    def modify_tree(self, individual, individual_tree, variances, source_tree,
                     operator, random_line=True):
-        tree_line = self.choose_node(individual_tree, operator, random_line)
+        tree_line = self.choose_node(individual_tree, operator, 
+                                     variances, random_line)
         if not tree_line:
             return source_tree, individual_tree
 
