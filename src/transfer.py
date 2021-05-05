@@ -160,9 +160,9 @@ class Transfer:
                 continue
             no_var = self._count_vars(source_pred[index])
             var_pred = self._generate_new_pred(no_var)
-            for pred in self.predicate_inst.new_kb_source or pred in self.predicate_inst.new_first_kb_source:
+            for pred in self.predicate_inst.new_first_kb_source:
                 if new_source_pred == pred.split('(')[0].lower().strip(): 
-                    real_predicate = '({}'.format(pred.split('(')[1])
+                    real_predicate = f"({pred.split('(')[1].replace('+', '').replace('-', '')}"
                     source = 'source: {}'.format(self.predicate_inst.change_predicate(pred, 
                                                                                       [tree_number, index_node], 
                                                                                       real_predicate))
@@ -171,7 +171,7 @@ class Transfer:
                     break
             for pred in self.predicate_inst.new_first_kb_source:
                 if new_source_pred == pred.split('(')[0].lower().strip():  
-                    real_predicate = '({}'.format(pred.split('(')[1])
+                    real_predicate = f"({pred.split('(')[1].replace('+', '').replace('-', '')}"
                     source = 'source: {}'.format(self.predicate_inst.change_predicate(pred, 
                                                                                       [tree_number, index_node], 
                                                                                       real_predicate))
