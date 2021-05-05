@@ -31,7 +31,6 @@ class Predicate:
         valid_tree = []
         first_source_pred = first_source_tree[0].split(';')[2].split(':-')[0].split('(')[0]
         first_target_pred = individual_tree[0].split(';')[2].split(':-')[0].split('(')[0]
-
         for line in range(0, len(individual_tree)):
             target_pred = individual_tree[line]
             source_pred = first_source_tree[line]

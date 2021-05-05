@@ -229,6 +229,13 @@ class Individual:
         return ind.individual_trees, ind.modified_src_tree, ind.transfer
 
     @staticmethod
+    def get_cll():
+        f = open(f'boostsrl/test_output.txt').read()
+        import re
+        line = re.findall(f'%Pos.*|%Neg.*|%LL.*|%LL*', f)
+        return [word.replace(' ','').replace('\t','').replace('%','') for word in line]
+        
+    @staticmethod
     def evaluate(args):
         """
             Evaluating the individual 
@@ -273,6 +280,7 @@ class Individual:
             train_pos_target, train_neg_target, train_facts_target, \
             test_pos_target, test_neg_target, test_facts_target = Individual.define_splits(pos_target, neg_target, 
                                                                                      facts_target, i)
+            train_neg_target = train_neg_target[:len(train_pos_target)]
             model_tr = boostsrl.train(background_train, train_pos_target, train_neg_target, 
                                       train_facts_target, refine=refine, transfer=transfer, 
                                       trees=10)
@@ -286,7 +294,6 @@ class Individual:
             
             test_model = boostsrl.test(model_tr, test_pos_target, test_neg_target, 
                                        test_facts_target, trees=10)
-
             results_fold = test_model.summarize_results()
             if results_fold['CLL'] < best_cll:
                 variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
@@ -294,6 +301,7 @@ class Individual:
         m_auc_pr, m_auc_roc, m_cll, m_prec, m_rec, \
         m_f1, s_auc_pr, s_auc_roc, s_cll, s_prec, s_rec, s_f1 = Individual.get_results(results)
         
+       
 
 
         # print('MEDIA')
@@ -456,7 +464,7 @@ class Individual:
                                                         ind.variances[idx],
                                                         ind.first_source_tree[idx], 
                                                         operator,
-                                                        False)
+                                                        True)
             new_source_tree.append(new_src)
             new_individual_trees.append(new_ind)
         # print("KB: ", ind.predicate_inst.kb_source)
@@ -543,3 +551,64 @@ class Individual:
         tree_two.predicate_inst.new_kb_source = list(set(tree_two.predicate_inst.new_kb_source))
         tree_two.predicate_inst.new_first_kb_source = list(set(tree_two.predicate_inst.new_first_kb_source))
         return tree_one, tree_two
+
+    def crossover_tree(self, tree_one, tree_two, tree_one_src, tree_two_src):
+        if len(tree_one) == 1 or len(tree_two) == 1:
+            return tree_one, tree_two, tree_one_src, tree_two_src
+        tree_one_choice = randint(1, len(tree_one)-1)
+        tree_two_choice = randint(1, len(tree_two)-1)
+
+        path_tree_one = tree_one[tree_one_choice].split(';')[1]
+        path_tree_two = tree_two[tree_two_choice].split(';')[1]
+        number_tree_one = tree_one[tree_one_choice].split(';')[0]
+        number_tree_two = tree_two[tree_two_choice].split(';')[0]
+        lines_tree_one = []
+        lines_tree_two = []
+        for i in range(0, len(tree_one)):
+            if tree_one[i].split(';')[1].startswith(path_tree_one):
+                lines_tree_one.append(i)
+        for j in range(0, len(tree_two)):
+            if tree_two[j].split(';')[1].startswith(path_tree_two):
+                lines_tree_two.append(j)
+
+        tree_one[tree_one_choice].split(';')[1].replace(path_tree_one, path_tree_two)
+        tree_two[tree_two_choice].split(';')[1].replace(path_tree_two, path_tree_one)
+
+        tree_one_src[tree_one_choice].split(';')[1].replace(path_tree_one, path_tree_two)
+        tree_two_src[tree_two_choice].split(';')[1].replace(path_tree_two, path_tree_one)        
+
+        new_tree_one = tree_one[:tree_one_choice]
+        new_tree_two = tree_two[:tree_two_choice]
+
+        new_tree_one_src = tree_one_src[:tree_one_choice]
+        new_tree_two_src = tree_two_src[:tree_two_choice]
+
+        for j in lines_tree_two:
+            tmp_tree_two = tree_two[j].split(';')
+            tmp_tree_two[0] = number_tree_one
+            tmp_tree_two[1] = tmp_tree_two[1].replace(path_tree_two, path_tree_one, 1)
+            new_tree_one.append(';'.join(tmp_tree_two))
+
+            tmp_tree_two = tree_two_src[j].split(';')
+            tmp_tree_two[0] = number_tree_one
+            tmp_tree_two[1] = tmp_tree_two[1].replace(path_tree_two, path_tree_one, 1)
+            new_tree_one_src.append(';'.join(tmp_tree_two))
+        for k in lines_tree_one:
+            tmp_tree_one = tree_one[k].split(';')
+            tmp_tree_one[0] = number_tree_two
+            tmp_tree_one[1] = tmp_tree_one[1].replace(path_tree_one, path_tree_two, 1)
+            new_tree_two.append(';'.join(tmp_tree_one))
+
+            tmp_tree_one = tree_one_src[k].split(';')
+            tmp_tree_one[0] = number_tree_two
+            tmp_tree_one[1] = tmp_tree_one[1].replace(path_tree_one, path_tree_two, 1)
+            new_tree_two_src.append(';'.join(tmp_tree_one))
+
+        new_tree_one.extend(tree_one[lines_tree_one[-1]+1:])
+        new_tree_two.extend(tree_two[lines_tree_two[-1]+1:])
+
+        new_tree_one_src.extend(tree_one_src[lines_tree_one[-1]+1:])
+        new_tree_two_src.extend(tree_two_src[lines_tree_two[-1]+1:])
+
+        return new_tree_one, new_tree_two, new_tree_one_src, new_tree_two_src
+
