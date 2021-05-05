@@ -23,7 +23,7 @@ def get_train_division(dataset):
 
 
 def split_folds(dataset, n_folds):
-    random.shuffle(dataset)
+    # random.shuffle(dataset)
     res = []
     kf = KFold(n_splits=n_folds)
     for train_index, test_index in kf.split(dataset):
@@ -35,8 +35,10 @@ def split_train_test(dataset, test_size=0.3):
     X_train, X_test = train_test_split(dataset, test_size=test_size, random_state=42)
     return X_train, X_test
 
-def get_train_test(dataset):
-    test_index = random.randint(0, len(dataset[0])-1)
+def get_train_test(dataset, i):
+    # test_index = random.randint(0, len(dataset[0])-1)
+    test_index = i
+    print(test_index)
     if len(dataset[0]) >= 3:
         test_facts = dataset[0][test_index]
         test_pos = dataset[1][test_index]
@@ -108,7 +110,7 @@ def create_structured_trees(model):
             structured_src.append(model.get_structured_tree(treenumber='combine').copy())
            
     src_struct = copy.deepcopy(structured_src)
-    print(src_struct)
+    # print(src_struct)
     new_src_struct = []
     for i in range(0, len(src_struct)):
         new_src_struct.append(define_individual(src_struct[i], i))  
@@ -164,7 +166,7 @@ def test_refine_transfer(kb, target, refine, transfer, train_dataset, test_datas
     return test_model.summarize_results(), test_model
 
 
-def test_tree_b(source, target, kb_source, kb_target, transferred_structured, train_dataset, test_dataset):
+def test_tree_b(source, target, kb_source, kb_target, transferred_structured, train_dataset, test_dataset, _transfer=None):
     sys.path.insert(0, '../TreeBoostler')
 
     from revision import revision
@@ -186,15 +188,17 @@ def test_tree_b(source, target, kb_source, kb_target, transferred_structured, tr
         with open('experiments/' + experiment_title + '/' + str(nbr) + '_' + experiment_title + '.txt', 'a') as f:
             print(message, file=f)
             print(message)
-    
-    tr_file = transfer.get_transfer_file(kb_source, kb_target, predicate, to_predicate, searchArgPermutation=True, allowSameTargetMap=False)
+    if _transfer:
+        tr_file = _transfer
+    else:
+        tr_file = transfer.get_transfer_file(kb_source, kb_target, predicate, to_predicate, searchArgPermutation=True, allowSameTargetMap=False)
     new_target = to_predicate
-    
+
     # transfer and revision theory
     # experiment_title = f'IMDB->cora: {source}->{target}'
     # nbr = 1
     background = boostsrl.modes(kb_target, [to_predicate], useStdLogicVariables=False, maxTreeDepth=3, nodeSize=2, numOfClauses=8)
-    return revision.theory_revision(background, boostsrl, target, train_dataset[0], train_dataset[1], train_dataset[2], test_dataset[0], test_dataset[1], test_dataset[2], transferred_structured, transfer=tr_file, trees=10, max_revision_iterations=1, print_function=print_function)
+    return revision.theory_revision(background, boostsrl, target, train_dataset[0], train_dataset[1], train_dataset[2], test_dataset[0], test_dataset[1], test_dataset[2], transferred_structured, transfer=tr_file, trees=10, max_revision_iterations=10, print_function=print_function)
 
 
 def save_results(final_results, source, target, kb_source, kb_target):
@@ -202,20 +206,57 @@ def save_results(final_results, source, target, kb_source, kb_target):
             os.makedirs(f'src/experiments/{kb_source}_{kb_target}')
 
     with open(f'src/experiments/{kb_source}_{kb_target}/groot_train_{source}_{target}.txt', 'w') as f:
-        f.write(json.dumps(final_results[f'{source}->{target}'][1]))
-        f.write('\n')
-        f.write(json.dumps(final_results[f'{source}->{target}'][2]))
+        for i in final_results[f'{source}->{target}']:
+            f.write(json.dumps(i[1]))
+            f.write('\n')
+            f.write(json.dumps(i[2]))
         f.close()
-    with open(f'src/experiments/{kb_source}_{kb_target}/groot_test_{source}_{target}.txt', 'w') as f:
-        f.write(json.dumps(final_results[f'groot_test:{source}->{target}']))
-        f.close()
+    # with open(f'src/experiments/{kb_source}_{kb_target}/groot_test_{source}_{target}.txt', 'w') as f:
+    #     for i in final_results[f'groot_test:{source}->{target}']:
+    #         f.write(json.dumps(i))
+    #         f.write('\n')
+    #     f.close()
     with open(f'src/experiments/{kb_source}_{kb_target}/groot_inf_{source}_{target}.txt', 'w') as f:
-        f.write(json.dumps(final_results[f'inf_res:{source}->{target}']))
+        for i in final_results[f'inf_res:{source}->{target}']:
+            f.write(json.dumps(i))
+            f.write('\n')
         f.close()
-    with open(f'src/experiments/{kb_source}_{kb_target}/treeb_test_{source}_{target}.txt', 'w') as f:
-        f.write(json.dumps(final_results[f'tree_test:{source}->{target}'][1]))
-        f.write('\n')
-        f.write(json.dumps(final_results[f'tree_test:{source}->{target}'][2]))
-        f.write('\n')
-        f.write(json.dumps(final_results[f'tree_test:{source}->{target}'][3]))
+    # with open(f'src/experiments/{kb_source}_{kb_target}/treeb_test_{source}_{target}.txt', 'w') as f:
+    #     f.write(json.dumps(final_results[f'tree_test:{source}->{target}'][1]))
+    #     f.write('\n')
+    #     f.write(json.dumps(final_results[f'tree_test:{source}->{target}'][2]))
+    #     f.write('\n')
+    #     f.write(json.dumps(final_results[f'tree_test:{source}->{target}'][3]))
+    #     f.close()
+    with open(f'src/experiments/{kb_source}_{kb_target}/groot_train_brkga_{source}_{target}.txt', 'w') as f:
+        for i in final_results[f'brkga_{source}->{target}']:
+            f.write(json.dumps(i[1]))
+            f.write('\n')
+            f.write(json.dumps(i[2]))
+        f.close()
+    # with open(f'src/experiments/{kb_source}_{kb_target}/groot_test_brkga_{source}_{target}.txt', 'w') as f:
+    #     for i in final_results[f'groot_test_brkga:{source}->{target}']:
+    #         f.write(json.dumps(i))
+    #         f.write('\n')
+    #     f.close()
+    with open(f'src/experiments/{kb_source}_{kb_target}/groot_inf_brkga_{source}_{target}.txt', 'w') as f:
+        for i in final_results[f'inf_res_brkga:{source}->{target}']:
+            f.write(json.dumps(i))
+            f.write('\n')
+        f.close()
+    with open(f'src/experiments/{kb_source}_{kb_target}/groot_train_brkga_var_{source}_{target}.txt', 'w') as f:
+        for i in final_results[f'brkga_var_{source}->{target}']:
+            f.write(json.dumps(i[1]))
+            f.write('\n')
+            f.write(json.dumps(i[2]))
+        f.close()
+    # with open(f'src/experiments/{kb_source}_{kb_target}/groot_test_brkga_var_{source}_{target}.txt', 'w') as f:
+    #     for i in final_results[f'groot_test_brkga_var:{source}->{target}']:
+    #         f.write(json.dumps(i))
+    #         f.write('\n')
+    #     f.close()
+    with open(f'src/experiments/{kb_source}_{kb_target}/groot_inf_brkga_var_{source}_{target}.txt', 'w') as f:
+        for i in final_results[f'inf_res_brkga_var:{source}->{target}']:
+            f.write(json.dumps(i))
+            f.write('\n')
         f.close()
