@@ -92,7 +92,7 @@ class Population:
         pop = []
         for individual in population:
             if random() <= mutation_rate:
-                individual_aux = individual.mutation_revision(individual, mutation_rate)
+                individual_aux = individual.mutation(individual, mutation_rate)
                 individual_aux.need_evaluation = True
                 pop.append(individual_aux)
             else:
@@ -120,6 +120,22 @@ class Population:
                 part1, part2 = part1.crossover(part1, part2, div_part1, div_part2)
                 part1.need_evaluation = True
                 part2.need_evaluation = True
+        return population
+
+    def crossover_tree(self, population, cross_rate):
+        for individual in population:
+            if random() < cross_rate:     
+                part1 = randint(0, len(individual.individual_trees)-1)
+                part2 = randint(0, len(individual.individual_trees)-1)
+                res = individual.crossover_tree(individual.individual_trees[part1], 
+                                                         individual.individual_trees[part2],
+                                                         individual.first_source_tree[part1],
+                                                         individual.first_source_tree[part2])
+                individual.individual_trees[part1] = res[0]
+                individual.individual_trees[part2] = res[1]
+                individual.first_source_tree[part1] = res[2]
+                individual.first_source_tree[part2] = res[3]
+                individual.need_evaluation = True
         return population
 
     def evaluation(self, population, trees, pos_target, 
@@ -159,9 +175,9 @@ class Population:
             results = evaluate_pop[0].run_evaluate(evaluate_pop, pos_target, neg_target, facts_target)
             for ind, result in zip(evaluate_pop, results):
                 ind.fitness.values = result[0],
-                ind.results.append(result[1])    
+                ind.results.append(result[1])  
+                ind.variances = result[2]  
     
-
     def best_result(self):
         """
             Find the best result in population
@@ -173,12 +189,13 @@ class Population:
             result: float
         """
         result = self.population[0].fitness.values[0]
+        ind = self.population[0]
         for indice in range(self.pop_size):
             fit = self.population[indice].fitness.values
             # print(fit, fit[0] < result)
             if fit[0] < result:
                 result = fit[0]
-        # print(f"bestResult: {result}")
+                ind = self.population[indice]
         return result
 
     def get_all_best_results(self):
@@ -199,6 +216,5 @@ class Population:
             if fit[0] < result_cll:
                 result = self.population[indice].results[-1]
                 result_cll = fit[0]
-        # print(f"bestResult: {result}")
         return result
 
