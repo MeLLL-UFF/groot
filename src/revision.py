@@ -149,8 +149,11 @@ class Revision:
         for line in range(0, len(individual_tree)):
             tree = individual_tree[line]
             if tree.endswith('false;false'):
-                var_true = variances[tree.split(';')[1]][0]
-                var_false = variances[tree.split(';')[1]][1]
+                try:
+                    var_true = variances[tree.split(';')[1]][0]
+                    var_false = variances[tree.split(';')[1]][1]
+                except:
+                    continue
                 if var_true > 0.0025 and var_false > 0.0025:
                     possible_leafs.append(line)
         return possible_leafs
@@ -160,13 +163,23 @@ class Revision:
         for line in range(0, len(individual_tree)):
             tree = individual_tree[line].split(';')
             if tree[-1] == 'false':
-                var_true = variances[tree[1]][0]
-                if var_true > 0.0025:
-                    possible_leafs.append(line)
+                try:
+                    var_true = variances[tree[1]][0]
+                    if var_true > 0.0025:
+                        possible_leafs.append(line)
+                except:
+                    pass
+                # if var_true > 0.0025:
+                #     possible_leafs.append(line)
             if tree[-2] == 'false':
-                var_false = variances[tree[1]][1]
-                if var_false > 0.0025:
-                    possible_leafs.append(line)
+                try:
+                    var_false = variances[tree[1]][1]
+                    if var_false > 0.0025:
+                        possible_leafs.append(line)
+                except:
+                    pass
+                # if var_false > 0.0025:
+                #     possible_leafs.append(line)
         return possible_leafs
 
     def choose_node(self, individual_tree, operator, variances, random_line=True):
@@ -192,6 +205,9 @@ class Revision:
 
     def modify_tree(self, individual, individual_tree, variances, source_tree,
                     operator, random_line=True):
+        possibles = [True, False]
+        random_line = choice(possibles)
+        # random_line = False
         tree_line = self.choose_node(individual_tree, operator, 
                                      variances, random_line)
         if not tree_line:
