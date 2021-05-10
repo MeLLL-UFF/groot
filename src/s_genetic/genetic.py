@@ -9,7 +9,7 @@ from src.transfer import *
 def genetic(src_struct, target, source, pos_target, 
             neg_target, facts_target, kb_source, kb_target,
             target_pred, NUM_GEN=600, pop_size=10, 
-            crossover=0.6, mutation=0.3, trees=10):
+            crossover=0.6, mutation=0.3, trees=10, revision=None):
 
     pop = Population(pop_size)
     best_evaluates = []
@@ -53,11 +53,11 @@ def genetic(src_struct, target, source, pos_target,
        
 
         #crossover
-        pop_next = pop.crossover(pop_next, crossover)
-        # pop_next = pop.crossover_tree(pop_next, crossover)
+        # pop_next = pop.crossover(pop_next, crossover)
+        pop_next = pop.crossover_tree(pop_next, crossover)
 
         #mutating the population
-        pop_next = pop.mutation(pop_next, mutation)
+        pop_next = pop.mutation(pop_next, mutation, revision)
 
         # evaluating new population
         pop.evaluation(pop_next, trees, pos_target, 
@@ -67,8 +67,11 @@ def genetic(src_struct, target, source, pos_target,
         for ind in worst_individuals:
             pop_next.remove(ind)
 
-        all_best_results.append(pop.get_all_best_results())
+        # all_best_results.append(pop.get_all_best_results())
         pop_next.extend(best_individuals)
+        for i in best_individuals:
+            print(f"BEST: {i.results[-1]}")
+            all_best_results.append(i.results[-1])
 
         pop.population[:] = pop_next
     all_best_results.append(pop.get_all_best_results())

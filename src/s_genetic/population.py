@@ -1,5 +1,6 @@
 from deap import tools, base, creator
 from random import random
+import math
 
 
 from src.individual import *
@@ -43,6 +44,7 @@ class Population:
         for index in range(self.pop_size):
 
             creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
+            # creator.create("FitnessMulti", base.Fitness, weights=(-1.0, -1.0))
             creator.create("Individual", Individual, fitness=creator.FitnessMin)
             predicate_inst = Predicate(kb_source, kb_target, target_pred)
             tmp = creator.Individual(source_tree, target, source, predicate_inst)
@@ -76,7 +78,7 @@ class Population:
         """
         return self.toolbox.select(population, self.pop_size)
 
-    def mutation(self, population, mutation_rate):
+    def mutation(self, population, mutation_rate, revision):
         """
             Making mutation in the population
 
@@ -92,7 +94,10 @@ class Population:
         pop = []
         for individual in population:
             if random() <= mutation_rate:
-                individual_aux = individual.mutation(individual, mutation_rate)
+                if revision:
+                    individual_aux = individual.mutation_revision(individual, mutation_rate, revision)
+                else:
+                    individual_aux = individual.mutation(individual, mutation_rate)
                 individual_aux.need_evaluation = True
                 pop.append(individual_aux)
             else:
@@ -174,7 +179,8 @@ class Population:
 
             results = evaluate_pop[0].run_evaluate(evaluate_pop, pos_target, neg_target, facts_target)
             for ind, result in zip(evaluate_pop, results):
-                ind.fitness.values = result[0],
+                # ind.fitness.values = (result[0], result[3])
+                ind.fitness.values = -math.sqrt(result[0]**2+result[3]**2),
                 ind.results.append(result[1])  
                 ind.variances = result[2]  
     
@@ -214,7 +220,39 @@ class Population:
             fit = self.population[indice].fitness.values
             # print(fit, fit[0] < result)
             if fit[0] < result_cll:
-                result = self.population[indice].results[-1]
+                # result = self.population[indice].results[-1]
                 result_cll = fit[0]
+
+        all_best = []
+        for indice in range(self.pop_size):
+            fit = self.population[indice].fitness.values
+            if fit[0] == result_cll:
+                print(fit[0], result_cll)
+                all_best.append(self.population[indice].results[-1])
+        print(all_best)
+        best_roc = all_best[0]['m_auc_roc']
+        result = all_best[0]
+        for best in all_best:
+            if best['m_auc_roc'] > best_roc:
+                result = best
+                best_roc = best['m_auc_roc']
+        print(f"RESULT: {result}")
         return result
 
+    def get_best_roc(self, n_dom_individuals):
+        best = n_dom_individuals[0]
+        best_roc = n_dom_individuals[0].results[-1]['m_auc_roc']
+        for i in n_dom_individuals:
+            if i.results[-1]['m_auc_roc'] > best_roc:
+                best_roc = i.results[-1]['m_auc_roc']
+                best = i
+        all_bests = []
+        for i in n_dom_individuals:
+            if i.results[-1]['m_auc_roc'] == best_roc:
+                all_bests.append(i)
+        if len(all_bests) > 1:
+            for i in all_bests:
+                if -i.results[-1]['m_cll'] > -best.results[-1]['m_cll']:
+                    best = i
+        print(f"BEST AUC ROC: {best_roc}, BEST CLL: {best.results[-1]['m_cll']}")
+        return [best]
