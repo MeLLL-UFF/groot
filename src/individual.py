@@ -327,7 +327,7 @@ class Individual:
                    's_auc_pr': s_auc_pr, 's_auc_roc': s_auc_roc,
                    's_cll': s_cll, 's_rec': s_rec, 's_prec': s_prec, 's_f1': s_f1}
         os.chdir('..')
-        return m_cll, results, variances
+        return m_cll, results, variances, -m_auc_roc
 
     def _input_list(self, population, pos_target, neg_target, facts_target):
         """
@@ -441,7 +441,7 @@ class Individual:
         ind.individual_trees = new_individual_trees
         return ind
 
-    def mutation_revision(self, ind, mut_rate):
+    def mutation_revision(self, ind, mut_rate, revision):
         """
             Making mutation in an individual according to the mutation rate
 
@@ -454,6 +454,13 @@ class Individual:
             ----------
             ind: Individual instance
         """
+        if revision == 'random':
+            random_line = True
+        elif revision == 'guided':
+            random_line = False
+        else:
+            possibles = [True, False]
+            random_line = choice(possibles)
         operators = ['expansion', 'pruning']
         new_individual_trees = []
         new_source_tree = []
@@ -464,7 +471,7 @@ class Individual:
                                                         ind.variances[idx],
                                                         ind.first_source_tree[idx], 
                                                         operator,
-                                                        True)
+                                                        random_line)
             new_source_tree.append(new_src)
             new_individual_trees.append(new_ind)
         # print("KB: ", ind.predicate_inst.kb_source)
