@@ -143,6 +143,21 @@ class Population:
                 individual.need_evaluation = True
         return population
 
+    def crossover_trees(self, population, cross_rate):
+        for ind1, ind2 in zip(population[::2], population[1::2]):
+            if random() < cross_rate:     
+                part1 = randint(0, len(ind1.individual_trees)-1)
+                part2 = randint(0, len(ind2.individual_trees)-1)
+                res = ind1.crossover_trees(ind1,
+                                                ind2,
+                                                part1,
+                                                part2)
+                ind1 = res[0]
+                ind2 = res[1]
+                ind1.need_evaluation = True
+                ind2.need_evaluation = True
+        return population
+
     def evaluation(self, population, trees, pos_target, 
                    neg_target, facts_target):
         """

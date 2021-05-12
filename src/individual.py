@@ -619,3 +619,88 @@ class Individual:
 
         return new_tree_one, new_tree_two, new_tree_one_src, new_tree_two_src
 
+    def crossover_trees(self, ind1, ind2, part1, part2):
+        tree_one = ind1.individual_trees[part1] 
+        tree_two = ind2.individual_trees[part2]
+        tree_one_src = ind1.first_source_tree[part1]
+        tree_two_src = ind2.first_source_tree[part2]
+
+        if len(tree_one) == 1 or len(tree_two) == 1:
+            return tree_one, tree_two, tree_one_src, tree_two_src
+        tree_one_choice = randint(1, len(tree_one)-1)
+        tree_two_choice = randint(1, len(tree_two)-1)
+
+        path_tree_one = tree_one[tree_one_choice].split(';')[1]
+        path_tree_two = tree_two[tree_two_choice].split(';')[1]
+        number_tree_one = tree_one[tree_one_choice].split(';')[0]
+        number_tree_two = tree_two[tree_two_choice].split(';')[0]
+        lines_tree_one = []
+        lines_tree_two = []
+        for i in range(0, len(tree_one)):
+            if tree_one[i].split(';')[1].startswith(path_tree_one):
+                lines_tree_one.append(i)
+        for j in range(0, len(tree_two)):
+            if tree_two[j].split(';')[1].startswith(path_tree_two):
+                lines_tree_two.append(j)
+
+        tree_one[tree_one_choice].split(';')[1].replace(path_tree_one, path_tree_two)
+        tree_two[tree_two_choice].split(';')[1].replace(path_tree_two, path_tree_one)
+
+        tree_one_src[tree_one_choice].split(';')[1].replace(path_tree_one, path_tree_two)
+        tree_two_src[tree_two_choice].split(';')[1].replace(path_tree_two, path_tree_one)        
+
+        new_tree_one = tree_one[:tree_one_choice]
+        new_tree_two = tree_two[:tree_two_choice]
+
+        new_tree_one_src = tree_one_src[:tree_one_choice]
+        new_tree_two_src = tree_two_src[:tree_two_choice]
+
+        for j in lines_tree_two:
+            tmp_tree_two = tree_two[j].split(';')
+            tmp_tree_two[0] = number_tree_one
+            tmp_tree_two[1] = tmp_tree_two[1].replace(path_tree_two, path_tree_one, 1)
+            new_tree_one.append(';'.join(tmp_tree_two))
+
+            tmp_tree_two = tree_two_src[j].split(';')
+            tmp_tree_two[0] = number_tree_one
+            tmp_tree_two[1] = tmp_tree_two[1].replace(path_tree_two, path_tree_one, 1)
+            new_tree_one_src.append(';'.join(tmp_tree_two))
+        for k in lines_tree_one:
+            tmp_tree_one = tree_one[k].split(';')
+            tmp_tree_one[0] = number_tree_two
+            tmp_tree_one[1] = tmp_tree_one[1].replace(path_tree_one, path_tree_two, 1)
+            new_tree_two.append(';'.join(tmp_tree_one))
+
+            tmp_tree_one = tree_one_src[k].split(';')
+            tmp_tree_one[0] = number_tree_two
+            tmp_tree_one[1] = tmp_tree_one[1].replace(path_tree_one, path_tree_two, 1)
+            new_tree_two_src.append(';'.join(tmp_tree_one))
+
+        new_tree_one.extend(tree_one[lines_tree_one[-1]+1:])
+        new_tree_two.extend(tree_two[lines_tree_two[-1]+1:])
+
+        new_tree_one_src.extend(tree_one_src[lines_tree_one[-1]+1:])
+        new_tree_two_src.extend(tree_two_src[lines_tree_two[-1]+1:])
+
+        ind1.individual_trees[part1] = new_tree_one
+        ind2.individual_trees[part2] = new_tree_two
+        ind1.first_source_tree[part1] = new_tree_one_src
+        ind2.first_source_tree[part2] = new_tree_two_src
+
+        ind1.predicate_inst.kb_source.extend(ind2.predicate_inst.kb_source)
+        ind1.predicate_inst.new_kb_source.extend(ind2.predicate_inst.new_kb_source)
+        ind1.predicate_inst.new_first_kb_source.extend(ind2.predicate_inst.new_first_kb_source)
+        ind1.predicate_inst.kb_source = list(set(ind1.predicate_inst.kb_source))
+        ind1.predicate_inst.new_kb_source = list(set(ind1.predicate_inst.new_kb_source))
+        ind1.predicate_inst.new_first_kb_source = list(set(ind1.predicate_inst.new_first_kb_source))
+        
+
+        ind2.predicate_inst.kb_source.extend(ind1.predicate_inst.kb_source)
+        ind2.predicate_inst.new_kb_source.extend(ind1.predicate_inst.new_kb_source)
+        ind2.predicate_inst.new_first_kb_source.extend(ind1.predicate_inst.new_first_kb_source)
+        ind2.predicate_inst.kb_source = list(set(ind2.predicate_inst.kb_source))
+        ind2.predicate_inst.new_kb_source = list(set(ind2.predicate_inst.new_kb_source))
+        ind2.predicate_inst.new_first_kb_source = list(set(ind2.predicate_inst.new_first_kb_source))
+
+        return ind1, ind2
+
