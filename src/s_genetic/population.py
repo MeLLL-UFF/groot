@@ -195,8 +195,8 @@ class Population:
             results = evaluate_pop[0].run_evaluate(evaluate_pop, pos_target, neg_target, facts_target)
             for ind, result in zip(evaluate_pop, results):
                 # ind.fitness.values = (result[0], result[3])
-                ind.fitness.values = -math.sqrt(result[0]**2+result[3]**2),
-                ind.results.append(result[1])  
+                ind.fitness.values =  -math.sqrt(result[0]**2+result[3]**2),
+                ind.results.append(result[1])
                 ind.variances = result[2]  
     
     def best_result(self):

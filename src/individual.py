@@ -280,7 +280,16 @@ class Individual:
             train_pos_target, train_neg_target, train_facts_target, \
             test_pos_target, test_neg_target, test_facts_target = Individual.define_splits(pos_target, neg_target, 
                                                                                      facts_target, i)
-            train_neg_target = train_neg_target[:len(train_pos_target)]
+            train_neg_target = np.random.choice(train_neg_target, 2*len(train_pos_target))
+
+            # print(f"Train facts: {len(train_facts_target)}")
+            # print(f"Train neg: {len(train_neg_target)}")
+            # print(f"Train pos: {len(train_pos_target)}")
+
+            # print(f"Test facts: {len(test_facts_target)}")
+            # print(f"Test neg: {len(test_neg_target)}")
+            # print(f"Test pos: {len(test_pos_target)}")
+
             model_tr = boostsrl.train(background_train, train_pos_target, train_neg_target, 
                                       train_facts_target, refine=refine, transfer=transfer, 
                                       trees=10)
@@ -327,7 +336,7 @@ class Individual:
                    's_auc_pr': s_auc_pr, 's_auc_roc': s_auc_roc,
                    's_cll': s_cll, 's_rec': s_rec, 's_prec': s_prec, 's_f1': s_f1}
         os.chdir('..')
-        return m_cll, results, variances, -m_auc_roc
+        return m_cll, results, variances, -m_auc_pr
 
     def _input_list(self, population, pos_target, neg_target, facts_target):
         """

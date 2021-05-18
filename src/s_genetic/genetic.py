@@ -53,9 +53,9 @@ def genetic(src_struct, target, source, pos_target,
        
 
         #crossover
-        # pop_next = pop.crossover(pop_next, crossover)
+        pop_next = pop.crossover(pop_next, crossover)
         # pop_next = pop.crossover_tree(pop_next, crossover)
-        pop_next = pop.crossover_trees(pop_next, crossover)
+        # pop_next = pop.crossover_trees(pop_next, crossover)
 
         #mutating the population
         pop_next = pop.mutation(pop_next, mutation, revision)
