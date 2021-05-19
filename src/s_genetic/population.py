@@ -128,6 +128,7 @@ class Population:
         return population
 
     def crossover_tree(self, population, cross_rate):
+        print('entrei aqui')
         for individual in population:
             if random() < cross_rate:     
                 part1 = randint(0, len(individual.individual_trees)-1)
@@ -194,8 +195,8 @@ class Population:
 
             results = evaluate_pop[0].run_evaluate(evaluate_pop, pos_target, neg_target, facts_target)
             for ind, result in zip(evaluate_pop, results):
-                # ind.fitness.values = (result[0], result[3])
-                ind.fitness.values =  -math.sqrt(result[0]**2+result[3]**2),
+                ind.fitness.values = result[3],
+                # ind.fitness.values =  -math.sqrt(result[0]**2+result[3]**2),
                 ind.results.append(result[1])
                 ind.variances = result[2]  
     
@@ -218,6 +219,20 @@ class Population:
                 result = fit[0]
                 ind = self.population[indice]
         return result
+
+    def sel_best_cll(self, best_ind_auc_pr): 
+        best_auc_pr = best_ind_auc_pr.results[-1]['m_auc_pr']
+        best_inds = []
+        for i in self.population:
+            if i.results[-1]['m_auc_pr'] == best_auc_pr:
+                best_inds.append(i)
+        best_cll = best_inds[0].results[-1]['m_cll']
+        best_ind = best_inds[0]
+        for i in best_inds:
+            if i.results[-1]['m_cll'] < best_cll:
+                best_ind = i
+                best_cll = i.results[-1]['m_cll']
+        return [best_ind]
 
     def get_all_best_results(self):
         """
