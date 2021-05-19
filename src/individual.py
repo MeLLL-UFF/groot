@@ -635,7 +635,7 @@ class Individual:
         tree_two_src = ind2.first_source_tree[part2]
 
         if len(tree_one) == 1 or len(tree_two) == 1:
-            return tree_one, tree_two, tree_one_src, tree_two_src
+            return ind1, ind2
         tree_one_choice = randint(1, len(tree_one)-1)
         tree_two_choice = randint(1, len(tree_two)-1)
 
