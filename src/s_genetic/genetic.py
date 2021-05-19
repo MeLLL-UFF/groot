@@ -36,6 +36,7 @@ def genetic(src_struct, target, source, pos_target,
             ind.predicate_inst.mapping_type = {}
       
         best_individuals = pop.toolbox.selBest(pop.population, 1)
+        best_individuals = pop.sel_best_cll(best_individuals[0])
 
         if len(best_evaluates) > 0 and pop.best_result() == best_evaluates[-1]:
             has_same_best_value += 1
@@ -53,8 +54,8 @@ def genetic(src_struct, target, source, pos_target,
        
 
         #crossover
-        pop_next = pop.crossover(pop_next, crossover)
-        # pop_next = pop.crossover_tree(pop_next, crossover)
+        # pop_next = pop.crossover(pop_next, crossover)
+        pop_next = pop.crossover_tree(pop_next, crossover)
         # pop_next = pop.crossover_trees(pop_next, crossover)
 
         #mutating the population
