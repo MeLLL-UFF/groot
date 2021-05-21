@@ -9,7 +9,7 @@ from src.transfer import *
 def genetic(src_struct, target, source, pos_target, 
             neg_target, facts_target, kb_source, kb_target,
             target_pred, NUM_GEN=600, pop_size=10, 
-            crossover=0.6, mutation=0.3, trees=10, revision=None):
+            crossover=0.6, mutation=0.3, trees=10, revision=None, crossover_type=None):
 
     pop = Population(pop_size)
     best_evaluates = []
@@ -54,9 +54,13 @@ def genetic(src_struct, target, source, pos_target,
        
 
         #crossover
-        # pop_next = pop.crossover(pop_next, crossover)
-        pop_next = pop.crossover_tree(pop_next, crossover)
-        # pop_next = pop.crossover_trees(pop_next, crossover)
+        if crossover_type == 'tree':
+            pop_next = pop.crossover_tree(pop_next, crossover)
+        elif crossover_type == 'tree_ind':
+            pop_next = pop.crossover_trees(pop_next, crossover)
+        else:
+            pop_next = pop.crossover(pop_next, crossover)
+    
 
         #mutating the population
         pop_next = pop.mutation(pop_next, mutation, revision)
