@@ -170,16 +170,19 @@ class Predicate:
         for index in range(0, len(self.new_kb_source)):
             self.new_kb_source[index] = self.new_kb_source[index].replace('+', '')
             self.new_kb_source[index] = self.new_kb_source[index].replace('-', '')
+            self.new_kb_source[index] = self.new_kb_source[index].replace('`', '')
 
         for index in range(0, len(self.new_kb_target)):
             self.new_kb_target[index] = self.new_kb_target[index].replace('+', '')
             self.new_kb_target[index] = self.new_kb_target[index].replace('-', '')
+            self.new_kb_target[index] = self.new_kb_target[index].replace('`', '')
 
         if len(self.new_first_kb_source) == 0:
             self.new_first_kb_source =copy.deepcopy(self.first_kb_source)
             for index in range(0, len(self.first_kb_source)):
                 self.new_first_kb_source[index] = self.new_first_kb_source[index].replace('+', '')
                 self.new_first_kb_source[index] = self.new_first_kb_source[index].replace('-', '')
+                self.new_first_kb_source[index] = self.new_first_kb_source[index].replace('`', '')
 
     def get_modes(self, individual_tree, pred_source):
         """
@@ -205,12 +208,23 @@ class Predicate:
             tmp_var = ("".join(re.findall('\((.*?)\)',pred))).split(',')
             self.variables = [i.strip() for i in self.variables]
             
-            for var in tmp_var:
-                if var.strip() in self.variables:
-                    new_pred_source += '+,'
-                else: 
-                    new_pred_source += '-,'
-                    self.variables.append(var)
+            startswith_pred = []
+            tmp = new_pred_source.split('(')[0].strip()
+            if ';' in tmp:
+                tmp = f"{tmp.split(';')[2]}("
+            for pred_ in self.kb_source:
+                if pred_.startswith(tmp):
+                    startswith_pred.append(pred_)
+
+            if len(startswith_pred) and '`' in startswith_pred[0]:
+                new_pred_source += '+,`'
+            else:
+                for var in tmp_var:
+                    if var.strip() in self.variables:
+                        new_pred_source += '+,'
+                    else: 
+                        new_pred_source += '-,'
+                        self.variables.append(var)
 
             predicate.append(f'{new_pred_source})')
         return  ', '.join(predicate)
@@ -314,7 +328,7 @@ class Predicate:
             list_complete_valid_pred: list
         """
         occur_modes = ','.join([source_pred[occur.start()] 
-                           for occur in re.finditer('[+\-]', source_pred)])
+                           for occur in re.finditer('[+\-\`]', source_pred)])
         valid_pred = []
         complete_valid_pred = []
         complete_source_pred = ''
@@ -336,7 +350,7 @@ class Predicate:
                 source_pred = pred
                 break
         occur_modes = ','.join([source_pred[occur.start()] 
-                           for occur in re.finditer('[+\-]', source_pred)])
+                           for occur in re.finditer('[+\-\`]', source_pred)])
 
         for pred in new_kb_source:
             if new_source_pred in pred:

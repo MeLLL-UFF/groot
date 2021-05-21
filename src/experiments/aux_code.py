@@ -122,7 +122,7 @@ def create_pred_target(kb):
     #pred_target é : pred_target = [('movie', '+,-'), ('director', '+'),...]
     pred_target = []
     for pred in kb:
-        modes = ','.join([pred[occur.start()] for occur in re.finditer('[+\-]', pred)])
+        modes = ','.join([pred[occur.start()] for occur in re.finditer('[+\-\`]', pred)])
         pred_target.append((pred.split('(')[0], modes))
     return pred_target
 
