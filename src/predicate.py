@@ -1,5 +1,6 @@
 import copy
-from random import randint, random
+from itertools import permutations
+from random import choice, randint, random
 import re
 
 
@@ -26,6 +27,8 @@ class Predicate:
         self.new_first_kb_source = []
         self.variables = []
         self.mapping_type = {}
+        self.permutation = True
+        self.where_permutation = {}
 
     def check_tree(self, individual_tree, first_source_tree, ind):
         valid_tree = []
@@ -44,10 +47,8 @@ class Predicate:
                     if not self.check_predicates(source[idx], target[idx], ind):
                         new_pred = self.get_modes(first_source_tree, 
                                                   first_source_tree[line].split(":- ")[1])
-    
                         res = self.change_pred(first_source_pred, first_target_pred, 
                                                             first_source_tree[line], new_pred, ind)
-
                         new_target = res.split(';')[2].split(':-')[1].strip().split('),')[idx]
                         complete_source = self.get_complete_pred(source[idx], ind.predicate_inst.new_first_kb_source)
                         complete_target = self.get_complete_pred(new_target, ind.predicate_inst.new_kb_target)
@@ -130,15 +131,30 @@ class Predicate:
         source_types = source_pred.split('(')[1].split(')')[0].split(',')
         target_types = target_pred.split('(')[1].split(')')[0].split(',')
 
+        # if self.permutation:
+        #     poss_vars= list(permutations(target_types))
+        #     for poss_var in poss_vars:
+        #         for idx in range(0, len(source_types)):
+        #             source_type = source_types[idx].strip()
+        #             target_type = poss_var[idx].strip()
+        #             if source_type in list(mapping_type.keys()):
+        #                 if mapping_type[source_type] == target_type:
+        #                     target_types = list(poss_var)
+        #                     # print('ENTREI AQUI: ', target_types)
+        #                     break
+        # print('ENTREI AQUI 2: ', only_source, source_types, only_target, target_types)
         for idx in range(0, len(source_types)):
             source_type = source_types[idx].strip()
             target_type = target_types[idx].strip()
             if source_type in list(mapping_type.keys()):
                 if mapping_type[source_type] != target_type:
+                    # print('estou aqui: ', mapping_type[source_type], target_type)
+                    # print("MAPPING TYPE: ", mapping_type)
                     return False
         for idx in range(0, len(source_types)):
             if source_types[idx] not in list(mapping_type.keys()):
-                self.mapping_type[source_types[idx]] = target_types[idx]
+                    mapping_type[source_types[idx]] = target_types[idx]
+        # print("MAPPING: ", mapping_type)
         return True
 
     def change_predicate(self, pred, new_info, var):
@@ -244,10 +260,12 @@ class Predicate:
             for i in range(0, len(source_pred)):
                 if source_pred[i].replace(').', '') not in list(self.mapping_type.keys()):
                     self.mapping_type[source_pred[i].replace(').', '')] = target_pred[i].replace(').', '')
+        # exit()
 
     def mapping_types(self, individual_tree, first_source_tree, ind):
         first_source_pred = first_source_tree[0].split(';')[2].split(':-')[0].split('(')[0]
         first_target_pred = individual_tree[0].split(';')[2].split(':-')[0].split('(')[0]
+
 
         complete_source = self.get_complete_pred(first_source_pred, ind.predicate_inst.new_first_kb_source)
         complete_target = self.get_complete_pred(first_target_pred, ind.predicate_inst.new_kb_target)
@@ -298,12 +316,31 @@ class Predicate:
         else:
             pred_var = f'({",".join(pred_var)}).'
 
+
         index_target = []
         for var_target in range(0, len(list_pos_target)):
             if list_pos_target[var_target].endswith(pred_var.replace('(', '')):
                 index_target.append(var_target)
             elif list_pos_target[var_target].split('(')[1].startswith(pred_var.replace(').', '').replace('(', '')):
                 index_target.append(var_target)
+
+        # if self.permutation:
+        #     perm_pred_var = pred_var.replace('(', '').replace(').', '').split(',')
+        #     if len(perm_pred_var) <= 3:
+        #         list_var = list(permutations(perm_pred_var))
+        #         for poss in list_var:
+        #             ver_poss = f"({','.join(poss)})."
+        #             if ver_poss == pred_var:
+        #                 continue
+                    
+        #             for var_target in range(0, len(list_pos_target)):
+        #                 if list_pos_target[var_target].endswith(ver_poss.replace('(', '')):
+        #                     index_target.append(var_target)
+        #                 elif list_pos_target[var_target].split('(')[1].startswith(ver_poss.replace(').', '').replace('(', '')):
+        #                     index_target.append(var_target)
+
+        # index_target = list(set(index_target))
+        
         if len(index_target) == 0 and len(pred_var) == 3:
             pred_var = pred_var.replace('(', '').replace(').', '')
             for index in range(0, len(list_pos_target)):
@@ -405,7 +442,7 @@ class Predicate:
         """
         return f'{target_pred.split("(")[0]}({source_pred.split("(")[1]}'
 
-    def change_pred(self, source, target, pred, source_pred, individual=None):
+    def change_pred(self, source, target, pred, source_pred, individual=None, idx=None):
         """
             Change the predicate pred with the random predicates from source_pred
             If the predicate is the main predicate (source), it will be changed with target
@@ -436,6 +473,7 @@ class Predicate:
         source_pred = source_pred.split('), ')
         final_pred = []
         qtd_preds = 0
+        
         for pred in source_pred:
             complete_source, valid_preds, complete_valid = self.get_valid_predicates(pred, individual)
             if not len(valid_preds):
@@ -461,5 +499,45 @@ class Predicate:
         if has_target: 
             split_pred[2] =  f"{target}({split_pred[2].split(':-')[0].split('(')[1].strip()} :- {', '.join(final_pred)}"
         else: split_pred[2] = ', '.join(final_pred)
+        
+
         split_pred[2] = f"{split_pred[2]}."
+        
+
         return ";".join(split_pred)
+
+    def verify_permutation(self, source_pred, target_pred, ind):
+
+        # if not target_pred:
+        #     return source_pred, target_pred, False
+
+        if not self.permutation or 'none' in target_pred:
+            return source_pred, target_pred, False
+        
+        else:
+            complete_target = ''
+            for pred in ind.predicate_inst.new_kb_target:
+                if pred.startswith(target_pred.split('(')[0].strip()):
+                    complete_target = pred.split('(')[1].replace(').', '')
+                    break
+            perm_pred_var = complete_target.split(',')
+            poss_var = set()
+            if len(perm_pred_var) <= 3:
+                list_var = list(permutations(perm_pred_var))
+                source_var_perm = list(permutations(source_pred.split('(')[1].replace(')', '').replace('.', '').split(',')))
+                target_var_perm = list(permutations(target_pred.split('(')[1].replace(')', '').replace('.', '').split(',')))
+                for idx_var in range(0, len(list_var)):
+                    verify_poss = f"({','.join(list_var[idx_var])})."
+                    for pred in ind.predicate_inst.new_kb_target:
+                        if pred.endswith(verify_poss):
+                            if pred.endswith(f'({complete_target}).'):
+                                poss_var.add((pred, source_var_perm[0], target_var_perm[0], False))
+                            else:
+                                poss_var.add((pred, source_var_perm[idx_var], target_var_perm[idx_var], True))
+
+            new_choice = choice(list(poss_var))
+
+            if '.' in source_pred:
+                return f"{source_pred.split('(')[0]}({', '.join([x.strip() for x in new_choice[1]])}).", f"{new_choice[0].split('(')[0]}({', '.join([x.strip() for x in new_choice[2]])}).", new_choice[3]
+            else:
+                return f"{source_pred.split('(')[0]}({', '.join([x.strip() for x in new_choice[1]])}", f"{new_choice[0].split('(')[0]}({', '.join([x.strip() for x in new_choice[2]])}", new_choice[3]
