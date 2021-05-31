@@ -1,4 +1,6 @@
 from deap import tools, base, creator
+from math import floor
+from time import time
 
 
 from src.individual import *
@@ -9,7 +11,12 @@ from src.transfer import *
 def genetic(src_struct, target, source, pos_target, 
             neg_target, facts_target, kb_source, kb_target,
             target_pred, NUM_GEN=600, pop_size=10, 
-            crossover=0.6, mutation=0.3, trees=10):
+            crossover=0.6, mutation=0.3, trees=10, num_elite=0.1, num_mutation=0.1):
+
+    start_time = time()
+    num_pop_elite = floor(num_elite*pop_size)
+    num_pop_mutation = floor(num_mutation*pop_size)
+    num_pop_crossover = pop_size - num_pop_elite - num_pop_mutation
 
     pop = Population(pop_size)
     best_evaluates = []
@@ -41,25 +48,19 @@ def genetic(src_struct, target, source, pos_target,
         best_evaluates.append(pop.best_result())
         print('MELHOR RESULTADO: ', pop.best_result())
 
-        elite = pop.toolbox.selBest(pop.population, 10)
-
-        # if len(best_evaluates) > 0 and pop.best_result() == best_evaluates[-1]:
-        #     has_same_best_value += 1
-        # else:
-        #     has_same_best_value = 0
-        # best_evaluates.append(pop.best_result())
-        # print('MELHOR RESULTADO: ', pop.best_result())
+        elite = pop.toolbox.selBest(pop.population, num_pop_elite)
 
         if has_same_best_value == ((NUM_GEN)/2)+1:
-            return pop, best_evaluates, all_best_results
+            final_time = time() - start_time
+            return pop, best_evaluates, all_best_results, final_time
        
         pop_next = [individual for individual in pop.population if individual not in elite]
 
         #crossover
-        pop_next = pop.crossover(pop_next, elite, 10, crossover)
+        pop_next = pop.crossover(pop_next, elite, num_pop_crossover, crossover)
     
         #mutating the population
-        pop_next.extend(pop.mutation(10, mutation, 
+        pop_next.extend(pop.mutation(num_pop_mutation, mutation, 
                                      src_struct, target, 
                                      source, kb_source,
                                      kb_target, target_pred))
@@ -72,9 +73,22 @@ def genetic(src_struct, target, source, pos_target,
 
 
         pop.population[:] = pop_next
-        all_best_results.append(pop.get_all_best_results())
-        # pop.print_pop()
-    all_best_results.append(pop.get_all_best_results())
-    best_evaluates.append(pop.best_result())
+        # all_best_results.append(pop.get_all_best_results())
 
-    return pop, best_evaluates, all_best_results
+        best_individuals = pop.toolbox.selBest(pop.population, 1)
+        best_individuals = pop.sel_best_cll(best_individuals[0])
+        for i in best_individuals:
+                print(f"BEST: {i.results[-1]}")
+                all_best_results.append(i.results[-1])
+
+        # pop.print_pop()
+    best_evaluates.append(pop.best_result())
+    best_individuals = pop.toolbox.selBest(pop.population, 1)
+    best_individuals = pop.sel_best_cll(best_individuals[0])
+    for i in best_individuals:
+            print(f"BEST: {i.results[-1]}")
+            all_best_results.append(i.results[-1])
+    
+    final_time = time() - start_time
+    
+    return pop, best_evaluates, all_best_results, final_time

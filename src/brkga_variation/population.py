@@ -43,8 +43,8 @@ class Population:
         """
         for index in range(self.pop_size):
 
-            creator.create("FitnessMax", base.Fitness, weights=(1.0,))
-            creator.create("Individual", Individual, fitness=creator.FitnessMax)
+            creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
+            creator.create("Individual", Individual, fitness=creator.FitnessMin)
             predicate_inst = Predicate(kb_source, kb_target, target_pred)
             tmp = creator.Individual(source_tree, target, source, predicate_inst)
 
@@ -64,7 +64,7 @@ class Population:
             print(ind.fitness)
         print (']')
 
-    def mutation(self, population, mutation_rate):
+    def mutation(self, population, mutation_rate, revision):
         """
             Making mutation in the population
 
@@ -80,28 +80,59 @@ class Population:
         pop = []
         for individual in population:
             if random() <= mutation_rate:
-                individual_aux = individual.mutation(individual, mutation_rate)
+                if revision:
+                    individual_aux = individual.mutation_revision(individual, mutation_rate, revision)
+                else:
+                    individual_aux = individual.mutation(individual, mutation_rate)
                 individual_aux.need_evaluation = True
                 pop.append(individual_aux)
             else:
                 pop.append(individual)
         return pop
 
+    # def _get_genes(self, individual_pop, individual_elite, crossover_rate):
+    #     positions = []
+    #     new_ind = copy.deepcopy(individual_elite)
+    #     for i in range(0, len(individual_pop.individual_trees)):
+    #         positions.append(uniform(0.0, 1.0))
+
+    #     new_ind.individual_trees = []
+    #     new_ind.source_tree = []
+    #     for idx in range(0, len(positions)):
+    #         if positions[idx] <= crossover_rate:
+    #             new_ind.individual_trees.append(individual_elite.individual_trees[idx])
+    #             new_ind.source_tree.append(individual_elite.source_tree[idx])
+    #         else:
+    #             new_ind.individual_trees.append(individual_pop.individual_trees[idx])
+    #             new_ind.source_tree.append(individual_pop.source_tree[idx])
+    #     new_ind.need_evaluation = True
+    #     return new_ind
+
     def _get_genes(self, individual_pop, individual_elite, crossover_rate):
-        positions = []
         new_ind = copy.deepcopy(individual_elite)
-        for i in range(0, len(individual_pop.individual_trees)):
-            positions.append(uniform(0.0, 1.0))
+
+        new_ind.predicate_inst.kb_source.extend(individual_pop.predicate_inst.kb_source)
+        new_ind.predicate_inst.new_kb_source.extend(individual_pop.predicate_inst.new_kb_source)
+        new_ind.predicate_inst.new_first_kb_source.extend(individual_pop.predicate_inst.new_first_kb_source)
+   
 
         new_ind.individual_trees = []
-        new_ind.source_tree = []
-        for idx in range(0, len(positions)):
-            if positions[idx] <= crossover_rate:
-                new_ind.individual_trees.append(individual_elite.individual_trees[idx])
-                new_ind.source_tree.append(individual_elite.source_tree[idx])
-            else:
-                new_ind.individual_trees.append(individual_pop.individual_trees[idx])
-                new_ind.source_tree.append(individual_pop.source_tree[idx])
+        new_ind.first_source_tree = []
+        
+        for tree in range(0, len(individual_elite.individual_trees)):
+            base_individual_trees = len(individual_pop.individual_trees[tree])
+            if len(individual_pop.individual_trees[tree]) < len(individual_elite.individual_trees[tree]):
+                base_individual_trees = len(individual_elite.individual_trees[tree])
+            positions = []
+            for i in range(0, base_individual_trees):
+                positions.append(uniform(0.0, 1.0))
+
+            res = new_ind.crossover_genes(individual_pop.individual_trees[tree], individual_elite.individual_trees[tree], 
+                                    individual_pop.first_source_tree[tree], individual_elite.first_source_tree[tree], 
+                                    positions, crossover_rate)
+            new_ind.individual_trees.append(res[0])   
+            new_ind.first_source_tree.append(res[1])  
+                            
         new_ind.need_evaluation = True
         return new_ind
 
@@ -174,9 +205,9 @@ class Population:
 
             results = evaluate_pop[0].run_evaluate(evaluate_pop, pos_target, neg_target, facts_target)
             for ind, result in zip(evaluate_pop, results):
-                ind.fitness.values = result[0],
+                ind.fitness.values = result[3],
                 ind.results.append(result[1])    
-    
+                ind.variances = result[2] 
 
     def best_result(self):
         """
@@ -191,12 +222,24 @@ class Population:
         result = self.population[0].fitness.values[0]
         for indice in range(self.pop_size):
             fit = self.population[indice].fitness.values
-            # print(fit, fit[0] < result)
-            # if fit[0] < result:
-            if fit[0] > result:
+            if fit[0] < result:
                 result = fit[0]
         # print(f"bestResult: {result}")
         return result
+
+    def sel_best_cll(self, best_ind_auc_pr): 
+        best_auc_pr = best_ind_auc_pr.results[-1]['m_auc_pr']
+        best_inds = []
+        for i in self.population:
+            if i.results[-1]['m_auc_pr'] == best_auc_pr:
+                best_inds.append(i)
+        best_cll = best_inds[0].results[-1]['m_cll']
+        best_ind = best_inds[0]
+        for i in best_inds:
+            if i.results[-1]['m_cll'] < best_cll:
+                best_ind = i
+                best_cll = i.results[-1]['m_cll']
+        return [best_ind]
 
     def get_all_best_results(self):
         """
@@ -208,15 +251,28 @@ class Population:
             ----------
             result: float
         """
-        result_cll = self.population[0].fitness.values[0]
+        result_auc_pr = self.population[0].fitness.values[0]
         result = self.population[0].results[-1]
         for indice in range(self.pop_size):
             fit = self.population[indice].fitness.values
             # print(fit, fit[0] < result)
-            # if fit[0] < result_cll:
-            if fit[0] > result_cll:
-                result = self.population[indice].results[-1]
-                result_cll = fit[0]
-        # print(f"bestResult: {result}")
+            if fit[0] < result_auc_pr:
+                # result = self.population[indice].results[-1]
+                result_auc_pr = fit[0]
+
+        all_best = []
+        for indice in range(self.pop_size):
+            fit = self.population[indice].fitness.values
+            if fit[0] == result_auc_pr:
+                print(fit[0], result_auc_pr)
+                all_best.append(self.population[indice].results[-1])
+        # print(all_best)
+        best_cll = all_best[0]['m_cll']
+        result = all_best[0]
+        for best in all_best:
+            if best['m_cll'] < best_cll:
+                result = best
+                best_cll= best['m_cll']
+        # print(f"RESULT: {result}")
         return result
 
