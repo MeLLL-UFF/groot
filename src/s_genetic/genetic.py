@@ -1,5 +1,5 @@
 from deap import tools, base, creator
-
+from time import time
 
 from src.individual import *
 from src.s_genetic.population import *
@@ -10,6 +10,8 @@ def genetic(src_struct, target, source, pos_target,
             neg_target, facts_target, kb_source, kb_target,
             target_pred, NUM_GEN=600, pop_size=10, 
             crossover=0.6, mutation=0.3, trees=10, revision=None, crossover_type=None):
+
+    start_time = time()
 
     pop = Population(pop_size)
     best_evaluates = []
@@ -46,7 +48,8 @@ def genetic(src_struct, target, source, pos_target,
         print('MELHOR RESULTADO: ', pop.best_result())
 
         if has_same_best_value == ((NUM_GEN)/2)+1:
-            return pop, best_evaluates, all_best_results
+            final_time = time() - start_time
+            return pop, best_evaluates, all_best_results, final_time
        
         pop_next = pop.selection(pop.population)
         
@@ -80,7 +83,13 @@ def genetic(src_struct, target, source, pos_target,
             all_best_results.append(i.results[-1])
 
         pop.population[:] = pop_next
-    all_best_results.append(pop.get_all_best_results())
+    
     best_evaluates.append(pop.best_result())
-
-    return pop, best_evaluates, all_best_results
+    best_individuals = pop.toolbox.selBest(pop.population, 1)
+    best_individuals = pop.sel_best_cll(best_individuals[0])
+    for i in best_individuals:
+            print(f"BEST: {i.results[-1]}")
+            all_best_results.append(i.results[-1])
+    
+    final_time = time() - start_time
+    return pop, best_evaluates, all_best_results, final_time
