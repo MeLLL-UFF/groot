@@ -205,9 +205,7 @@ class Revision:
 
     def modify_tree(self, individual, individual_tree, variances, source_tree,
                     operator, random_line=True):
-        # possibles = [True, False]
-        # random_line = choice(possibles)
-        # random_line = False
+
         tree_line = self.choose_node(individual_tree, operator, 
                                      variances, random_line)
         if not tree_line:

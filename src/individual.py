@@ -713,3 +713,65 @@ class Individual:
 
         return ind1, ind2
 
+    def crossover_genes(self, pop_tree, elite_tree, src_pop_tree, src_elite_tree, positions, crossover_rate):
+        new_tree = []
+        new_src_tree = []
+
+        base_individual_trees = len(pop_tree)
+        smaller_tree = pop_tree
+        if len(elite_tree) < len(pop_tree):
+            base_individual_trees = len(elite_tree)
+            smaller_tree = elite_tree
+
+        for idx in range(0, base_individual_trees):
+            if positions[idx] <= crossover_rate:
+                new_tree.append(elite_tree[idx])
+                new_src_tree.append(src_elite_tree[idx])
+            else:
+                new_tree.append(pop_tree[idx])
+                new_src_tree.append(src_pop_tree[idx])
+
+
+        if len(positions) > base_individual_trees:
+            add = False
+            for idx in range(base_individual_trees, len(positions)):
+                if positions[idx] <= crossover_rate and smaller_tree == pop_tree:
+                    new_tree.append(elite_tree[idx])
+                    new_src_tree.append(src_elite_tree[idx])
+                    add = True
+                elif positions[idx] >= crossover_rate and smaller_tree == elite_tree:
+                    new_tree.append(pop_tree[idx])
+                    new_src_tree.append(src_pop_tree[idx])
+                    add = True
+
+            if add:
+                for idx in range(base_individual_trees-1, len(new_tree)):
+                    new_changed_tree = new_tree[idx].split(';')
+                    new_changed_src_tree = new_src_tree[idx].split(';')
+                    branch = new_tree[idx].split(';')[1]
+                    for next_branch in range(idx+1, len(new_tree)):
+                        if new_tree[next_branch].split(';')[1].startswith(branch):
+                            change_branch = new_tree[next_branch].split(';')[1].split(f'{branch},')[1].split(',')[0]
+                            if change_branch == 'false':
+                                new_changed_tree[-1] = new_changed_tree[-1].replace(new_changed_tree[-1], 'true')
+                                new_changed_src_tree[-1] = new_changed_src_tree[-1].replace(new_changed_src_tree[-1], 'true')
+                            else:
+                                new_changed_tree[-2] = new_changed_tree[-2].replace(new_changed_tree[-2], 'true')
+                                new_changed_src_tree[-2] = new_changed_src_tree[-2].replace(new_changed_src_tree[-2], 'true')
+                    new_tree[idx] = ";".join(new_changed_tree)
+                    new_src_tree[idx] = ";".join(new_changed_src_tree)
+
+        new_changed_tree = new_tree[-1].split(';')
+        new_changed_src_tree = new_src_tree[-1].split(';')
+
+        new_changed_tree[-2] = 'false'
+        new_changed_tree[-1] = 'false'
+
+        new_changed_src_tree[-2] = 'false'
+        new_changed_src_tree[-1] = 'false'
+
+
+        new_tree[-1] = ";".join(new_changed_tree)
+        new_src_tree[-1] = ";".join(new_changed_src_tree)
+
+        return new_tree, new_src_tree
