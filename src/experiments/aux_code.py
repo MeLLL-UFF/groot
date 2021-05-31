@@ -201,6 +201,107 @@ def test_tree_b(source, target, kb_source, kb_target, transferred_structured, tr
     return revision.theory_revision(background, boostsrl, target, train_dataset[0], train_dataset[1], train_dataset[2], test_dataset[0], test_dataset[1], test_dataset[2], transferred_structured, transfer=tr_file, trees=10, max_revision_iterations=10, print_function=print_function)
 
 
+def save_base_results(rdn_b_result, rdn_result, tree_b_result, path):
+    """ path is like genetic_type/experiment_name_genetic_info
+    """
+    if not os.path.exists(f'src/experiments/{path}'):
+        os.makedirs(f'src/experiments/{path}')
+    
+    with open(f'src/experiments/{path}/rdn_boost.txt', 'w') as f:
+        for i in rdn_b_result:
+                f.write(json.dumps(i[1]))
+                f.write('\n')
+                f.write(json.dumps(i[2]))
+                f.write('\n')
+                f.write(json.dumps(i[3]))
+                f.write('\n')
+                f.write(json.dumps(i[4]))
+                f.write('\n')
+
+        f.close()
+
+    with open(f'src/experiments/{path}/rdn.txt', 'w') as f:
+        for i in rdn_result:
+                f.write(json.dumps(i[1]))
+                f.write('\n')
+                f.write(json.dumps(i[2]))
+                f.write('\n')
+                f.write(json.dumps(i[3]))
+                f.write('\n')
+                f.write(json.dumps(i[4]))
+                f.write('\n')
+
+        f.close()
+
+    with open(f'src/experiments/{path}/treeb.txt', 'w') as f:
+        for i in tree_b_result:
+                f.write(json.dumps(i[1]))
+                f.write('\n')
+                f.write(json.dumps(i[2]))
+                f.write('\n')
+                f.write(json.dumps(i[3]))
+                f.write('\n')
+
+        f.close()
+
+
+def save_groot_results(path, individual_number, final_results, source, target):
+    if not os.path.exists(f'src/experiments/{path}'):
+        os.makedirs(f'src/experiments/{path}')
+    
+    rounds = [filename.split('_')[1] for filename in os.listdir(f'src/experiments/{path}') if filename.startswith("round_")]
+
+    last_folder = 1
+    if len(rounds):
+        last_folder = str(int(sorted(rounds)[-1])+1)
+
+    if individual_number != 1:
+        last_folder = str(int(sorted(rounds)[-1]))
+
+    if individual_number == 1 and int(last_folder) <= 5:
+        os.makedirs(f'src/experiments/{path}/round_{last_folder}')
+
+    # if int(last_folder) <= 5 and individual_number == 1:
+    #     os.makedirs(f'src/experiments/{path}/round_{last_folder}')
+    #     os.makedirs(f'src/experiments/{path}/round_{last_folder}/individual_{individual_number}')
+
+    if int(last_folder) <=5:
+        os.makedirs(f'src/experiments/{path}/round_{last_folder}/individual_{individual_number}')
+        # os.makedirs(f'src/experiments/{path}/round_{last_folder}/individual_{individual_number}')
+
+        with open(f'src/experiments/{path}/round_{last_folder}/individual_{individual_number}/train.txt', 'w') as f:
+            f.write(json.dumps(final_results[f'{source}->{target}'][1]))
+            f.write('\n')
+            f.write(json.dumps(final_results[f'{source}->{target}'][2]))
+            f.write('\n')
+            f.write(json.dumps(final_results[f'{source}->{target}'][3]))
+            f.close()
+
+        with open(f'src/experiments/{path}/round_{last_folder}/individual_{individual_number}/test.txt', 'w') as f:
+            for i in final_results[f'test:{source}->{target}']:
+                f.write(json.dumps(i[0]))
+                f.write('\n')
+            f.close()
+
+        with open(f'src/experiments/{path}/round_{last_folder}/individual_{individual_number}/refine.txt', 'w') as f:
+            for i in final_results[f'refine:{source}->{target}']:
+                f.write(json.dumps(i))
+                f.write('\n')
+            f.close()
+        
+        with open(f'src/experiments/{path}/round_{last_folder}/individual_{individual_number}/transfer.txt', 'w') as f:
+            for i in final_results[f'transfer:{source}->{target}']:
+                f.write(json.dumps(i))
+                f.write('\n')
+            f.close()
+
+        with open(f'src/experiments/{path}/round_{last_folder}/individual_{individual_number}/inf.txt', 'w') as f:
+            for i in final_results[f'inf:{source}->{target}']:
+                f.write(json.dumps(i))
+                f.write('\n')
+            f.close()
+    
+
 def save_results(final_results, source, target, kb_source, kb_target):
     if not os.path.exists(f'src/experiments/{kb_source}_{kb_target}'):
             os.makedirs(f'src/experiments/{kb_source}_{kb_target}')
