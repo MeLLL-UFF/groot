@@ -208,7 +208,7 @@ class Revision:
 
         tree_line = self.choose_node(individual_tree, operator, 
                                      variances, random_line)
-        if not tree_line:
+        if not tree_line or len(variances) == 0:
             return source_tree, individual_tree
 
         if operator == 'expansion':
