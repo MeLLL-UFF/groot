@@ -4,6 +4,7 @@
 from boostsrl import boostsrl
 import copy
 import json
+import math
 import re
 import os
 import random
@@ -35,48 +36,29 @@ def split_train_test(dataset, test_size=0.3):
     X_train, X_test = train_test_split(dataset, test_size=test_size, random_state=42)
     return X_train, X_test
 
-def get_train_test(dataset, i):
-    # test_index = random.randint(0, len(dataset[0])-1)
-    test_index = i
-    print(test_index)
-    if len(dataset[0]) >= 3:
-        test_facts = dataset[0][test_index]
-        test_pos = dataset[1][test_index]
-        test_neg = dataset[2][test_index]
+def get_train_test(pos, neg, facts,  n_folds=3):
+    if len(pos) > 0:
+        pos = [x for y in pos for x in y]
+        neg = [x for y in neg for x in y]
+        facts =  [x for y in facts for x in y]
 
-        dataset[0].remove(dataset[0][test_index])
-        dataset[1].remove(dataset[1][test_index])
-        dataset[2].remove(dataset[2][test_index])
+    pos_ex = []
+    neg_ex = []
+    facts_ex = [facts]*n_folds
 
-        train_facts = dataset[0]
-        train_pos = dataset[1]
-        train_neg = dataset[2]
+    #calculate positives
+    amount = math.ceil(len(pos)/n_folds)
+    for i in range(n_folds):
+        pos_ex.append(pos[:amount])
+        pos = pos[amount:]
 
-        # test_facts = dataset[0][0]
-        # test_pos = dataset[1][0]
-        # test_neg = dataset[2][0]
-    elif len(dataset[0]) == 2:
-        test_facts = dataset[0][test_index]
-        test_pos = dataset[1][test_index]
-        test_neg = dataset[2][test_index]
+    #calculate negatives
+    amount = math.ceil(len(neg)/n_folds)
+    for i in range(n_folds):
+        neg_ex.append(neg[:amount])
+        neg = neg[amount:]
 
-        dataset[0].remove(dataset[0][test_index])
-        dataset[1].remove(dataset[1][test_index])
-        dataset[2].remove(dataset[2][test_index])
-
-        train_facts = split_folds(dataset[0][0], 2)
-        train_pos = split_folds(dataset[1][0], 2)
-        train_neg = split_folds(dataset[2][0], 2)
-    else:
-        train_facts, test_facts = split_train_test(dataset[0][0])
-        train_pos, test_pos = split_train_test(dataset[1][0])
-        train_neg, test_neg = split_train_test(dataset[2][0])
-
-        train_facts = split_folds(train_facts, 2)
-        train_pos = split_folds(train_pos, 2)
-        train_neg = split_folds(train_neg, 2)
-    
-    return train_facts, train_pos, train_neg, test_facts, test_pos, test_neg
+    return pos_ex, neg_ex, facts_ex
 
 
 def get_branch(curr_value, next_value):
@@ -137,21 +119,11 @@ def get_best_individual(population):
     return ind
     
 
-def get_refine_transfer(ind, source, target, kb_source, kb_target):
-
-    if not os.path.exists(f'src/experiments/{kb_source}_{kb_target}'):
-            os.makedirs(f'src/experiments/{kb_source}_{kb_target}')
-
+def get_refine_transfer(ind):
     refine = []
     for tree in ind.modified_src_tree:
         refine.extend(tree)
     transfer = ind.transfer.transfer
-    with open(f'src/experiments/{kb_source}_{kb_target}/refine_{source}_{target}.txt', 'w') as f:
-        f.write(json.dumps(refine))
-        f.close()
-    with open(f'src/experiments/{kb_source}_{kb_target}/transfer_{source}_{target}.txt', 'w') as f:
-        f.write(json.dumps(transfer))
-        f.close()
     return refine, transfer
 
 
@@ -200,6 +172,118 @@ def test_tree_b(source, target, kb_source, kb_target, transferred_structured, tr
     background = boostsrl.modes(kb_target, [to_predicate], useStdLogicVariables=False, maxTreeDepth=3, nodeSize=2, numOfClauses=8)
     return revision.theory_revision(background, boostsrl, target, train_dataset[0], train_dataset[1], train_dataset[2], test_dataset[0], test_dataset[1], test_dataset[2], transferred_structured, transfer=tr_file, trees=10, max_revision_iterations=10, print_function=print_function)
 
+
+def save_examples(pos, neg, path):
+    if not os.path.exists(f'{path}'):
+        os.makedirs(f'{path}')
+
+    with open(f'{path}/pos.txt', 'w') as f:
+        f.write(json.dumps(pos))
+    f.close()
+
+    with open(f'{path}/neg.txt', 'w') as f:
+        f.write(json.dumps(neg))
+    f.close()
+
+def save_base_results(rdn_b_result, rdn_result, tree_b_result, path):
+    """ path is like genetic_type/experiment_name_genetic_info
+    """
+    if not os.path.exists(f'{path}'):
+        os.makedirs(f'{path}')
+
+    with open(f'{path}/rdn_boost.txt', 'w') as f:
+        for i in rdn_b_result:
+                f.write(json.dumps(i[1]))
+                f.write('\n')
+                f.write(json.dumps(i[2]))
+                f.write('\n')
+                f.write(json.dumps(i[3]))
+                f.write('\n')
+                f.write(json.dumps(i[4]))
+                f.write('\n')
+
+        f.close()
+
+    with open(f'{path}/rdn.txt', 'w') as f:
+        for i in rdn_result:
+                f.write(json.dumps(i[1]))
+                f.write('\n')
+                f.write(json.dumps(i[2]))
+                f.write('\n')
+                f.write(json.dumps(i[3]))
+                f.write('\n')
+                f.write(json.dumps(i[4]))
+                f.write('\n')
+
+        f.close()
+
+    with open(f'{path}/treeb.txt', 'w') as f:
+        for i in tree_b_result:
+                f.write(json.dumps(i[1]))
+                f.write('\n')
+                f.write(json.dumps(i[2]))
+                f.write('\n')
+                f.write(json.dumps(i[3]))
+                f.write('\n')
+
+        f.close()
+
+
+def save_groot_results(path, individual_number, final_results, source, target):
+    if not os.path.exists(f'{path}'):
+        os.makedirs(f'{path}')
+
+    rounds = [filename.split('_')[1] for filename in os.listdir(f'{path}') if filename.startswith("round_")]
+
+    last_folder = 1
+    if len(rounds):
+        last_folder = str(int(sorted(rounds)[-1])+1)
+
+    if individual_number != 1:
+        last_folder = str(int(sorted(rounds)[-1]))
+
+    if individual_number == 1 and int(last_folder) <= 5:
+        os.makedirs(f'{path}/round_{last_folder}')
+
+    # if int(last_folder) <= 5 and individual_number == 1:
+    #     os.makedirs(f'src/experiments/{path}/round_{last_folder}')
+    #     os.makedirs(f'src/experiments/{path}/round_{last_folder}/individual_{individual_number}')
+
+    if int(last_folder) <=5:
+        os.makedirs(f'{path}/round_{last_folder}/individual_{individual_number}')
+        # os.makedirs(f'src/experiments/{path}/round_{last_folder}/individual_{individual_number}')
+
+        with open(f'{path}/round_{last_folder}/individual_{individual_number}/train.txt', 'w') as f:
+            f.write(json.dumps(final_results[f'{source}->{target}'][1]))
+            f.write('\n')
+            f.write(json.dumps(final_results[f'{source}->{target}'][2]))
+            f.write('\n')
+            f.write(json.dumps(final_results[f'{source}->{target}'][3]))
+            f.close()
+
+        with open(f'{path}/round_{last_folder}/individual_{individual_number}/test.txt', 'w') as f:
+            for i in final_results[f'test:{source}->{target}']:
+                f.write(json.dumps(i[0]))
+                f.write('\n')
+            f.close()
+
+        with open(f'{path}/round_{last_folder}/individual_{individual_number}/refine.txt', 'w') as f:
+            for i in final_results[f'refine:{source}->{target}']:
+                f.write(json.dumps(i))
+                f.write('\n')
+            f.close()
+
+        with open(f'{path}/round_{last_folder}/individual_{individual_number}/transfer.txt', 'w') as f:
+            for i in final_results[f'transfer:{source}->{target}']:
+                f.write(json.dumps(i))
+                f.write('\n')
+            f.close()
+
+        with open(f'{path}/round_{last_folder}/individual_{individual_number}/inf.txt', 'w') as f:
+            for i in final_results[f'inf:{source}->{target}']:
+                f.write(json.dumps(i))
+                f.write('\n')
+            f.close()
 
 def save_results(final_results, source, target, kb_source, kb_target):
     if not os.path.exists(f'src/experiments/{kb_source}_{kb_target}'):
