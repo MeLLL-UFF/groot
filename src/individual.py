@@ -276,37 +276,72 @@ class Individual:
                                           maxTreeDepth=3, nodeSize=2, numOfClauses=8)
         results = []
         best_cll = 0.0
-        for i in range(0, len(pos_target)):
+
+        if len(pos_target) > 2:
+            for i in range(0, len(pos_target)):
+                train_pos_target, train_neg_target, train_facts_target, \
+                test_pos_target, test_neg_target, test_facts_target = Individual.define_splits(pos_target, neg_target, 
+                                                                                facts_target, i)
+                
+                train_neg_target = np.random.choice(train_neg_target, 2*len(train_pos_target))
+
+                model_tr = boostsrl.train(background_train, train_pos_target, train_neg_target, 
+                                    train_facts_target, refine=refine, transfer=transfer, 
+                                    trees=10)
+
+                make_test = True
+                with open('boostsrl/train_output.txt', 'r') as f:
+                    train_file = ' '.join(f.readlines())
+                    if 'TOO MANY NODES CONSIDERED' in train_file:
+                        print("INDIVIDUO COM PROBLEMA: ", args["idx"])
+                        make_test = False
+
+                if make_test:
+                    test_model = boostsrl.test(model_tr, test_pos_target, test_neg_target, 
+                                            test_facts_target, trees=10)
+                    results_fold = test_model.summarize_results()
+
+                    if results_fold['CLL'] < best_cll:
+                        variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
+                else:
+                    results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
+                    variances = []
+
+            results.append(results_fold)
+
+
+        else:
             train_pos_target, train_neg_target, train_facts_target, \
-            test_pos_target, test_neg_target, test_facts_target = Individual.define_splits(pos_target, neg_target, 
-                                                                                     facts_target, i)
+            test_pos_target, test_neg_target, test_facts_target = pos_target[0], neg_target[0], facts_target, \
+                                                                pos_target[1], neg_target[1], facts_target
+
             train_neg_target = np.random.choice(train_neg_target, 2*len(train_pos_target))
 
-            # print(f"Train facts: {len(train_facts_target)}")
-            # print(f"Train neg: {len(train_neg_target)}")
-            # print(f"Train pos: {len(train_pos_target)}")
-
-            # print(f"Test facts: {len(test_facts_target)}")
-            # print(f"Test neg: {len(test_neg_target)}")
-            # print(f"Test pos: {len(test_pos_target)}")
 
             model_tr = boostsrl.train(background_train, train_pos_target, train_neg_target, 
-                                      train_facts_target, refine=refine, transfer=transfer, 
-                                      trees=10)
+                                        train_facts_target, refine=refine, transfer=transfer, 
+                                        trees=10)
 
-            # structured_src = []
-            # for j in range(0, 10):
-            #     try:
-            #         structured_src.append(model_tr.get_structured_tree(treenumber=j+1).copy())
-            #     except:
-            #         structured_src.append(model_tr.get_structured_tree(treenumber='combine').copy())
-            
-            test_model = boostsrl.test(model_tr, test_pos_target, test_neg_target, 
-                                       test_facts_target, trees=10)
-            results_fold = test_model.summarize_results()
-            if results_fold['CLL'] < best_cll:
-                variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
+            make_test = True
+            with open('boostsrl/train_output.txt', 'r') as f:
+                train_file = ' '.join(f.readlines())
+                if 'TOO MANY NODES CONSIDERED' in train_file:
+                    print("INDIVIDUO COM PROBLEMA: ", args["idx"])
+                    make_test = False
+
+            if make_test:
+                test_model = boostsrl.test(model_tr, test_pos_target, test_neg_target, 
+                                        test_facts_target, trees=10)
+                results_fold = test_model.summarize_results()
+
+                if results_fold['CLL'] < best_cll:
+                    variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
+            else:
+                results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
+                variances = []
+        
             results.append(results_fold)
+            
         m_auc_pr, m_auc_roc, m_cll, m_prec, m_rec, \
         m_f1, s_auc_pr, s_auc_roc, s_cll, s_prec, s_rec, s_f1 = Individual.get_results(results)
         
@@ -389,7 +424,7 @@ class Individual:
         pool.join()
 
         input_list = self._input_list(population, pos_target, neg_target, facts_target)
-        pool = multiprocessing.Pool()
+        pool = multiprocessing.Pool(processes = multiprocessing.cpu_count())
         results = pool.map(self.evaluate, input_list)
         
         pool.terminate()
