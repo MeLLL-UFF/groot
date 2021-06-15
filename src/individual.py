@@ -275,7 +275,7 @@ class Individual:
         background_train = boostsrl.modes(args['kb_target'], [args['target']], useStdLogicVariables=False, 
                                           maxTreeDepth=3, nodeSize=2, numOfClauses=8)
         results = []
-        best_cll = 0.0
+        worst_auc_pr = 1.0
 
         if len(pos_target) > 2:
             for i in range(0, len(pos_target)):
@@ -301,9 +301,9 @@ class Individual:
                                             test_facts_target, trees=10)
                     results_fold = test_model.summarize_results()
 
-                    if results_fold['CLL'] < best_cll:
+                    if results_fold['AUC PR'] < worst_auc_pr:
                         variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
-                        best_cll = results_fold['CLL']
+                        worst_auc_pr = results_fold['AUC PR']
                 else:
                     results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
                     variances = []
@@ -333,10 +333,8 @@ class Individual:
                 test_model = boostsrl.test(model_tr, test_pos_target, test_neg_target, 
                                         test_facts_target, trees=10)
                 results_fold = test_model.summarize_results()
-
-                if results_fold['CLL'] < best_cll:
-                    variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
-                    best_cll = results_fold['CLL']
+                    
+                variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
             else:
                 results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
                 variances = []
