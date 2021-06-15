@@ -290,11 +290,11 @@ class Individual:
                                     trees=10)
 
                 make_test = True
-                with open('boostsrl/train_output.txt', 'r') as f:
-                    train_file = ' '.join(f.readlines())
-                    if 'TOO MANY NODES CONSIDERED' in train_file:
-                        print("INDIVIDUO COM PROBLEMA: ", args["idx"])
-                        make_test = False
+#                 with open('boostsrl/train_output.txt', 'r') as f:
+#                     train_file = ' '.join(f.readlines())
+#                     if 'TOO MANY NODES CONSIDERED' in train_file:
+#                         print("INDIVIDUO COM PROBLEMA: ", args["idx"])
+#                         make_test = False
 
                 if make_test:
                     test_model = boostsrl.test(model_tr, test_pos_target, test_neg_target, 
@@ -303,11 +303,11 @@ class Individual:
 
                     if results_fold['CLL'] < best_cll:
                         variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
+                        best_cll = results_fold['CLL']
                 else:
                     results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
                     variances = []
-
-            results.append(results_fold)
+                results.append(results_fold)
 
 
         else:
@@ -323,11 +323,11 @@ class Individual:
                                         trees=10)
 
             make_test = True
-            with open('boostsrl/train_output.txt', 'r') as f:
-                train_file = ' '.join(f.readlines())
-                if 'TOO MANY NODES CONSIDERED' in train_file:
-                    print("INDIVIDUO COM PROBLEMA: ", args["idx"])
-                    make_test = False
+#             with open('boostsrl/train_output.txt', 'r') as f:
+#                 train_file = ' '.join(f.readlines())
+#                 if 'TOO MANY NODES CONSIDERED' in train_file:
+#                     print("INDIVIDUO COM PROBLEMA: ", args["idx"])
+#                     make_test = False
 
             if make_test:
                 test_model = boostsrl.test(model_tr, test_pos_target, test_neg_target, 
@@ -336,6 +336,7 @@ class Individual:
 
                 if results_fold['CLL'] < best_cll:
                     variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
+                    best_cll = results_fold['CLL']
             else:
                 results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
                 variances = []
