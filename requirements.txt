@@ -3,3 +3,4 @@ git+git://github.com/rodrigoazs/boostsrl-python-package.git
 deap
 sklearn
 pandas
+scikit-optimize
