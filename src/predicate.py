@@ -241,7 +241,6 @@ class Predicate:
                     else: 
                         new_pred_source += '-,'
                         self.variables.append(var)
-
             predicate.append(f'{new_pred_source})')
         return  ', '.join(predicate)
 
@@ -390,7 +389,7 @@ class Predicate:
                            for occur in re.finditer('[+\-\`]', source_pred)])
 
         for pred in new_kb_source:
-            if new_source_pred in pred:
+            if new_source_pred == pred.split('(')[0]:
                 complete_source_pred = pred
                 break
 
@@ -408,7 +407,7 @@ class Predicate:
 
         for target in valid_pred:
             for pred in new_kb_target:
-                if target.split('(')[0].strip() in pred:
+                if target.split('(')[0].strip() == pred.split('(')[0]:
                     complete_valid_pred.append(pred)
                     break
         valid_index = self._get_valid_map(complete_source_pred, complete_valid_pred)
@@ -500,7 +499,7 @@ class Predicate:
             split_pred[2] =  f"{target}({split_pred[2].split(':-')[0].split('(')[1].strip()} :- {', '.join(final_pred)}"
         else: split_pred[2] = ', '.join(final_pred)
         
-
+        
         split_pred[2] = f"{split_pred[2]}."
         
 
