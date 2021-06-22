@@ -42,6 +42,7 @@ def genetic(src_struct, target, source, pos_target,
             ind.predicate_inst.mapping_type = {}
       
         top = pop.toolbox.selBest(pop.population, num_pop_top)
+        top = pop.get_elite(pop.population, top, num_pop_top)
         bottom = pop.toolbox.selWorst(pop.population, num_pop_bottom)
 
         if len(best_evaluates) > 0 and pop.best_result() == best_evaluates[-1]:

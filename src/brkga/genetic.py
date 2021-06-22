@@ -34,9 +34,6 @@ def genetic(src_struct, target, source, pos_target,
         print("GENERATION: ", generation)
 
         for ind in pop.population:
-            print(ind.results[-1])
-
-        for ind in pop.population:
             ind.source_tree = ind.individual_trees
             ind.predicate_inst.kb_source = ind.predicate_inst.kb_target
             ind.predicate_inst.generate_new_preds()
