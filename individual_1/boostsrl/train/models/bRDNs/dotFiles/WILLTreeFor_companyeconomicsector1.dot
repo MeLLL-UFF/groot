@@ -1,0 +1,19 @@
+digraph G{ 
+1[label = "[companyeconomicsector(C, B), companyalsoknownas(C, D)]"];
+1 -> 2[label="True"];
+1 -> 3[label="False"];
+2[shape = box,label = "0,000(0,500)"];
+3[label = "[bankboughtbank(E, A), companyalsoknownas(F, E)]"];
+3 -> 4[label="True"];
+3 -> 5[label="False"];
+4[label = "[companyalsoknownas(G, A), bankboughtbank(G, E)]"];
+4 -> 6[label="True"];
+4 -> 7[label="False"];
+6[shape = box,label = "0,000(0,500)"];
+7[label = "[acquired(F, E)]"];
+7 -> 8[label="True"];
+7 -> 9[label="False"];
+8[shape = box,label = "0,000(0,500)"];
+9[shape = box,label = "0,312(0,577)"];
+5[shape = box,label = "0,158(0,539)"];
+}

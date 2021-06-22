@@ -1,0 +1,12 @@
+setParam: stringsAreCaseSensitive = true.
+
+usePrologVariables: true.
+
+
+(companyeconomicsector(A, B, 0) :- economicsectorcompany(B, UniqueVar25), bankboughtbank(UniqueVar25, _), bankboughtbank(UniqueVar26, A), bankboughtbank(UniqueVar26, _)).
+(companyeconomicsector(A, B, 0.46840932792227635) :-  /* #pos=6 */ economicsectorcompany(B, UniqueVar27), bankboughtbank(UniqueVar27, _), bankboughtbank(UniqueVar27, _), companyalsoknownas(A, _), companyalsoknownas(UniqueVar28, A), companyalsoknownas(A, UniqueVar28)).
+(companyeconomicsector(A, B, 0) :- economicsectorcompany(B, UniqueVar29), bankboughtbank(UniqueVar29, _), bankboughtbank(UniqueVar29, _), companyalsoknownas(A, _)).
+(companyeconomicsector(A, B, 0) :- economicsectorcompany(B, UniqueVar30), bankboughtbank(UniqueVar30, _), companyalsoknownas(UniqueVar31, A), bankboughtbank(_, UniqueVar31)).
+(companyeconomicsector(_, A, 0.45786242812948674) :-  /* #neg=2 #pos=131 */ economicsectorcompany(A, UniqueVar32), bankboughtbank(UniqueVar32, _)).
+(companyeconomicsector(A, _, 0) :- bankboughtbank(A, _)).
+companyeconomicsector(_, _, -0.04173104975887575) /* #neg=514 #pos=121 */ .

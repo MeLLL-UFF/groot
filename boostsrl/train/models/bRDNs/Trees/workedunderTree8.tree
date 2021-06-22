@@ -1,0 +1,8 @@
+setParam: stringsAreCaseSensitive = true.
+
+usePrologVariables: true.
+
+
+(workedunder(_, A, -0.06842697784420268) :-  /* #neg=738 */ actor(A)).
+(workedunder(A, B, 0.15274385809367164) :-  /* #pos=382 */ movie(UniqueVar9, A), movie(UniqueVar9, B)).
+workedunder(_, _, -0.06842697784420276) /* #neg=26 */ .

@@ -1,0 +1,124 @@
+args[0] = -i
+args[1] = -model
+args[3] = -test
+args[5] = -target
+args[7] = -trees
+args[9] = -aucJarPath
+
+% Starting an INFERENCE run of bRDN.
+% Running on host: C02DX2QHML7H
+
+% Switching to VarIndicator = uppercase.
+
+% Unset'ing VarIndicator.
+
+Resetting the LazyGroundNthArgumentClauseIndex.
+
+% Calling ILPouterLoop from createRegressionOuterLooper.
+
+% getInputArgWithDefaultValue: args=[test/test_pos.txt, test/test_neg.txt, test/test_bk.txt, test/test_facts.txt]
+%  for N=0: args[N]=test/test_pos.txt
+
+% getInputArgWithDefaultValue: args=[test/test_pos.txt, test/test_neg.txt, test/test_bk.txt, test/test_facts.txt]
+%  for N=1: args[N]=test/test_neg.txt
+
+% getInputArgWithDefaultValue: args=[test/test_pos.txt, test/test_neg.txt, test/test_bk.txt, test/test_facts.txt]
+%  for N=2: args[N]=test/test_bk.txt
+
+% getInputArgWithDefaultValue: args=[test/test_pos.txt, test/test_neg.txt, test/test_bk.txt, test/test_facts.txt]
+%  for N=3: args[N]=test/test_facts.txt
+
+% Welcome to the WILL ILP/SRL systems.
+
+
+% Switching to VarIndicator = uppercase.
+
+% Unset'ing VarIndicator.
+% Reading background theory from dir: null
+% Load '../background.txt'.
+
+% Switching to VarIndicator = uppercase.
+
+***** Warning: % Since this is the first setting of the notation for variables, will keep:
+%   variableIndicator = uppercase *****
+
+
+***** Warning: % Since this is the first setting of the notation for variables, will keep:
+%   variableIndicator = uppercase *****
+
+% [ LazyGroundClauseIndex ]  Building full index for mode/1 with 1 assertions.
+% LoadAllModes() called.  Currently loaded modes: []
+% [ LazyGroundClauseIndex ]  Building full index for sameAs/2 with 2 assertions.
+% [ LazyGroundNthArgumentClauseIndex ]  Argument 1:  Building full index for exp/3.
+% [ LazyGroundNthArgumentClauseIndex ]  Argument 0:  Building full index for log/3.
+% LoadAllLibraries() called.  Currently loaded libraries: [listsInLogic, differentInLogic, modes_arithmeticInLogic, inlines_comparisonInLogic, modes_listsInLogic, inlines_differentInLogic, modes_differentInLogic, arithmeticInLogic, inlines_listsInLogic, modes_comparisonInLogic, comparisonInLogic, inlines_arithmeticInLogic]
+
+%  Read the facts.
+%  Have read 33.542 facts.
+% Have read 2.246 examples from 'test' [test/test*].
+% Have read 185.871 examples from 'test' [test/test*].
+
+%  LearnOneClause initialized.
+
+% The outer looper has been created.
+
+% Initializing the ILP inner looper.
+
+% NEW target:                 samevenue(D, E)
+%  targetPred:                samevenue/2
+%  targetArgTypes:            signature = [const, const], types = [+venue, +venue]
+%  targets:                   [samevenue(D, E)]
+%  targetPredicates:          [samevenue/2]
+%  targetArgSpecs:            [[D[+venue], E[+venue]]]
+%  variablesInTargets:        [[D, E]]
+
+% Started collecting constants
+
+% Collecting the types of constants.
+
+% Looking at the training examples to see if any types of new constants can be inferred.
+% Time to collect constants: 474 milliseconds
+% Time to collect examples: 0 seconds
+
+% Read 2.246 pos examples and 185.871 neg examples.
+% Time to init learnOneClause: 539 milliseconds
+% Old dirtrain/models/
+
+% Have 2.246 'raw' positive examples and kept 2.246.
+% Have 185.871 'raw' negative examples and kept 185.871.
+
+% processing backup's for samevenue
+%  POS EX = 2.246
+%  NEG EX = 185.871
+
+% Memory usage by WILLSetup (just counts # targets?):
+%  |backupPosExamples| = 1
+%  |backupNegExamples| = 1
+%  |predicatesAsFacts| = 0
+%  |addedToFactBase|   = 0
+
+% Getting bRDN's target predicates.
+% Did not learn a model for 'samevenue' this run.
+%   loadModel (#0): train/models/bRDNs/Trees/samevenueTree0.tree
+%   loadModel (#1): train/models/bRDNs/Trees/samevenueTree1.tree
+%   loadModel (#2): train/models/bRDNs/Trees/samevenueTree2.tree
+%   loadModel (#3): train/models/bRDNs/Trees/samevenueTree3.tree
+%   loadModel (#4): train/models/bRDNs/Trees/samevenueTree4.tree
+%   loadModel (#5): train/models/bRDNs/Trees/samevenueTree5.tree
+%   loadModel (#6): train/models/bRDNs/Trees/samevenueTree6.tree
+%   loadModel (#7): train/models/bRDNs/Trees/samevenueTree7.tree
+%   loadModel (#8): train/models/bRDNs/Trees/samevenueTree8.tree
+%   loadModel (#9): train/models/bRDNs/Trees/samevenueTree9.tree
+%  Done loading 10 models.
+File: test/advice.txt doesnt exist.Hence no advice loaded
+
+% for samevenue |lookupPos| = 2.246
+% for samevenue |lookupNeg| = 185.871
+% getJointExamples: |pos| = 2.246, |neg| = 185.871
+
+% Starting inference in bRDN.
+% Trees = 10
+
+% Starting getMarginalProbabilities.
+% [ LazyGroundNthArgumentClauseIndex ]  Argument 1:  Building full index for recursion_samevenue/2.
+% [ LazyGroundClauseIndex ]  Building full index for recursion_samevenue/2 with 2.246 assertions.

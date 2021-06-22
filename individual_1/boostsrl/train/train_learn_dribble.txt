@@ -1,0 +1,1168 @@
+% Running on host: C02DX2QHML7H
+
+% Switching to VarIndicator = uppercase.
+
+% Unset'ing VarIndicator.
+
+% Calling ILPouterLoop from createRegressionOuterLooper.
+
+% getInputArgWithDefaultValue: args=[train/train_pos.txt, train/train_neg.txt, train/train_bk.txt, train/train_facts.txt]
+%  for N=0: args[N]=train/train_pos.txt
+
+% getInputArgWithDefaultValue: args=[train/train_pos.txt, train/train_neg.txt, train/train_bk.txt, train/train_facts.txt]
+%  for N=1: args[N]=train/train_neg.txt
+
+% getInputArgWithDefaultValue: args=[train/train_pos.txt, train/train_neg.txt, train/train_bk.txt, train/train_facts.txt]
+%  for N=2: args[N]=train/train_bk.txt
+
+% getInputArgWithDefaultValue: args=[train/train_pos.txt, train/train_neg.txt, train/train_bk.txt, train/train_facts.txt]
+%  for N=3: args[N]=train/train_facts.txt
+
+% Welcome to the WILL ILP/SRL systems.
+
+
+% Switching to VarIndicator = uppercase.
+
+% Unset'ing VarIndicator.
+% Reading background theory from dir: null
+% Load '../background.txt'.
+
+% Switching to VarIndicator = uppercase.
+
+***** Warning: % Since this is the first setting of the notation for variables, will keep:
+%   variableIndicator = uppercase *****
+
+
+***** Warning: % Since this is the first setting of the notation for variables, will keep:
+%   variableIndicator = uppercase *****
+
+% [ LazyGroundClauseIndex ]  Building full index for mode/1 with 1 assertions.
+% LoadAllModes() called.  Currently loaded modes: []
+% [ LazyGroundClauseIndex ]  Building full index for sameAs/2 with 2 assertions.
+% [ LazyGroundNthArgumentClauseIndex ]  Argument 1:  Building full index for exp/3.
+% [ LazyGroundNthArgumentClauseIndex ]  Argument 0:  Building full index for log/3.
+% LoadAllLibraries() called.  Currently loaded libraries: [listsInLogic, differentInLogic, modes_arithmeticInLogic, inlines_comparisonInLogic, modes_listsInLogic, inlines_differentInLogic, modes_differentInLogic, arithmeticInLogic, inlines_listsInLogic, modes_comparisonInLogic, comparisonInLogic, inlines_arithmeticInLogic]
+
+%  Read the facts.
+%  Have read 9.016 facts.
+% Have read 771 examples from 'train' [train/train*].
+% Have read 1.542 examples from 'train' [train/train*].
+
+%  LearnOneClause initialized.
+
+% The outer looper has been created.
+
+% Initializing the ILP inner looper.
+
+% NEW target:                 samevenue(D, E)
+%  targetPred:                samevenue/2
+%  targetArgTypes:            signature = [const, const], types = [+venue, +venue]
+%  targets:                   [samevenue(D, E)]
+%  targetPredicates:          [samevenue/2]
+%  targetArgSpecs:            [[D[+venue], E[+venue]]]
+%  variablesInTargets:        [[D, E]]
+
+% Started collecting constants
+
+% Collecting the types of constants.
+
+% Looking at the training examples to see if any types of new constants can be inferred.
+% Time to collect constants: 159 milliseconds
+% Time to collect examples: 0 seconds
+
+% Read 771 pos examples and 1.542 neg examples.
+% Time to init learnOneClause: 172 milliseconds
+% Old dirnull
+Setting model dir
+
+% Have 771 'raw' positive examples and kept 771.
+% Have 1.542 'raw' negative examples and kept 1.542.
+
+% processing backup's for samevenue
+%  POS EX = 771
+%  NEG EX = 1.542
+
+% Memory usage by WILLSetup (just counts # targets?):
+%  |backupPosExamples| = 1
+%  |backupNegExamples| = 1
+%  |predicatesAsFacts| = 0
+%  |addedToFactBase|   = 0
+train/models/
+File: train/advice.txt doesnt exist.Hence no advice loaded
+% Learning 10 trees in this iteration for samevenue
+
+% Learn model for: samevenue
+% Kept 771 of the 771 positive examples.
+% Kept 1.542 of the 1.542 negative examples.
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.2222222222222222
+Set score:0.0025
+% Dataset size: 2.313
+Computing probabilities
+prob time:5 milliseconds
+No hidden examples for : samevenue
+Time to build dataset: 48 milliseconds
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.22222222222224683
+Set score:0.0025
+% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
+
+% Have these 8 positive seeds: 29 766 783 1104 1268 1505 1618 2301
+
+% The best node found: null
+
+% target           = samevenue(D, E)
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  samevenue(_, _).  [covers 2.313,0/2.313,0 pos, 0,0/0,0 neg]
+
+% Finding mapping for predicates: [actor01, director01]
+% Number of legal mappings: 1
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.13E-6) for clause:  samevenue(A, _) :- samevenue(_, A).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.8300000000000003E-6) for clause:  samevenue(A, B) :- samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+% The best node found: samevenue(A, B) :- samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = samevenue(A, B) :- samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg] *****
+
+
+% Expanding node at Level 0 with score = 1,797693e+308.
+% Will extend: samevenue(A, B) :- samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% Path: 0;
+Comparing variance: NaN to score=0.0025 #egs=0.0
+Comparing variance: 0.22222222222224686 to score=0.0025 #egs=2313.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+
+% Time for loop #1: 200 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #1, the best clause found is:
+%      samevenue(A, B) :- samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% ******************************************
+
+%  Have stopped ILP's outer loop because the tree-structured queue is empty.
+
+% ******************************************
+
+%%%%%  WILL-Produced Tree #1 @ 23:42:52 6/16/21.  [Using 6.234.760 memory cells.]  %%%%%
+
+
+% FOR samevenue(A, B):
+%   if ( samevenue(C, A), samevenue(C, B) )
+%   then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   else return 0.1914822684328406;  // std dev = 22,672, 2.313,000 (wgt'ed) examples reached here.  /* #neg=1.542 #pos=771 */
+
+
+% Clauses:
+
+samevenue(A, B, 0) :- 
+     samevenue(C, A), 
+     samevenue(C, B), 
+     !. // Clause #1.
+
+samevenue(A, B, 0.1914822684328406) :- !. // Clause #2.
+
+
+% The flattened versions of these clauses:
+
+flattened_samevenue(a, b, 0) :- 
+   samevenue(uniqueVar1, a),
+   samevenue(uniqueVar1, b),
+   !. // Flattened version of clause #1.
+
+flattened_samevenue(underscore, underscore, 0.1914822684328406) :-  /* #neg=1.542 #pos=771 */ 
+   !. // Flattened version of clause #2.
+
+
+% The unique flattened literals:
+%   samevenue(uniqueVar1, a)
+%   samevenue(uniqueVar1, b)
+
+% Saving model in: train/models/bRDNs/samevenue.model.ckpt
+% Time taken to learn 1 trees is 392 milliseconds.
+
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.22222222222224683
+Set score:0.0025
+% Only 2313 out of 2313 converged.
+% Kept 771 of the 771 positive examples.
+% Kept 1.542 of the 1.542 negative examples.
+% Dataset size: 2.313
+Computing probabilities
+prob time:32 milliseconds
+No hidden examples for : samevenue
+Time to build dataset: 186 milliseconds
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.22222222222223964
+Set score:0.0025
+% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
+
+% Have these 10 positive seeds: 4 152 325 346 559 743 837 1132 1337 1600
+
+% The best node found: null
+
+% target           = samevenue(D, E)
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  samevenue(_, _).  [covers 2.313,0/2.313,0 pos, 0,0/0,0 neg]
+
+% Finding mapping for predicates: [actor11, director11]
+% Number of legal mappings: 1
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.13E-6) for clause:  samevenue(A, _) :- samevenue(_, A).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.93E-6) for clause:  samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+% The best node found: samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg] *****
+
+
+% Expanding node at Level 0 with score = 1,797693e+308.
+% Will extend: samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% Path: 1;
+Comparing variance: NaN to score=0.0025 #egs=0.0
+Comparing variance: 0.2222222222222396 to score=0.0025 #egs=2313.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+
+% Time for loop #1: 68 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #1, the best clause found is:
+%      samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% ******************************************
+
+%  Have stopped ILP's outer loop because the tree-structured queue is empty.
+
+% ******************************************
+
+%%%%%  WILL-Produced Tree #2 @ 23:42:53 6/16/21.  [Using 6.725.568 memory cells.]  %%%%%
+
+
+% FOR samevenue(A, B):
+%   if ( samevenue(C, A), recursion_samevenue(C, B) )
+%   then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   else return 0.16653882456486124;  // std dev = 22,672, 2.313,000 (wgt'ed) examples reached here.  /* #neg=1.542 #pos=771 */
+
+
+% Clauses:
+
+samevenue(A, B, 0) :- 
+     samevenue(C, A), 
+     recursion_samevenue(C, B), 
+     !. // Clause #1.
+
+samevenue(A, B, 0.16653882456486124) :- !. // Clause #2.
+
+
+% The flattened versions of these clauses:
+
+flattened_samevenue(a, b, 0) :- 
+   samevenue(uniqueVar2, a),
+   recursion_samevenue(uniqueVar2, b),
+   !. // Flattened version of clause #1.
+
+flattened_samevenue(underscore, underscore, 0.16653882456486124) :-  /* #neg=1.542 #pos=771 */ 
+   !. // Flattened version of clause #2.
+
+
+% The unique flattened literals:
+%   recursion_samevenue(uniqueVar2, b)
+%   samevenue(uniqueVar2, a)
+
+% Saving model in: train/models/bRDNs/samevenue.model.ckpt
+% Time taken to learn 2 trees is 751 milliseconds.
+
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.22222222222223964
+Set score:0.0025
+% Only 2313 out of 2313 converged.
+% Kept 771 of the 771 positive examples.
+% Kept 1.542 of the 1.542 negative examples.
+% Dataset size: 2.313
+Computing probabilities
+prob time:76 milliseconds
+No hidden examples for : samevenue
+Time to build dataset: 130 milliseconds
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.22222222222224214
+Set score:0.0025
+% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
+
+% Have these 6 positive seeds: 310 544 968 1295 1490 1861
+
+% The best node found: null
+
+% target           = samevenue(D, E)
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  samevenue(_, _).  [covers 2.313,0/2.313,0 pos, 0,0/0,0 neg]
+
+% Finding mapping for predicates: [actor21, director21]
+% Number of legal mappings: 1
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.13E-6) for clause:  samevenue(A, _) :- samevenue(_, A).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.93E-6) for clause:  samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+% The best node found: samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg] *****
+
+
+% Expanding node at Level 0 with score = 1,797693e+308.
+% Will extend: samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% Path: 2;
+Comparing variance: NaN to score=0.0025 #egs=0.0
+Comparing variance: 0.22222222222224217 to score=0.0025 #egs=2313.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+
+% Time for loop #1: 26 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #1, the best clause found is:
+%      samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% ******************************************
+
+%  Have stopped ILP's outer loop because the tree-structured queue is empty.
+
+% ******************************************
+
+%%%%%  WILL-Produced Tree #3 @ 23:42:53 6/16/21.  [Using 7.255.624 memory cells.]  %%%%%
+
+
+% FOR samevenue(A, B):
+%   if ( samevenue(C, A), recursion_samevenue(C, B) )
+%   then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   else return 0.14209424281557156;  // std dev = 22,672, 2.313,000 (wgt'ed) examples reached here.  /* #neg=1.542 #pos=771 */
+
+
+% Clauses:
+
+samevenue(A, B, 0) :- 
+     samevenue(C, A), 
+     recursion_samevenue(C, B), 
+     !. // Clause #1.
+
+samevenue(A, B, 0.14209424281557156) :- !. // Clause #2.
+
+
+% The flattened versions of these clauses:
+
+flattened_samevenue(a, b, 0) :- 
+   samevenue(uniqueVar3, a),
+   recursion_samevenue(uniqueVar3, b),
+   !. // Flattened version of clause #1.
+
+flattened_samevenue(underscore, underscore, 0.14209424281557156) :-  /* #neg=1.542 #pos=771 */ 
+   !. // Flattened version of clause #2.
+
+
+% The unique flattened literals:
+%   samevenue(uniqueVar3, a)
+%   recursion_samevenue(uniqueVar3, b)
+
+% Saving model in: train/models/bRDNs/samevenue.model.ckpt
+% Time taken to learn 3 trees is 1,030 seconds.
+
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.22222222222224214
+Set score:0.0025
+% Only 2313 out of 2313 converged.
+% Kept 771 of the 771 positive examples.
+% Kept 1.542 of the 1.542 negative examples.
+% Dataset size: 2.313
+Computing probabilities
+prob time:17 milliseconds
+No hidden examples for : samevenue
+Time to build dataset: 83 milliseconds
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.22222222222220542
+Set score:0.0025
+% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
+
+% Have these 7 positive seeds: 128 1104 1283 1468 1778 2012 2163
+
+% The best node found: null
+
+% target           = samevenue(D, E)
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  samevenue(_, _).  [covers 2.313,0/2.313,0 pos, 0,0/0,0 neg]
+
+% Finding mapping for predicates: [actor31, director31]
+% Number of legal mappings: 1
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.13E-6) for clause:  samevenue(A, _) :- samevenue(_, A).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.8300000000000003E-6) for clause:  samevenue(A, B) :- samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+% The best node found: samevenue(A, B) :- samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = samevenue(A, B) :- samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg] *****
+
+
+% Expanding node at Level 0 with score = 1,797693e+308.
+% Will extend: samevenue(A, B) :- samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% Path: 3;
+Comparing variance: NaN to score=0.0025 #egs=0.0
+Comparing variance: 0.22222222222220542 to score=0.0025 #egs=2313.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+
+% Time for loop #1: 33 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #1, the best clause found is:
+%      samevenue(A, B) :- samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% ******************************************
+
+%  Have stopped ILP's outer loop because the tree-structured queue is empty.
+
+% ******************************************
+
+%%%%%  WILL-Produced Tree #4 @ 23:42:53 6/16/21.  [Using 7.599.104 memory cells.]  %%%%%
+
+
+% FOR samevenue(A, B):
+%   if ( samevenue(C, A), samevenue(C, B) )
+%   then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   else return 0.1191489049074691;  // std dev = 22,672, 2.313,000 (wgt'ed) examples reached here.  /* #neg=1.542 #pos=771 */
+
+
+% Clauses:
+
+samevenue(A, B, 0) :- 
+     samevenue(C, A), 
+     samevenue(C, B), 
+     !. // Clause #1.
+
+samevenue(A, B, 0.1191489049074691) :- !. // Clause #2.
+
+
+% The flattened versions of these clauses:
+
+flattened_samevenue(a, b, 0) :- 
+   samevenue(uniqueVar4, a),
+   samevenue(uniqueVar4, b),
+   !. // Flattened version of clause #1.
+
+flattened_samevenue(underscore, underscore, 0.1191489049074691) :-  /* #neg=1.542 #pos=771 */ 
+   !. // Flattened version of clause #2.
+
+
+% The unique flattened literals:
+%   samevenue(uniqueVar4, b)
+%   samevenue(uniqueVar4, a)
+
+% Saving model in: train/models/bRDNs/samevenue.model.ckpt
+% Time taken to learn 4 trees is 1,199 seconds.
+
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.22222222222220542
+Set score:0.0025
+% Only 2313 out of 2313 converged.
+% Kept 771 of the 771 positive examples.
+% Kept 1.542 of the 1.542 negative examples.
+% Dataset size: 2.313
+Computing probabilities
+prob time:13 milliseconds
+No hidden examples for : samevenue
+Time to build dataset: 58 milliseconds
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.22222222222222027
+Set score:0.0025
+% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
+
+% Have these 10 positive seeds: 238 471 645 729 884 920 987 1107 1266 1522
+
+% The best node found: null
+
+% target           = samevenue(D, E)
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  samevenue(_, _).  [covers 2.313,0/2.313,0 pos, 0,0/0,0 neg]
+
+% Finding mapping for predicates: [actor41, director41]
+% Number of legal mappings: 1
+% [ LazyGroundNthArgumentClauseIndex ]  Argument 1:  Building full index for recursion_samevenue/2.
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.23E-6) for clause:  samevenue(A, _) :- recursion_samevenue(_, A).  [covers 2.313,0/2.313,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.93E-6) for clause:  samevenue(A, B) :- recursion_samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+% The best node found: samevenue(A, B) :- recursion_samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = samevenue(A, B) :- recursion_samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg] *****
+
+
+% Expanding node at Level 0 with score = 1,797693e+308.
+% Will extend: samevenue(A, B) :- recursion_samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% Path: 4;
+Comparing variance: NaN to score=0.0025 #egs=0.0
+Comparing variance: 0.22222222222222027 to score=0.0025 #egs=2313.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+
+% Time for loop #1: 423 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #1, the best clause found is:
+%      samevenue(A, B) :- recursion_samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% ******************************************
+
+%  Have stopped ILP's outer loop because the tree-structured queue is empty.
+
+% ******************************************
+
+%%%%%  WILL-Produced Tree #5 @ 23:42:54 6/16/21.  [Using 8.008.352 memory cells.]  %%%%%
+
+
+% FOR samevenue(A, B):
+%   if ( recursion_samevenue(C, A), samevenue(C, B) )
+%   then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   else return 0.09841340278402057;  // std dev = 22,672, 2.313,000 (wgt'ed) examples reached here.  /* #neg=1.542 #pos=771 */
+
+
+% Clauses:
+
+samevenue(A, B, 0) :- 
+     recursion_samevenue(C, A), 
+     samevenue(C, B), 
+     !. // Clause #1.
+
+samevenue(A, B, 0.09841340278402057) :- !. // Clause #2.
+
+
+% The flattened versions of these clauses:
+
+flattened_samevenue(a, b, 0) :- 
+   recursion_samevenue(uniqueVar5, a),
+   samevenue(uniqueVar5, b),
+   !. // Flattened version of clause #1.
+
+flattened_samevenue(underscore, underscore, 0.09841340278402057) :-  /* #neg=1.542 #pos=771 */ 
+   !. // Flattened version of clause #2.
+
+
+% The unique flattened literals:
+%   recursion_samevenue(uniqueVar5, a)
+%   samevenue(uniqueVar5, b)
+
+% Saving model in: train/models/bRDNs/samevenue.model.ckpt
+% Time taken to learn 5 trees is 1,732 seconds.
+
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.22222222222222027
+Set score:0.0025
+% Only 2313 out of 2313 converged.
+% Kept 771 of the 771 positive examples.
+% Kept 1.542 of the 1.542 negative examples.
+% Dataset size: 2.313
+Computing probabilities
+prob time:43 milliseconds
+No hidden examples for : samevenue
+Time to build dataset: 86 milliseconds
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.2222222222222093
+Set score:0.0025
+% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
+
+% Have these 10 positive seeds: 65 194 286 499 543 631 1184 1200 1518 1721
+
+% The best node found: null
+
+% target           = samevenue(D, E)
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  samevenue(_, _).  [covers 2.313,0/2.313,0 pos, 0,0/0,0 neg]
+
+% Finding mapping for predicates: [actor51, director51]
+% Number of legal mappings: 1
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.23E-6) for clause:  samevenue(A, _) :- recursion_samevenue(_, A).  [covers 2.313,0/2.313,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.93E-6) for clause:  samevenue(A, B) :- recursion_samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+% The best node found: samevenue(A, B) :- recursion_samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = samevenue(A, B) :- recursion_samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg] *****
+
+
+% Expanding node at Level 0 with score = 1,797693e+308.
+% Will extend: samevenue(A, B) :- recursion_samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% Path: 5;
+Comparing variance: NaN to score=0.0025 #egs=0.0
+Comparing variance: 0.2222222222222093 to score=0.0025 #egs=2313.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+
+% Time for loop #1: 99 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #1, the best clause found is:
+%      samevenue(A, B) :- recursion_samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% ******************************************
+
+%  Have stopped ILP's outer loop because the tree-structured queue is empty.
+
+% ******************************************
+
+%%%%%  WILL-Produced Tree #6 @ 23:42:54 6/16/21.  [Using 8.427.096 memory cells.]  %%%%%
+
+
+% FOR samevenue(A, B):
+%   if ( recursion_samevenue(C, A), samevenue(C, B) )
+%   then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   else return 0.08026654944252314;  // std dev = 22,672, 2.313,000 (wgt'ed) examples reached here.  /* #neg=1.542 #pos=771 */
+
+
+% Clauses:
+
+samevenue(A, B, 0) :- 
+     recursion_samevenue(C, A), 
+     samevenue(C, B), 
+     !. // Clause #1.
+
+samevenue(A, B, 0.08026654944252314) :- !. // Clause #2.
+
+
+% The flattened versions of these clauses:
+
+flattened_samevenue(a, b, 0) :- 
+   recursion_samevenue(uniqueVar6, a),
+   samevenue(uniqueVar6, b),
+   !. // Flattened version of clause #1.
+
+flattened_samevenue(underscore, underscore, 0.08026654944252314) :-  /* #neg=1.542 #pos=771 */ 
+   !. // Flattened version of clause #2.
+
+
+% The unique flattened literals:
+%   samevenue(uniqueVar6, b)
+%   recursion_samevenue(uniqueVar6, a)
+
+% Saving model in: train/models/bRDNs/samevenue.model.ckpt
+% Time taken to learn 6 trees is 2,012 seconds.
+
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.2222222222222093
+Set score:0.0025
+% Only 2313 out of 2313 converged.
+% Kept 771 of the 771 positive examples.
+% Kept 1.542 of the 1.542 negative examples.
+% Dataset size: 2.313
+Computing probabilities
+prob time:89 milliseconds
+No hidden examples for : samevenue
+Time to build dataset: 158 milliseconds
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.222222222222214
+Set score:0.0025
+% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
+
+% Have these 10 positive seeds: 50 134 177 686 853 954 1303 1564 1633 1910
+
+% The best node found: null
+
+% target           = samevenue(D, E)
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  samevenue(_, _).  [covers 2.313,0/2.313,0 pos, 0,0/0,0 neg]
+
+% Finding mapping for predicates: [actor61, director61]
+% Number of legal mappings: 1
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.23E-6) for clause:  samevenue(A, _) :- recursion_samevenue(_, A).  [covers 2.313,0/2.313,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.93E-6) for clause:  samevenue(A, B) :- recursion_samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+% The best node found: samevenue(A, B) :- recursion_samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = samevenue(A, B) :- recursion_samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg] *****
+
+
+% Expanding node at Level 0 with score = 1,797693e+308.
+% Will extend: samevenue(A, B) :- recursion_samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% Path: 6;
+Comparing variance: NaN to score=0.0025 #egs=0.0
+Comparing variance: 0.22222222222221402 to score=0.0025 #egs=2313.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+
+% Time for loop #1: 235 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #1, the best clause found is:
+%      samevenue(A, B) :- recursion_samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% ******************************************
+
+%  Have stopped ILP's outer loop because the tree-structured queue is empty.
+
+% ******************************************
+
+%%%%%  WILL-Produced Tree #7 @ 23:42:54 6/16/21.  [Using 8.822.184 memory cells.]  %%%%%
+
+
+% FOR samevenue(A, B):
+%   if ( recursion_samevenue(C, A), samevenue(C, B) )
+%   then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   else return 0.06479591611328821;  // std dev = 22,672, 2.313,000 (wgt'ed) examples reached here.  /* #neg=1.542 #pos=771 */
+
+
+% Clauses:
+
+samevenue(A, B, 0) :- 
+     recursion_samevenue(C, A), 
+     samevenue(C, B), 
+     !. // Clause #1.
+
+samevenue(A, B, 0.06479591611328821) :- !. // Clause #2.
+
+
+% The flattened versions of these clauses:
+
+flattened_samevenue(a, b, 0) :- 
+   recursion_samevenue(uniqueVar7, a),
+   samevenue(uniqueVar7, b),
+   !. // Flattened version of clause #1.
+
+flattened_samevenue(underscore, underscore, 0.06479591611328821) :-  /* #neg=1.542 #pos=771 */ 
+   !. // Flattened version of clause #2.
+
+
+% The unique flattened literals:
+%   samevenue(uniqueVar7, b)
+%   recursion_samevenue(uniqueVar7, a)
+
+% Saving model in: train/models/bRDNs/samevenue.model.ckpt
+% Time taken to learn 7 trees is 2,532 seconds.
+
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.222222222222214
+Set score:0.0025
+% Only 2313 out of 2313 converged.
+% Kept 771 of the 771 positive examples.
+% Kept 1.542 of the 1.542 negative examples.
+% Dataset size: 2.313
+Computing probabilities
+prob time:122 milliseconds
+No hidden examples for : samevenue
+Time to build dataset: 205 milliseconds
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.22222222222223093
+Set score:0.0025
+% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
+
+% Have these 4 positive seeds: 1001 1457 1599 1909
+
+% The best node found: null
+
+% target           = samevenue(D, E)
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  samevenue(_, _).  [covers 2.313,0/2.313,0 pos, 0,0/0,0 neg]
+
+% Finding mapping for predicates: [director71, actor71]
+% Number of legal mappings: 1
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.13E-6) for clause:  samevenue(A, _) :- samevenue(_, A).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.8300000000000003E-6) for clause:  samevenue(A, B) :- samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+% The best node found: samevenue(A, B) :- samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = samevenue(A, B) :- samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg] *****
+
+
+% Expanding node at Level 0 with score = 1,797693e+308.
+% Will extend: samevenue(A, B) :- samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% Path: 7;
+Comparing variance: NaN to score=0.0025 #egs=0.0
+Comparing variance: 0.22222222222223093 to score=0.0025 #egs=2313.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+
+% Time for loop #1: 31 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #1, the best clause found is:
+%      samevenue(A, B) :- samevenue(C, A), samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% ******************************************
+
+%  Have stopped ILP's outer loop because the tree-structured queue is empty.
+
+% ******************************************
+
+%%%%%  WILL-Produced Tree #8 @ 23:42:55 6/16/21.  [Using 9.251.328 memory cells.]  %%%%%
+
+
+% FOR samevenue(A, B):
+%   if ( samevenue(C, A), samevenue(C, B) )
+%   then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   else return 0.051879169344046294;  // std dev = 22,672, 2.313,000 (wgt'ed) examples reached here.  /* #neg=1.542 #pos=771 */
+
+
+% Clauses:
+
+samevenue(A, B, 0) :- 
+     samevenue(C, A), 
+     samevenue(C, B), 
+     !. // Clause #1.
+
+samevenue(A, B, 0.051879169344046294) :- !. // Clause #2.
+
+
+% The flattened versions of these clauses:
+
+flattened_samevenue(a, b, 0) :- 
+   samevenue(uniqueVar8, a),
+   samevenue(uniqueVar8, b),
+   !. // Flattened version of clause #1.
+
+flattened_samevenue(underscore, underscore, 0.051879169344046294) :-  /* #neg=1.542 #pos=771 */ 
+   !. // Flattened version of clause #2.
+
+
+% The unique flattened literals:
+%   samevenue(uniqueVar8, a)
+%   samevenue(uniqueVar8, b)
+
+% Saving model in: train/models/bRDNs/samevenue.model.ckpt
+% Time taken to learn 8 trees is 3,039 seconds.
+
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.22222222222223093
+Set score:0.0025
+% Only 2313 out of 2313 converged.
+% Kept 771 of the 771 positive examples.
+% Kept 1.542 of the 1.542 negative examples.
+% Dataset size: 2.313
+Computing probabilities
+prob time:188 milliseconds
+No hidden examples for : samevenue
+Time to build dataset: 256 milliseconds
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.22222222222223167
+Set score:0.0025
+% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
+
+% Have these 10 positive seeds: 350 1109 1114 1295 1377 1795 1990 2155 2161 2237
+
+% The best node found: null
+
+% target           = samevenue(D, E)
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  samevenue(_, _).  [covers 2.313,0/2.313,0 pos, 0,0/0,0 neg]
+
+% Finding mapping for predicates: [director81, actor81]
+% Number of legal mappings: 1
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.13E-6) for clause:  samevenue(A, _) :- samevenue(_, A).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.93E-6) for clause:  samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+% The best node found: samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg] *****
+
+
+% Expanding node at Level 0 with score = 1,797693e+308.
+% Will extend: samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% Path: 8;
+Comparing variance: NaN to score=0.0025 #egs=0.0
+Comparing variance: 0.22222222222223165 to score=0.0025 #egs=2313.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+
+% Time for loop #1: 19 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #1, the best clause found is:
+%      samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% ******************************************
+
+%  Have stopped ILP's outer loop because the tree-structured queue is empty.
+
+% ******************************************
+
+%%%%%  WILL-Produced Tree #9 @ 23:42:55 6/16/21.  [Using 9.647.024 memory cells.]  %%%%%
+
+
+% FOR samevenue(A, B):
+%   if ( samevenue(C, A), recursion_samevenue(C, B) )
+%   then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   else return 0.04126932998425056;  // std dev = 22,672, 2.313,000 (wgt'ed) examples reached here.  /* #neg=1.542 #pos=771 */
+
+
+% Clauses:
+
+samevenue(A, B, 0) :- 
+     samevenue(C, A), 
+     recursion_samevenue(C, B), 
+     !. // Clause #1.
+
+samevenue(A, B, 0.04126932998425056) :- !. // Clause #2.
+
+
+% The flattened versions of these clauses:
+
+flattened_samevenue(a, b, 0) :- 
+   samevenue(uniqueVar9, a),
+   recursion_samevenue(uniqueVar9, b),
+   !. // Flattened version of clause #1.
+
+flattened_samevenue(underscore, underscore, 0.04126932998425056) :-  /* #neg=1.542 #pos=771 */ 
+   !. // Flattened version of clause #2.
+
+
+% The unique flattened literals:
+%   recursion_samevenue(uniqueVar9, b)
+%   samevenue(uniqueVar9, a)
+
+% Saving model in: train/models/bRDNs/samevenue.model.ckpt
+% Time taken to learn 9 trees is 3,620 seconds.
+
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.22222222222223167
+Set score:0.0025
+% Only 2313 out of 2313 converged.
+% Kept 771 of the 771 positive examples.
+% Kept 1.542 of the 1.542 negative examples.
+% Dataset size: 2.313
+Computing probabilities
+prob time:177 milliseconds
+No hidden examples for : samevenue
+Time to build dataset: 247 milliseconds
+%      addToQueueOfTreeStructuredLearningTasks (level=0; score=1,797693135e+308)
+%         ILP node to extend: null
+%      Insert tree-structured search node (@ level = 0 and with score = 1,797693135e+308) into the LAST position (#1) in the search queue.
+Variance:0.22222222222222662
+Set score:0.0025
+% [AdviceProcessor]  Generated 0 clauses at relevance level STRONGLY_IRRELEVANT.
+
+% Have these 7 positive seeds: 268 742 1262 1827 2149 2169 2283
+
+% The best node found: null
+
+% target           = samevenue(D, E)
+%     Score = -Infinity (regressionFit = Infinity, penalties=2.2E-7) for clause:  samevenue(_, _).  [covers 2.313,0/2.313,0 pos, 0,0/0,0 neg]
+
+% Finding mapping for predicates: [director91, actor91]
+% Number of legal mappings: 1
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.13E-6) for clause:  samevenue(A, _) :- samevenue(_, A).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+%     Score = -Infinity (regressionFit = Infinity, penalties=1.93E-6) for clause:  samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+% The best node found: samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+
+***** Warning: Have a bestNode that covers no positive examples.  That shouldn't happen.  Best node = samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg] *****
+
+
+% Expanding node at Level 0 with score = 1,797693e+308.
+% Will extend: samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% Path: 9;
+Comparing variance: NaN to score=0.0025 #egs=0.0
+Comparing variance: 0.2222222222222266 to score=0.0025 #egs=2313.0
+%   Creating a TRUE-branch leaf because wgtedCountTrueBranchPos = 0,0 < 2.1 * minPosCov = 6,3
+
+% Time for loop #1: 26 milliseconds.
+% Internal node max length = 2
+% Max tree depth in lits   = 12
+% Max tree depth in nodes  = 3
+% Max number of clauses    = 8
+
+% On cycle #1, the best clause found is:
+%      samevenue(A, B) :- samevenue(C, A), recursion_samevenue(C, B).  [covers 0,0/2.313,0 pos, 0,0/0,0 neg]
+% This clause covers 0 positive examples, of which 0 are newly covered.
+% It also covers 0 negative examples, of which 0 are newly covered.
+
+% ******************************************
+
+%  Have stopped ILP's outer loop because the tree-structured queue is empty.
+
+% ******************************************
+
+%%%%%  WILL-Produced Tree #10 @ 23:42:56 6/16/21.  [Using 10.042.264 memory cells.]  %%%%%
+
+
+% FOR samevenue(A, B):
+%   if ( samevenue(C, A), recursion_samevenue(C, B) )
+%   then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   else return 0.032663748734838016;  // std dev = 22,672, 2.313,000 (wgt'ed) examples reached here.  /* #neg=1.542 #pos=771 */
+
+
+% Clauses:
+
+samevenue(A, B, 0) :- 
+     samevenue(C, A), 
+     recursion_samevenue(C, B), 
+     !. // Clause #1.
+
+samevenue(A, B, 0.032663748734838016) :- !. // Clause #2.
+
+
+% The flattened versions of these clauses:
+
+flattened_samevenue(a, b, 0) :- 
+   samevenue(uniqueVar10, a),
+   recursion_samevenue(uniqueVar10, b),
+   !. // Flattened version of clause #1.
+
+flattened_samevenue(underscore, underscore, 0.032663748734838016) :-  /* #neg=1.542 #pos=771 */ 
+   !. // Flattened version of clause #2.
+
+
+% The unique flattened literals:
+%   recursion_samevenue(uniqueVar10, b)
+%   samevenue(uniqueVar10, a)
+
+% Saving model in: train/models/bRDNs/samevenue.model.ckpt
+% Saving model in: train/models/bRDNs/samevenue.model
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%  Final call for computing score for samevenue.  %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+stepLength_tree1(1.0).
+stepLength_tree2(1.0).
+stepLength_tree3(1.0).
+stepLength_tree4(1.0).
+stepLength_tree5(1.0).
+stepLength_tree6(1.0).
+stepLength_tree7(1.0).
+stepLength_tree8(1.0).
+stepLength_tree9(1.0).
+stepLength_tree10(1.0).
+
+logPrior(-1.8).
+samevenue(D, E, Total) :- // A general accessor. 
+   samevenue(D, E, 1000000, Total), !.
+samevenue(D, E, Total) :- waitHere("This should not fail", samevenue(D, E, Total)).
+
+samevenue(D, E, TreesToUse, Total) :- // A tree-limited accessor (e.g., for tuning the number of trees to use).
+   logPrior(LogPrior),
+   getScore_samevenue_tree1(D, E, TreesToUse, Total1),
+   getScore_samevenue_tree2(D, E, TreesToUse, Total2),
+   getScore_samevenue_tree3(D, E, TreesToUse, Total3),
+   getScore_samevenue_tree4(D, E, TreesToUse, Total4),
+   getScore_samevenue_tree5(D, E, TreesToUse, Total5),
+   getScore_samevenue_tree6(D, E, TreesToUse, Total6),
+   getScore_samevenue_tree7(D, E, TreesToUse, Total7),
+   getScore_samevenue_tree8(D, E, TreesToUse, Total8),
+   getScore_samevenue_tree9(D, E, TreesToUse, Total9),
+   getScore_samevenue_tree10(D, E, TreesToUse, Total10),
+   Total is LogPrior + Total1 + Total2 + Total3 + Total4 + Total5 + Total6 + Total7 + Total8 + Total9 + Total10,
+   !.
+samevenue(D, E, TreesToUse, Total) :- waitHere("This should not fail", samevenue(D, E, TreesToUse, Total)).
+
+getScore_samevenue_tree1(D, E, TreesToUse, 0.0) :- 1 > TreesToUse, !.
+getScore_samevenue_tree1(D, E, TreesToUse, Total1) :- samevenue_tree1(D, E, Total), stepLength_tree1(StepLen), Total1 is Total * StepLen.
+
+getScore_samevenue_tree2(D, E, TreesToUse, 0.0) :- 2 > TreesToUse, !.
+getScore_samevenue_tree2(D, E, TreesToUse, Total2) :- samevenue_tree2(D, E, Total), stepLength_tree2(StepLen), Total2 is Total * StepLen.
+
+getScore_samevenue_tree3(D, E, TreesToUse, 0.0) :- 3 > TreesToUse, !.
+getScore_samevenue_tree3(D, E, TreesToUse, Total3) :- samevenue_tree3(D, E, Total), stepLength_tree3(StepLen), Total3 is Total * StepLen.
+
+getScore_samevenue_tree4(D, E, TreesToUse, 0.0) :- 4 > TreesToUse, !.
+getScore_samevenue_tree4(D, E, TreesToUse, Total4) :- samevenue_tree4(D, E, Total), stepLength_tree4(StepLen), Total4 is Total * StepLen.
+
+getScore_samevenue_tree5(D, E, TreesToUse, 0.0) :- 5 > TreesToUse, !.
+getScore_samevenue_tree5(D, E, TreesToUse, Total5) :- samevenue_tree5(D, E, Total), stepLength_tree5(StepLen), Total5 is Total * StepLen.
+
+getScore_samevenue_tree6(D, E, TreesToUse, 0.0) :- 6 > TreesToUse, !.
+getScore_samevenue_tree6(D, E, TreesToUse, Total6) :- samevenue_tree6(D, E, Total), stepLength_tree6(StepLen), Total6 is Total * StepLen.
+
+getScore_samevenue_tree7(D, E, TreesToUse, 0.0) :- 7 > TreesToUse, !.
+getScore_samevenue_tree7(D, E, TreesToUse, Total7) :- samevenue_tree7(D, E, Total), stepLength_tree7(StepLen), Total7 is Total * StepLen.
+
+getScore_samevenue_tree8(D, E, TreesToUse, 0.0) :- 8 > TreesToUse, !.
+getScore_samevenue_tree8(D, E, TreesToUse, Total8) :- samevenue_tree8(D, E, Total), stepLength_tree8(StepLen), Total8 is Total * StepLen.
+
+getScore_samevenue_tree9(D, E, TreesToUse, 0.0) :- 9 > TreesToUse, !.
+getScore_samevenue_tree9(D, E, TreesToUse, Total9) :- samevenue_tree9(D, E, Total), stepLength_tree9(StepLen), Total9 is Total * StepLen.
+
+getScore_samevenue_tree10(D, E, TreesToUse, 0.0) :- 10 > TreesToUse, !.
+getScore_samevenue_tree10(D, E, TreesToUse, Total10) :- samevenue_tree10(D, E, Total), stepLength_tree10(StepLen), Total10 is Total * StepLen.
+
+flattenedLiteralsInThisSetOfTrees(samevenue, 20, [
+   samevenue(uniqueVar6, b),
+   samevenue(uniqueVar7, b),
+   recursion_samevenue(uniqueVar9, b),
+   samevenue(uniqueVar10, a),
+   samevenue(uniqueVar3, a),
+   samevenue(uniqueVar5, b),
+   samevenue(uniqueVar8, b),
+   samevenue(uniqueVar1, b),
+   samevenue(uniqueVar2, a),
+   samevenue(uniqueVar4, a),
+   recursion_samevenue(uniqueVar2, b),
+   recursion_samevenue(uniqueVar7, a),
+   recursion_samevenue(uniqueVar10, b),
+   recursion_samevenue(uniqueVar6, a),
+   recursion_samevenue(uniqueVar3, b),
+   recursion_samevenue(uniqueVar5, a),
+   samevenue(uniqueVar9, a),
+   samevenue(uniqueVar8, a),
+   samevenue(uniqueVar1, a),
+   samevenue(uniqueVar4, b)]).
+% Time taken to learn model for 'samevenue': 4,199 seconds.
+% Saving model in: train/models/bRDNs/samevenue.model
+cached groundings hit: 0
+Misses: 0
+
+% Total learning time (10 trees): 5,166 seconds.

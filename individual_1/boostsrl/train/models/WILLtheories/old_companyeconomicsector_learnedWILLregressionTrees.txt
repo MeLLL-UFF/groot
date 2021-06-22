@@ -1,0 +1,1345 @@
+usePrologVariables: true.
+
+% maxTreeDepthInNodes                 = 3
+% maxTreeDepthInLiterals              = 12
+% maxNumberOfLiteralsAtAnInteriorNode = 2
+% maxFreeBridgersInBody               = 1
+% maxNumberOfClauses                  = 8
+% maxNodesToConsider                  = 10
+% maxNodesToCreate                    = 10.000
+% maxAcceptableNodeScoreToStop        = 0,003
+% negPosRatio                         = 2,000
+% testNegPosRatio                     = -1,000
+% # of pos examples                   = 780
+% # of neg examples                   = 0
+
+
+
+%%%%%  WILL-Produced Tree #1 @ 11:14:06 6/14/21.  [Using 7.280.408 memory cells.]  %%%%%
+
+% FOR companyeconomicsector(A, B):
+%   if ( economicsectorcompany(B, C) )
+%   then if ( bankboughtbank(C, D), companyalsoknownas(E, D) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else if ( bankboughtbank(F, A), acquired(A, G) )
+%   | | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | | else if ( companyalsoknownas(H, A), bankboughtbank(C, I) )
+%   | | | then return 0.8581489350995122;  // std dev = 0,000, 4,000 (wgt'ed) examples reached here.  /* #pos=4 */
+%   | | | else return 0.643425008719141;  // std dev = 7,414, 326,000 (wgt'ed) examples reached here.  /* #neg=70 #pos=256 */
+%   else if ( acquired(J, A), acquired(A, K) )
+%   | then if ( acquired(L, K) )
+%   | | then return -0.1418510649004877;  // std dev = 2,79e-08, 30,000 (wgt'ed) examples reached here.  /* #neg=30 */
+%   | | else return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else return -0.14185106490048746;  // std dev = 2,70e-07, 420,000 (wgt'ed) examples reached here.  /* #neg=420 */
+
+
+% Clauses:
+
+companyeconomicsector(A, B, 0) :- 
+     economicsectorcompany(B, C), 
+     bankboughtbank(C, D), 
+     companyalsoknownas(E, D), 
+     !. // Clause #1.
+
+companyeconomicsector(A, B, 0) :- 
+     economicsectorcompany(B, C), 
+     bankboughtbank(D, A), 
+     acquired(A, E), 
+     !. // Clause #2.
+
+companyeconomicsector(A, B, 0.8581489350995122) :- 
+     economicsectorcompany(B, C), 
+     companyalsoknownas(D, A), 
+     bankboughtbank(C, E), 
+     !. // Clause #3.
+
+companyeconomicsector(A, B, 0.643425008719141) :- 
+     economicsectorcompany(B, C), 
+     !. // Clause #4.
+
+companyeconomicsector(A, B, -0.1418510649004877) :- 
+     acquired(C, A), 
+     acquired(A, D), 
+     acquired(E, D), 
+     !. // Clause #5.
+
+companyeconomicsector(A, B, 0) :- 
+     acquired(C, A), 
+     acquired(A, D), 
+     !. // Clause #6.
+
+companyeconomicsector(A, B, -0.14185106490048746) :- !. // Clause #7.
+
+
+% The flattened versions of these clauses:
+
+flattened_companyeconomicsector(underscore, a, 0) :- 
+   economicsectorcompany(a, uniqueVar1),
+   bankboughtbank(uniqueVar1, uniqueVar2),
+   companyalsoknownas(underscore, uniqueVar2),
+   !. // Flattened version of clause #1.
+
+flattened_companyeconomicsector(a, b, 0) :- 
+   economicsectorcompany(b, underscore),
+   bankboughtbank(underscore, a),
+   acquired(a, underscore),
+   !. // Flattened version of clause #2.
+
+flattened_companyeconomicsector(a, b, 0.8581489350995122) :-  /* #pos=4 */ 
+   economicsectorcompany(b, uniqueVar3),
+   companyalsoknownas(underscore, a),
+   bankboughtbank(uniqueVar3, underscore),
+   !. // Flattened version of clause #3.
+
+flattened_companyeconomicsector(underscore, a, 0.643425008719141) :-  /* #neg=70 #pos=256 */ 
+   economicsectorcompany(a, underscore),
+   !. // Flattened version of clause #4.
+
+flattened_companyeconomicsector(a, underscore, -0.1418510649004877) :-  /* #neg=30 */ 
+   acquired(underscore, a),
+   acquired(a, uniqueVar4),
+   acquired(underscore, uniqueVar4),
+   !. // Flattened version of clause #5.
+
+flattened_companyeconomicsector(a, underscore, 0) :- 
+   acquired(underscore, a),
+   acquired(a, underscore),
+   !. // Flattened version of clause #6.
+
+flattened_companyeconomicsector(underscore, underscore, -0.14185106490048746) :-  /* #neg=420 */ 
+   !. // Flattened version of clause #7.
+
+
+% The unique flattened literals:
+%   bankboughtbank(underscore, a)
+%   acquired(underscore, a)
+%   economicsectorcompany(a, underscore)
+%   acquired(a, underscore)
+%   bankboughtbank(uniqueVar3, underscore)
+%   economicsectorcompany(b, uniqueVar3)
+%   companyalsoknownas(underscore, a)
+%   acquired(underscore, uniqueVar4)
+%   companyalsoknownas(underscore, uniqueVar2)
+%   acquired(a, uniqueVar4)
+%   economicsectorcompany(a, uniqueVar1)
+%   bankboughtbank(uniqueVar1, uniqueVar2)
+%   economicsectorcompany(b, underscore)
+
+%%%%%  WILL-Produced Tree #2 @ 11:14:06 6/14/21.  [Using 7.494.368 memory cells.]  %%%%%
+
+% FOR companyeconomicsector(A, B):
+%   if ( companyeconomicsector(C, B), companyalsoknownas(C, D) )
+%   then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   else if ( bankboughtbank(E, A), companyalsoknownas(F, E) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else return 0.15951180297497172;  // std dev = 11,894, 780,000 (wgt'ed) examples reached here.  /* #neg=520 #pos=260 */
+
+
+% Clauses:
+
+companyeconomicsector(A, B, 0) :- 
+     companyeconomicsector(C, B), 
+     companyalsoknownas(C, D), 
+     !. // Clause #1.
+
+companyeconomicsector(A, B, 0) :- 
+     bankboughtbank(C, A), 
+     companyalsoknownas(D, C), 
+     !. // Clause #2.
+
+companyeconomicsector(A, B, 0.15951180297497172) :- !. // Clause #3.
+
+
+% The flattened versions of these clauses:
+
+flattened_companyeconomicsector(underscore, a, 0) :- 
+   companyeconomicsector(uniqueVar5, a),
+   companyalsoknownas(uniqueVar5, underscore),
+   !. // Flattened version of clause #1.
+
+flattened_companyeconomicsector(a, underscore, 0) :- 
+   bankboughtbank(uniqueVar6, a),
+   companyalsoknownas(underscore, uniqueVar6),
+   !. // Flattened version of clause #2.
+
+flattened_companyeconomicsector(underscore, underscore, 0.15951180297497172) :-  /* #neg=520 #pos=260 */ 
+   !. // Flattened version of clause #3.
+
+
+% The unique flattened literals:
+%   companyalsoknownas(uniqueVar5, underscore)
+%   bankboughtbank(uniqueVar6, a)
+%   companyalsoknownas(underscore, uniqueVar6)
+%   companyeconomicsector(uniqueVar5, a)
+
+%%%%%  WILL-Produced Tree #3 @ 11:14:07 6/14/21.  [Using 7.736.440 memory cells.]  %%%%%
+
+% FOR companyeconomicsector(A, B):
+%   if ( companyeconomicsector(C, B), acquired(C, D) )
+%   then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   else if ( economicsectorcompany(B, E) )
+%   | then if ( bankboughtbank(F, A) )
+%   | | then return 0.3971474414036294;  // std dev = 1,155, 6,000 (wgt'ed) examples reached here.  /* #neg=2 #pos=4 */
+%   | | else if ( bankboughtbank(A, G) )
+%   | | | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | | | else return 0.5200573584972591;  // std dev = 7,325, 324,000 (wgt'ed) examples reached here.  /* #neg=68 #pos=256 */
+%   | else if ( bankboughtbank(H, A), companyalsoknownas(I, H) )
+%   | | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | | else return -0.14401452291291714;  // std dev = 0,000, 450,000 (wgt'ed) examples reached here.  /* #neg=450 */
+
+
+% Clauses:
+
+companyeconomicsector(A, B, 0) :- 
+     companyeconomicsector(C, B), 
+     acquired(C, D), 
+     !. // Clause #1.
+
+companyeconomicsector(A, B, 0.3971474414036294) :- 
+     economicsectorcompany(B, C), 
+     bankboughtbank(D, A), 
+     !. // Clause #2.
+
+companyeconomicsector(A, B, 0) :- 
+     economicsectorcompany(B, C), 
+     bankboughtbank(A, D), 
+     !. // Clause #3.
+
+companyeconomicsector(A, B, 0.5200573584972591) :- 
+     economicsectorcompany(B, C), 
+     !. // Clause #4.
+
+companyeconomicsector(A, B, 0) :- 
+     bankboughtbank(C, A), 
+     companyalsoknownas(D, C), 
+     !. // Clause #5.
+
+companyeconomicsector(A, B, -0.14401452291291714) :- !. // Clause #6.
+
+
+% The flattened versions of these clauses:
+
+flattened_companyeconomicsector(underscore, a, 0) :- 
+   companyeconomicsector(uniqueVar7, a),
+   acquired(uniqueVar7, underscore),
+   !. // Flattened version of clause #1.
+
+flattened_companyeconomicsector(a, b, 0.3971474414036294) :-  /* #neg=2 #pos=4 */ 
+   economicsectorcompany(b, underscore),
+   bankboughtbank(underscore, a),
+   !. // Flattened version of clause #2.
+
+flattened_companyeconomicsector(a, b, 0) :- 
+   economicsectorcompany(b, underscore),
+   bankboughtbank(a, underscore),
+   !. // Flattened version of clause #3.
+
+flattened_companyeconomicsector(underscore, a, 0.5200573584972591) :-  /* #neg=68 #pos=256 */ 
+   economicsectorcompany(a, underscore),
+   !. // Flattened version of clause #4.
+
+flattened_companyeconomicsector(a, underscore, 0) :- 
+   bankboughtbank(uniqueVar8, a),
+   companyalsoknownas(underscore, uniqueVar8),
+   !. // Flattened version of clause #5.
+
+flattened_companyeconomicsector(underscore, underscore, -0.14401452291291714) :-  /* #neg=450 */ 
+   !. // Flattened version of clause #6.
+
+
+% The unique flattened literals:
+%   bankboughtbank(underscore, a)
+%   bankboughtbank(uniqueVar8, a)
+%   companyeconomicsector(uniqueVar7, a)
+%   economicsectorcompany(a, underscore)
+%   bankboughtbank(a, underscore)
+%   acquired(uniqueVar7, underscore)
+%   companyalsoknownas(underscore, uniqueVar8)
+%   economicsectorcompany(b, underscore)
+
+%%%%%  WILL-Produced Tree #4 @ 11:14:07 6/14/21.  [Using 8.018.040 memory cells.]  %%%%%
+
+% FOR companyeconomicsector(A, B):
+%   if ( companyeconomicsector(C, B), acquired(C, D) )
+%   then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   else if ( acquired(A, E) )
+%   | then return 0.09150059484649986;  // std dev = 5,266, 199,000 (wgt'ed) examples reached here.  /* #neg=134 #pos=65 */
+%   | else if ( companyalsoknownas(A, F), bankboughtbank(F, A) )
+%   | | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | | else if ( companyalsoknownas(G, A) )
+%   | | | then return 0.12871831294810998;  // std dev = 2,177, 35,000 (wgt'ed) examples reached here.  /* #neg=22 #pos=13 */
+%   | | | else return 0.09826780681619565;  // std dev = 8,741, 546,000 (wgt'ed) examples reached here.  /* #neg=364 #pos=182 */
+
+
+% Clauses:
+
+companyeconomicsector(A, B, 0) :- 
+     companyeconomicsector(C, B), 
+     acquired(C, D), 
+     !. // Clause #1.
+
+companyeconomicsector(A, B, 0.09150059484649986) :- 
+     acquired(A, C), 
+     !. // Clause #2.
+
+companyeconomicsector(A, B, 0) :- 
+     companyalsoknownas(A, C), 
+     bankboughtbank(C, A), 
+     !. // Clause #3.
+
+companyeconomicsector(A, B, 0.12871831294810998) :- 
+     companyalsoknownas(C, A), 
+     !. // Clause #4.
+
+companyeconomicsector(A, B, 0.09826780681619565) :- !. // Clause #5.
+
+
+% The flattened versions of these clauses:
+
+flattened_companyeconomicsector(underscore, a, 0) :- 
+   companyeconomicsector(uniqueVar9, a),
+   acquired(uniqueVar9, underscore),
+   !. // Flattened version of clause #1.
+
+flattened_companyeconomicsector(a, underscore, 0.09150059484649986) :-  /* #neg=134 #pos=65 */ 
+   acquired(a, underscore),
+   !. // Flattened version of clause #2.
+
+flattened_companyeconomicsector(a, underscore, 0) :- 
+   companyalsoknownas(a, uniqueVar10),
+   bankboughtbank(uniqueVar10, a),
+   !. // Flattened version of clause #3.
+
+flattened_companyeconomicsector(a, underscore, 0.12871831294810998) :-  /* #neg=22 #pos=13 */ 
+   companyalsoknownas(underscore, a),
+   !. // Flattened version of clause #4.
+
+flattened_companyeconomicsector(underscore, underscore, 0.09826780681619565) :-  /* #neg=364 #pos=182 */ 
+   !. // Flattened version of clause #5.
+
+
+% The unique flattened literals:
+%   companyalsoknownas(underscore, a)
+%   acquired(a, underscore)
+%   companyalsoknownas(a, uniqueVar10)
+%   acquired(uniqueVar9, underscore)
+%   bankboughtbank(uniqueVar10, a)
+%   companyeconomicsector(uniqueVar9, a)
+
+%%%%%  WILL-Produced Tree #5 @ 11:14:07 6/14/21.  [Using 8.324.472 memory cells.]  %%%%%
+
+% FOR companyeconomicsector(A, B):
+%   if ( companyeconomicsector(C, B), bankboughtbank(C, D) )
+%   then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   else if ( bankboughtbank(A, E) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else if ( acquired(A, F), acquired(F, G) )
+%   | | then if ( acquired(A, G), companyalsoknownas(G, H) )
+%   | | | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | | | else return 0.05116526666394152;  // std dev = 3,284, 79,000 (wgt'ed) examples reached here.  /* #neg=55 #pos=24 */
+%   | | else if ( companyalsoknownas(I, A) )
+%   | | | then return 0.10025839742334353;  // std dev = 3,474, 90,000 (wgt'ed) examples reached here.  /* #neg=58 #pos=32 */
+%   | | | else return 0.08267166506220493;  // std dev = 9,138, 611,000 (wgt'ed) examples reached here.  /* #neg=407 #pos=204 */
+
+
+% Clauses:
+
+companyeconomicsector(A, B, 0) :- 
+     companyeconomicsector(C, B), 
+     bankboughtbank(C, D), 
+     !. // Clause #1.
+
+companyeconomicsector(A, B, 0) :- 
+     bankboughtbank(A, C), 
+     !. // Clause #2.
+
+companyeconomicsector(A, B, 0) :- 
+     acquired(A, C), 
+     acquired(C, D), 
+     acquired(A, D), 
+     companyalsoknownas(D, E), 
+     !. // Clause #3.
+
+companyeconomicsector(A, B, 0.05116526666394152) :- 
+     acquired(A, C), 
+     acquired(C, D), 
+     !. // Clause #4.
+
+companyeconomicsector(A, B, 0.10025839742334353) :- 
+     companyalsoknownas(C, A), 
+     !. // Clause #5.
+
+companyeconomicsector(A, B, 0.08267166506220493) :- !. // Clause #6.
+
+
+% The flattened versions of these clauses:
+
+flattened_companyeconomicsector(underscore, a, 0) :- 
+   companyeconomicsector(uniqueVar11, a),
+   bankboughtbank(uniqueVar11, underscore),
+   !. // Flattened version of clause #1.
+
+flattened_companyeconomicsector(a, underscore, 0) :- 
+   bankboughtbank(a, underscore),
+   !. // Flattened version of clause #2.
+
+flattened_companyeconomicsector(a, underscore, 0) :- 
+   acquired(a, uniqueVar12),
+   acquired(uniqueVar12, uniqueVar13),
+   acquired(a, uniqueVar13),
+   companyalsoknownas(uniqueVar13, underscore),
+   !. // Flattened version of clause #3.
+
+flattened_companyeconomicsector(a, underscore, 0.05116526666394152) :-  /* #neg=55 #pos=24 */ 
+   acquired(a, uniqueVar14),
+   acquired(uniqueVar14, underscore),
+   !. // Flattened version of clause #4.
+
+flattened_companyeconomicsector(a, underscore, 0.10025839742334353) :-  /* #neg=58 #pos=32 */ 
+   companyalsoknownas(underscore, a),
+   !. // Flattened version of clause #5.
+
+flattened_companyeconomicsector(underscore, underscore, 0.08267166506220493) :-  /* #neg=407 #pos=204 */ 
+   !. // Flattened version of clause #6.
+
+
+% The unique flattened literals:
+%   companyalsoknownas(underscore, a)
+%   bankboughtbank(uniqueVar11, underscore)
+%   acquired(a, uniqueVar12)
+%   acquired(a, uniqueVar13)
+%   acquired(a, uniqueVar14)
+%   acquired(uniqueVar14, underscore)
+%   bankboughtbank(a, underscore)
+%   companyeconomicsector(uniqueVar11, a)
+%   acquired(uniqueVar12, uniqueVar13)
+%   companyalsoknownas(uniqueVar13, underscore)
+
+%%%%%  WILL-Produced Tree #6 @ 11:14:08 6/14/21.  [Using 8.553.184 memory cells.]  %%%%%
+
+% FOR companyeconomicsector(A, B):
+%   if ( economicsectorcompany(B, C), acquired(C, D) )
+%   then if ( bankboughtbank(C, E) )
+%   | then if ( acquired(A, F) )
+%   | | then return 0.5751350599783538;  // std dev = 0,000, 1,000 (wgt'ed) examples reached here.  /* #pos=1 */
+%   | | else if ( bankboughtbank(C, E), companyalsoknownas(E, G) )
+%   | | | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | | | else return 0.4956823818553203;  // std dev = 1,921, 54,000 (wgt'ed) examples reached here.  /* #neg=4 #pos=50 */
+%   | else if ( bankboughtbank(H, A), bankboughtbank(I, H) )
+%   | | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | | else if ( companyalsoknownas(A, J) )
+%   | | | then return 0.44835541423046993;  // std dev = 2,081, 40,000 (wgt'ed) examples reached here.  /* #neg=5 #pos=35 */
+%   | | | else return 0.4449755226241912;  // std dev = 4,468, 177,000 (wgt'ed) examples reached here.  /* #neg=23 #pos=154 */
+%   else if ( acquired(K, A), bankboughtbank(L, K) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else return -0.14074992278537768;  // std dev = 3,647, 508,000 (wgt'ed) examples reached here.  /* #neg=488 #pos=20 */
+
+
+% Clauses:
+
+companyeconomicsector(A, B, 0.5751350599783538) :- 
+     economicsectorcompany(B, C), 
+     acquired(C, D), 
+     bankboughtbank(C, E), 
+     acquired(A, F), 
+     !. // Clause #1.
+
+companyeconomicsector(A, B, 0) :- 
+     economicsectorcompany(B, C), 
+     acquired(C, D), 
+     bankboughtbank(C, E), 
+     companyalsoknownas(E, F), 
+     !. // Clause #2.
+
+companyeconomicsector(A, B, 0.4956823818553203) :- 
+     economicsectorcompany(B, C), 
+     acquired(C, D), 
+     bankboughtbank(C, E), 
+     !. // Clause #3.
+
+companyeconomicsector(A, B, 0) :- 
+     economicsectorcompany(B, C), 
+     acquired(C, D), 
+     bankboughtbank(E, A), 
+     bankboughtbank(F, E), 
+     !. // Clause #4.
+
+companyeconomicsector(A, B, 0.44835541423046993) :- 
+     economicsectorcompany(B, C), 
+     acquired(C, D), 
+     companyalsoknownas(A, E), 
+     !. // Clause #5.
+
+companyeconomicsector(A, B, 0.4449755226241912) :- 
+     economicsectorcompany(B, C), 
+     acquired(C, D), 
+     !. // Clause #6.
+
+companyeconomicsector(A, B, 0) :- 
+     acquired(C, A), 
+     bankboughtbank(D, C), 
+     !. // Clause #7.
+
+companyeconomicsector(A, B, -0.14074992278537768) :- !. // Clause #8.
+
+
+/* Before Simplification:
+
+% Unsimplified Clauses:
+
+companyeconomicsector(A, B, 0.5751350599783538) :- 
+     economicsectorcompany(B, C), 
+     acquired(C, D), 
+     bankboughtbank(C, E), 
+     acquired(A, F), 
+     !. // Clause #1.
+
+companyeconomicsector(A, B, 0) :- 
+     economicsectorcompany(B, C), 
+     acquired(C, D), 
+     bankboughtbank(C, E), 
+     bankboughtbank(C, E), 
+     companyalsoknownas(E, F), 
+     !. // Clause #2.
+
+companyeconomicsector(A, B, 0.4956823818553203) :- 
+     economicsectorcompany(B, C), 
+     acquired(C, D), 
+     bankboughtbank(C, E), 
+     !. // Clause #3.
+
+companyeconomicsector(A, B, 0) :- 
+     economicsectorcompany(B, C), 
+     acquired(C, D), 
+     bankboughtbank(E, A), 
+     bankboughtbank(F, E), 
+     !. // Clause #4.
+
+companyeconomicsector(A, B, 0.44835541423046993) :- 
+     economicsectorcompany(B, C), 
+     acquired(C, D), 
+     companyalsoknownas(A, E), 
+     !. // Clause #5.
+
+companyeconomicsector(A, B, 0.4449755226241912) :- 
+     economicsectorcompany(B, C), 
+     acquired(C, D), 
+     !. // Clause #6.
+
+companyeconomicsector(A, B, 0) :- 
+     acquired(C, A), 
+     bankboughtbank(D, C), 
+     !. // Clause #7.
+
+companyeconomicsector(A, B, -0.14074992278537768) :- !. // Clause #8.
+
+
+*/
+% The flattened versions of these clauses:
+
+flattened_companyeconomicsector(a, b, 0.5751350599783538) :-  /* #pos=1 */ 
+   economicsectorcompany(b, uniqueVar15),
+   acquired(uniqueVar15, underscore),
+   bankboughtbank(uniqueVar15, underscore),
+   acquired(a, underscore),
+   !. // Flattened version of clause #1.
+
+flattened_companyeconomicsector(underscore, a, 0) :- 
+   economicsectorcompany(a, uniqueVar16),
+   acquired(uniqueVar16, underscore),
+   bankboughtbank(uniqueVar16, uniqueVar17),
+   bankboughtbank(uniqueVar16, uniqueVar17),
+   companyalsoknownas(uniqueVar17, underscore),
+   !. // Flattened version of clause #2.
+
+flattened_companyeconomicsector(underscore, a, 0.4956823818553203) :-  /* #neg=4 #pos=50 */ 
+   economicsectorcompany(a, uniqueVar18),
+   acquired(uniqueVar18, underscore),
+   bankboughtbank(uniqueVar18, underscore),
+   !. // Flattened version of clause #3.
+
+flattened_companyeconomicsector(a, b, 0) :- 
+   economicsectorcompany(b, uniqueVar19),
+   acquired(uniqueVar19, underscore),
+   bankboughtbank(uniqueVar20, a),
+   bankboughtbank(underscore, uniqueVar20),
+   !. // Flattened version of clause #4.
+
+flattened_companyeconomicsector(a, b, 0.44835541423046993) :-  /* #neg=5 #pos=35 */ 
+   economicsectorcompany(b, uniqueVar21),
+   acquired(uniqueVar21, underscore),
+   companyalsoknownas(a, underscore),
+   !. // Flattened version of clause #5.
+
+flattened_companyeconomicsector(underscore, a, 0.4449755226241912) :-  /* #neg=23 #pos=154 */ 
+   economicsectorcompany(a, uniqueVar22),
+   acquired(uniqueVar22, underscore),
+   !. // Flattened version of clause #6.
+
+flattened_companyeconomicsector(a, underscore, 0) :- 
+   acquired(uniqueVar23, a),
+   bankboughtbank(underscore, uniqueVar23),
+   !. // Flattened version of clause #7.
+
+flattened_companyeconomicsector(underscore, underscore, -0.14074992278537768) :-  /* #neg=488 #pos=20 */ 
+   !. // Flattened version of clause #8.
+
+
+% The unique flattened literals:
+%   bankboughtbank(underscore, uniqueVar23)
+%   companyalsoknownas(uniqueVar17, underscore)
+%   bankboughtbank(uniqueVar15, underscore)
+%   acquired(uniqueVar16, underscore)
+%   economicsectorcompany(b, uniqueVar21)
+%   acquired(a, underscore)
+%   economicsectorcompany(b, uniqueVar19)
+%   bankboughtbank(underscore, uniqueVar20)
+%   bankboughtbank(uniqueVar20, a)
+%   acquired(uniqueVar22, underscore)
+%   acquired(uniqueVar19, underscore)
+%   acquired(uniqueVar23, a)
+%   economicsectorcompany(b, uniqueVar15)
+%   economicsectorcompany(a, uniqueVar16)
+%   acquired(uniqueVar18, underscore)
+%   bankboughtbank(uniqueVar18, underscore)
+%   acquired(uniqueVar15, underscore)
+%   economicsectorcompany(a, uniqueVar22)
+%   bankboughtbank(uniqueVar16, uniqueVar17)
+%   acquired(uniqueVar21, underscore)
+%   economicsectorcompany(a, uniqueVar18)
+%   companyalsoknownas(a, underscore)
+
+%%%%%  WILL-Produced Tree #7 @ 11:14:08 6/14/21.  [Using 8.833.336 memory cells.]  %%%%%
+
+% FOR companyeconomicsector(A, B):
+%   if ( economicsectorcompany(B, C) )
+%   then if ( bankboughtbank(C, D) )
+%   | then if ( bankboughtbank(A, E), acquired(E, A) )
+%   | | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | | else return 0.348284869481738;  // std dev = 2,312, 60,000 (wgt'ed) examples reached here.  /* #neg=6 #pos=54 */
+%   | else if ( acquired(A, F), bankboughtbank(G, F) )
+%   | | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | | else if ( companyalsoknownas(H, A), acquired(H, I) )
+%   | | | then return 0.2434665850523533;  // std dev = 2,468, 38,000 (wgt'ed) examples reached here.  /* #neg=9 #pos=29 */
+%   | | | else return 0.2600665463256042;  // std dev = 6,044, 232,000 (wgt'ed) examples reached here.  /* #neg=55 #pos=177 */
+%   else if ( bankboughtbank(A, J) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else return -0.13152256001642876;  // std dev = 0,039, 450,000 (wgt'ed) examples reached here.  /* #neg=450 */
+
+
+% Clauses:
+
+companyeconomicsector(A, B, 0) :- 
+     economicsectorcompany(B, C), 
+     bankboughtbank(C, D), 
+     bankboughtbank(A, E), 
+     acquired(E, A), 
+     !. // Clause #1.
+
+companyeconomicsector(A, B, 0.348284869481738) :- 
+     economicsectorcompany(B, C), 
+     bankboughtbank(C, D), 
+     !. // Clause #2.
+
+companyeconomicsector(A, B, 0) :- 
+     economicsectorcompany(B, C), 
+     acquired(A, D), 
+     bankboughtbank(E, D), 
+     !. // Clause #3.
+
+companyeconomicsector(A, B, 0.2434665850523533) :- 
+     economicsectorcompany(B, C), 
+     companyalsoknownas(D, A), 
+     acquired(D, E), 
+     !. // Clause #4.
+
+companyeconomicsector(A, B, 0.2600665463256042) :- 
+     economicsectorcompany(B, C), 
+     !. // Clause #5.
+
+companyeconomicsector(A, B, 0) :- 
+     bankboughtbank(A, C), 
+     !. // Clause #6.
+
+companyeconomicsector(A, B, -0.13152256001642876) :- !. // Clause #7.
+
+
+% The flattened versions of these clauses:
+
+flattened_companyeconomicsector(a, b, 0) :- 
+   economicsectorcompany(b, uniqueVar24),
+   bankboughtbank(uniqueVar24, underscore),
+   bankboughtbank(a, uniqueVar25),
+   acquired(uniqueVar25, a),
+   !. // Flattened version of clause #1.
+
+flattened_companyeconomicsector(underscore, a, 0.348284869481738) :-  /* #neg=6 #pos=54 */ 
+   economicsectorcompany(a, uniqueVar26),
+   bankboughtbank(uniqueVar26, underscore),
+   !. // Flattened version of clause #2.
+
+flattened_companyeconomicsector(a, b, 0) :- 
+   economicsectorcompany(b, underscore),
+   acquired(a, uniqueVar27),
+   bankboughtbank(underscore, uniqueVar27),
+   !. // Flattened version of clause #3.
+
+flattened_companyeconomicsector(a, b, 0.2434665850523533) :-  /* #neg=9 #pos=29 */ 
+   economicsectorcompany(b, underscore),
+   companyalsoknownas(uniqueVar28, a),
+   acquired(uniqueVar28, underscore),
+   !. // Flattened version of clause #4.
+
+flattened_companyeconomicsector(underscore, a, 0.2600665463256042) :-  /* #neg=55 #pos=177 */ 
+   economicsectorcompany(a, underscore),
+   !. // Flattened version of clause #5.
+
+flattened_companyeconomicsector(a, underscore, 0) :- 
+   bankboughtbank(a, underscore),
+   !. // Flattened version of clause #6.
+
+flattened_companyeconomicsector(underscore, underscore, -0.13152256001642876) :-  /* #neg=450 */ 
+   !. // Flattened version of clause #7.
+
+
+% The unique flattened literals:
+%   acquired(uniqueVar25, a)
+%   economicsectorcompany(a, underscore)
+%   bankboughtbank(uniqueVar26, underscore)
+%   acquired(a, uniqueVar27)
+%   bankboughtbank(a, underscore)
+%   economicsectorcompany(a, uniqueVar26)
+%   economicsectorcompany(b, uniqueVar24)
+%   bankboughtbank(underscore, uniqueVar27)
+%   companyalsoknownas(uniqueVar28, a)
+%   bankboughtbank(a, uniqueVar25)
+%   bankboughtbank(uniqueVar24, underscore)
+%   acquired(uniqueVar28, underscore)
+%   economicsectorcompany(b, underscore)
+
+%%%%%  WILL-Produced Tree #8 @ 11:14:09 6/14/21.  [Using 8.977.296 memory cells.]  %%%%%
+
+% FOR companyeconomicsector(A, B):
+%   if ( economicsectorcompany(B, C), bankboughtbank(C, D) )
+%   then if ( bankboughtbank(E, A), companyalsoknownas(E, F) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else if ( acquired(C, G), companyalsoknownas(A, H) )
+%   | | then if ( acquired(I, A), acquired(A, I) )
+%   | | | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | | | else return 0.3077494330384366;  // std dev = 0,000, 4,000 (wgt'ed) examples reached here.  /* #pos=4 */
+%   | | else if ( acquired(J, A), companyalsoknownas(K, J) )
+%   | | | then return -0.3003151119196353;  // std dev = 0,816, 3,000 (wgt'ed) examples reached here.  /* #neg=2 #pos=1 */
+%   | | | else return 0.29332871089915186;  // std dev = 1,917, 53,000 (wgt'ed) examples reached here.  /* #neg=4 #pos=49 */
+%   else if ( bankboughtbank(A, L) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else return -2.640406218671465E-4;  // std dev = 7,683, 720,000 (wgt'ed) examples reached here.  /* #neg=514 #pos=206 */
+
+
+% Clauses:
+
+companyeconomicsector(A, B, 0) :- 
+     economicsectorcompany(B, C), 
+     bankboughtbank(C, D), 
+     bankboughtbank(E, A), 
+     companyalsoknownas(E, F), 
+     !. // Clause #1.
+
+companyeconomicsector(A, B, 0) :- 
+     economicsectorcompany(B, C), 
+     bankboughtbank(C, D), 
+     acquired(C, E), 
+     companyalsoknownas(A, F), 
+     acquired(G, A), 
+     acquired(A, G), 
+     !. // Clause #2.
+
+companyeconomicsector(A, B, 0.3077494330384366) :- 
+     economicsectorcompany(B, C), 
+     bankboughtbank(C, D), 
+     acquired(C, E), 
+     companyalsoknownas(A, F), 
+     !. // Clause #3.
+
+companyeconomicsector(A, B, -0.3003151119196353) :- 
+     economicsectorcompany(B, C), 
+     bankboughtbank(C, D), 
+     acquired(E, A), 
+     companyalsoknownas(F, E), 
+     !. // Clause #4.
+
+companyeconomicsector(A, B, 0.29332871089915186) :- 
+     economicsectorcompany(B, C), 
+     bankboughtbank(C, D), 
+     !. // Clause #5.
+
+companyeconomicsector(A, B, 0) :- 
+     bankboughtbank(A, C), 
+     !. // Clause #6.
+
+companyeconomicsector(A, B, -2.640406218671465E-4) :- !. // Clause #7.
+
+
+% The flattened versions of these clauses:
+
+flattened_companyeconomicsector(a, b, 0) :- 
+   economicsectorcompany(b, uniqueVar29),
+   bankboughtbank(uniqueVar29, underscore),
+   bankboughtbank(uniqueVar30, a),
+   companyalsoknownas(uniqueVar30, underscore),
+   !. // Flattened version of clause #1.
+
+flattened_companyeconomicsector(a, b, 0) :- 
+   economicsectorcompany(b, uniqueVar31),
+   bankboughtbank(uniqueVar31, underscore),
+   acquired(uniqueVar31, underscore),
+   companyalsoknownas(a, underscore),
+   acquired(uniqueVar32, a),
+   acquired(a, uniqueVar32),
+   !. // Flattened version of clause #2.
+
+flattened_companyeconomicsector(a, b, 0.3077494330384366) :-  /* #pos=4 */ 
+   economicsectorcompany(b, uniqueVar33),
+   bankboughtbank(uniqueVar33, underscore),
+   acquired(uniqueVar33, underscore),
+   companyalsoknownas(a, underscore),
+   !. // Flattened version of clause #3.
+
+flattened_companyeconomicsector(a, b, -0.3003151119196353) :-  /* #neg=2 #pos=1 */ 
+   economicsectorcompany(b, uniqueVar34),
+   bankboughtbank(uniqueVar34, underscore),
+   acquired(uniqueVar35, a),
+   companyalsoknownas(underscore, uniqueVar35),
+   !. // Flattened version of clause #4.
+
+flattened_companyeconomicsector(underscore, a, 0.29332871089915186) :-  /* #neg=4 #pos=49 */ 
+   economicsectorcompany(a, uniqueVar36),
+   bankboughtbank(uniqueVar36, underscore),
+   !. // Flattened version of clause #5.
+
+flattened_companyeconomicsector(a, underscore, 0) :- 
+   bankboughtbank(a, underscore),
+   !. // Flattened version of clause #6.
+
+flattened_companyeconomicsector(underscore, underscore, -2.640406218671465E-4) :-  /* #neg=514 #pos=206 */ 
+   !. // Flattened version of clause #7.
+
+
+% The unique flattened literals:
+%   bankboughtbank(uniqueVar29, underscore)
+%   bankboughtbank(uniqueVar33, underscore)
+%   acquired(a, uniqueVar32)
+%   bankboughtbank(uniqueVar34, underscore)
+%   acquired(uniqueVar35, a)
+%   companyalsoknownas(uniqueVar30, underscore)
+%   bankboughtbank(a, underscore)
+%   bankboughtbank(uniqueVar31, underscore)
+%   bankboughtbank(uniqueVar30, a)
+%   economicsectorcompany(a, uniqueVar36)
+%   economicsectorcompany(b, uniqueVar33)
+%   acquired(uniqueVar32, a)
+%   bankboughtbank(uniqueVar36, underscore)
+%   economicsectorcompany(b, uniqueVar31)
+%   economicsectorcompany(b, uniqueVar29)
+%   economicsectorcompany(b, uniqueVar34)
+%   acquired(uniqueVar31, underscore)
+%   companyalsoknownas(underscore, uniqueVar35)
+%   acquired(uniqueVar33, underscore)
+%   companyalsoknownas(a, underscore)
+
+%%%%%  WILL-Produced Tree #9 @ 11:14:09 6/14/21.  [Using 9.240.136 memory cells.]  %%%%%
+
+% FOR companyeconomicsector(A, B):
+%   if ( economicsectorcompany(B, C) )
+%   then if ( companyalsoknownas(D, A), companyalsoknownas(D, E) )
+%   | then if ( companyalsoknownas(C, D) )
+%   | | then if ( acquired(E, A), acquired(F, A) )
+%   | | | then return 0.39979697406500614;  // std dev = 0,000, 1,000 (wgt'ed) examples reached here.  /* #pos=1 */
+%   | | | else return 0.3955150005484274;  // std dev = 0,386, 41,000 (wgt'ed) examples reached here.  /* #pos=41 */
+%   | | else if ( companyalsoknownas(A, E), acquired(C, G) )
+%   | | | then return -0.5883668215480906;  // std dev = 0,000, 2,000 (wgt'ed) examples reached here.  /* #neg=2 */
+%   | | | else return -0.5089233073627891;  // std dev = 0,193, 8,000 (wgt'ed) examples reached here.  /* #neg=8 */
+%   | else if ( bankboughtbank(C, H) )
+%   | | then return 0.20360090803581635;  // std dev = 2,221, 56,000 (wgt'ed) examples reached here.  /* #neg=6 #pos=50 */
+%   | | else if ( acquired(C, I) )
+%   | | | then return 0.2784198133022245;  // std dev = 4,287, 172,000 (wgt'ed) examples reached here.  /* #neg=21 #pos=151 */
+%   | | | else return -0.11394747428535493;  // std dev = 3,349, 50,000 (wgt'ed) examples reached here.  /* #neg=33 #pos=17 */
+%   else if ( companyalsoknownas(J, A), acquired(K, A) )
+%   | then return -0.11871554219093192;  // std dev = 0,007, 11,000 (wgt'ed) examples reached here.  /* #neg=11 */
+%   | else return -0.11714831302332472;  // std dev = 0,034, 439,000 (wgt'ed) examples reached here.  /* #neg=439 */
+
+
+% Clauses:
+
+companyeconomicsector(A, B, 0.39979697406500614) :- 
+     economicsectorcompany(B, C), 
+     companyalsoknownas(D, A), 
+     companyalsoknownas(D, E), 
+     companyalsoknownas(C, D), 
+     acquired(E, A), 
+     acquired(F, A), 
+     !. // Clause #1.
+
+companyeconomicsector(A, B, 0.3955150005484274) :- 
+     economicsectorcompany(B, C), 
+     companyalsoknownas(D, A), 
+     companyalsoknownas(D, E), 
+     companyalsoknownas(C, D), 
+     !. // Clause #2.
+
+companyeconomicsector(A, B, -0.5883668215480906) :- 
+     economicsectorcompany(B, C), 
+     companyalsoknownas(D, A), 
+     companyalsoknownas(D, E), 
+     companyalsoknownas(A, E), 
+     acquired(C, F), 
+     !. // Clause #3.
+
+companyeconomicsector(A, B, -0.5089233073627891) :- 
+     economicsectorcompany(B, C), 
+     companyalsoknownas(D, A), 
+     companyalsoknownas(D, E), 
+     !. // Clause #4.
+
+companyeconomicsector(A, B, 0.20360090803581635) :- 
+     economicsectorcompany(B, C), 
+     bankboughtbank(C, D), 
+     !. // Clause #5.
+
+companyeconomicsector(A, B, 0.2784198133022245) :- 
+     economicsectorcompany(B, C), 
+     acquired(C, D), 
+     !. // Clause #6.
+
+companyeconomicsector(A, B, -0.11394747428535493) :- 
+     economicsectorcompany(B, C), 
+     !. // Clause #7.
+
+companyeconomicsector(A, B, -0.11871554219093192) :- 
+     companyalsoknownas(C, A), 
+     acquired(D, A), 
+     !. // Clause #8.
+
+companyeconomicsector(A, B, -0.11714831302332472) :- !. // Clause #9.
+
+
+% The flattened versions of these clauses:
+
+flattened_companyeconomicsector(a, b, 0.39979697406500614) :-  /* #pos=1 */ 
+   economicsectorcompany(b, uniqueVar37),
+   companyalsoknownas(uniqueVar38, a),
+   companyalsoknownas(uniqueVar38, uniqueVar39),
+   companyalsoknownas(uniqueVar37, uniqueVar38),
+   acquired(uniqueVar39, a),
+   acquired(underscore, a),
+   !. // Flattened version of clause #1.
+
+flattened_companyeconomicsector(a, b, 0.3955150005484274) :-  /* #pos=41 */ 
+   economicsectorcompany(b, uniqueVar40),
+   companyalsoknownas(uniqueVar41, a),
+   companyalsoknownas(uniqueVar41, underscore),
+   companyalsoknownas(uniqueVar40, uniqueVar41),
+   !. // Flattened version of clause #2.
+
+flattened_companyeconomicsector(a, b, -0.5883668215480906) :-  /* #neg=2 */ 
+   economicsectorcompany(b, uniqueVar42),
+   companyalsoknownas(uniqueVar43, a),
+   companyalsoknownas(uniqueVar43, uniqueVar44),
+   companyalsoknownas(a, uniqueVar44),
+   acquired(uniqueVar42, underscore),
+   !. // Flattened version of clause #3.
+
+flattened_companyeconomicsector(a, b, -0.5089233073627891) :-  /* #neg=8 */ 
+   economicsectorcompany(b, underscore),
+   companyalsoknownas(uniqueVar45, a),
+   companyalsoknownas(uniqueVar45, underscore),
+   !. // Flattened version of clause #4.
+
+flattened_companyeconomicsector(underscore, a, 0.20360090803581635) :-  /* #neg=6 #pos=50 */ 
+   economicsectorcompany(a, uniqueVar46),
+   bankboughtbank(uniqueVar46, underscore),
+   !. // Flattened version of clause #5.
+
+flattened_companyeconomicsector(underscore, a, 0.2784198133022245) :-  /* #neg=21 #pos=151 */ 
+   economicsectorcompany(a, uniqueVar47),
+   acquired(uniqueVar47, underscore),
+   !. // Flattened version of clause #6.
+
+flattened_companyeconomicsector(underscore, a, -0.11394747428535493) :-  /* #neg=33 #pos=17 */ 
+   economicsectorcompany(a, underscore),
+   !. // Flattened version of clause #7.
+
+flattened_companyeconomicsector(a, underscore, -0.11871554219093192) :-  /* #neg=11 */ 
+   companyalsoknownas(underscore, a),
+   acquired(underscore, a),
+   !. // Flattened version of clause #8.
+
+flattened_companyeconomicsector(underscore, underscore, -0.11714831302332472) :-  /* #neg=439 */ 
+   !. // Flattened version of clause #9.
+
+
+% The unique flattened literals:
+%   acquired(underscore, a)
+%   companyalsoknownas(a, uniqueVar44)
+%   companyalsoknownas(uniqueVar41, a)
+%   companyalsoknownas(uniqueVar38, uniqueVar39)
+%   economicsectorcompany(a, underscore)
+%   companyalsoknownas(uniqueVar45, a)
+%   companyalsoknownas(uniqueVar40, uniqueVar41)
+%   acquired(uniqueVar42, underscore)
+%   economicsectorcompany(b, uniqueVar42)
+%   companyalsoknownas(uniqueVar38, a)
+%   companyalsoknownas(uniqueVar41, underscore)
+%   economicsectorcompany(a, uniqueVar46)
+%   economicsectorcompany(a, uniqueVar47)
+%   companyalsoknownas(uniqueVar37, uniqueVar38)
+%   companyalsoknownas(underscore, a)
+%   acquired(uniqueVar47, underscore)
+%   bankboughtbank(uniqueVar46, underscore)
+%   economicsectorcompany(b, uniqueVar37)
+%   economicsectorcompany(b, uniqueVar40)
+%   companyalsoknownas(uniqueVar43, uniqueVar44)
+%   acquired(uniqueVar39, a)
+%   companyalsoknownas(uniqueVar43, a)
+%   economicsectorcompany(b, underscore)
+%   companyalsoknownas(uniqueVar45, underscore)
+
+%%%%%  WILL-Produced Tree #10 @ 11:14:10 6/14/21.  [Using 9.503.184 memory cells.]  %%%%%
+
+% FOR companyeconomicsector(A, B):
+%   if ( economicsectorcompany(B, C), bankboughtbank(C, D) )
+%   then if ( companyalsoknownas(E, A), companyalsoknownas(C, E) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else if ( companyalsoknownas(F, A), bankboughtbank(F, D) )
+%   | | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | | else if ( acquired(G, A), companyalsoknownas(G, H) )
+%   | | | then return -0.27758800961017444;  // std dev = 0,816, 3,000 (wgt'ed) examples reached here.  /* #neg=2 #pos=1 */
+%   | | | else return 0.18635591780075006;  // std dev = 1,918, 57,000 (wgt'ed) examples reached here.  /* #neg=4 #pos=53 */
+%   else if ( companyeconomicsector(I, B), bankboughtbank(A, J) )
+%   | then return 0;  // std dev = 0,000, 0,000 (wgt'ed) examples reached here.
+%   | else if ( companyalsoknownas(K, A), companyalsoknownas(A, L) )
+%   | | then if ( companyalsoknownas(E, A), acquired(F, A) )
+%   | | | then return 0.04004317445624071;  // std dev = 0,820, 17,000 (wgt'ed) examples reached here.  /* #neg=11 #pos=6 */
+%   | | | else return -0.0023700343671941818;  // std dev = 2,385, 104,000 (wgt'ed) examples reached here.  /* #neg=72 #pos=32 */
+%   | | else if ( acquired(A, M), acquired(N, M) )
+%   | | | then return -0.0016124902742861555;  // std dev = 2,771, 108,000 (wgt'ed) examples reached here.  /* #neg=73 #pos=35 */
+%   | | | else return -0.014461943424290347;  // std dev = 5,851, 491,000 (wgt'ed) examples reached here.  /* #neg=358 #pos=133 */
+
+
+% Clauses:
+
+companyeconomicsector(A, B, 0) :- 
+     economicsectorcompany(B, C), 
+     bankboughtbank(C, D), 
+     companyalsoknownas(E, A), 
+     companyalsoknownas(C, E), 
+     !. // Clause #1.
+
+companyeconomicsector(A, B, 0) :- 
+     economicsectorcompany(B, C), 
+     bankboughtbank(C, D), 
+     companyalsoknownas(E, A), 
+     bankboughtbank(E, D), 
+     !. // Clause #2.
+
+companyeconomicsector(A, B, -0.27758800961017444) :- 
+     economicsectorcompany(B, C), 
+     bankboughtbank(C, D), 
+     acquired(E, A), 
+     companyalsoknownas(E, F), 
+     !. // Clause #3.
+
+companyeconomicsector(A, B, 0.18635591780075006) :- 
+     economicsectorcompany(B, C), 
+     bankboughtbank(C, D), 
+     !. // Clause #4.
+
+companyeconomicsector(A, B, 0) :- 
+     companyeconomicsector(C, B), 
+     bankboughtbank(A, D), 
+     !. // Clause #5.
+
+companyeconomicsector(A, B, 0.04004317445624071) :- 
+     companyalsoknownas(C, A), 
+     companyalsoknownas(A, D), 
+     companyalsoknownas(E, A), 
+     acquired(F, A), 
+     !. // Clause #6.
+
+companyeconomicsector(A, B, -0.0023700343671941818) :- 
+     companyalsoknownas(C, A), 
+     companyalsoknownas(A, D), 
+     !. // Clause #7.
+
+companyeconomicsector(A, B, -0.0016124902742861555) :- 
+     acquired(A, C), 
+     acquired(D, C), 
+     !. // Clause #8.
+
+companyeconomicsector(A, B, -0.014461943424290347) :- !. // Clause #9.
+
+
+% The flattened versions of these clauses:
+
+flattened_companyeconomicsector(a, b, 0) :- 
+   economicsectorcompany(b, uniqueVar48),
+   bankboughtbank(uniqueVar48, underscore),
+   companyalsoknownas(uniqueVar49, a),
+   companyalsoknownas(uniqueVar48, uniqueVar49),
+   !. // Flattened version of clause #1.
+
+flattened_companyeconomicsector(a, b, 0) :- 
+   economicsectorcompany(b, uniqueVar50),
+   bankboughtbank(uniqueVar50, uniqueVar51),
+   companyalsoknownas(uniqueVar52, a),
+   bankboughtbank(uniqueVar52, uniqueVar51),
+   !. // Flattened version of clause #2.
+
+flattened_companyeconomicsector(a, b, -0.27758800961017444) :-  /* #neg=2 #pos=1 */ 
+   economicsectorcompany(b, uniqueVar53),
+   bankboughtbank(uniqueVar53, underscore),
+   acquired(uniqueVar54, a),
+   companyalsoknownas(uniqueVar54, underscore),
+   !. // Flattened version of clause #3.
+
+flattened_companyeconomicsector(underscore, a, 0.18635591780075006) :-  /* #neg=4 #pos=53 */ 
+   economicsectorcompany(a, uniqueVar55),
+   bankboughtbank(uniqueVar55, underscore),
+   !. // Flattened version of clause #4.
+
+flattened_companyeconomicsector(a, b, 0) :- 
+   companyeconomicsector(underscore, b),
+   bankboughtbank(a, underscore),
+   !. // Flattened version of clause #5.
+
+flattened_companyeconomicsector(a, underscore, 0.04004317445624071) :-  /* #neg=11 #pos=6 */ 
+   companyalsoknownas(underscore, a),
+   companyalsoknownas(a, underscore),
+   companyalsoknownas(underscore, a),
+   acquired(underscore, a),
+   !. // Flattened version of clause #6.
+
+flattened_companyeconomicsector(a, underscore, -0.0023700343671941818) :-  /* #neg=72 #pos=32 */ 
+   companyalsoknownas(underscore, a),
+   companyalsoknownas(a, underscore),
+   !. // Flattened version of clause #7.
+
+flattened_companyeconomicsector(a, underscore, -0.0016124902742861555) :-  /* #neg=73 #pos=35 */ 
+   acquired(a, uniqueVar56),
+   acquired(underscore, uniqueVar56),
+   !. // Flattened version of clause #8.
+
+flattened_companyeconomicsector(underscore, underscore, -0.014461943424290347) :-  /* #neg=358 #pos=133 */ 
+   !. // Flattened version of clause #9.
+
+
+% The unique flattened literals:
+%   bankboughtbank(uniqueVar52, uniqueVar51)
+%   acquired(underscore, a)
+%   economicsectorcompany(a, uniqueVar55)
+%   companyalsoknownas(uniqueVar49, a)
+%   bankboughtbank(uniqueVar53, underscore)
+%   bankboughtbank(a, underscore)
+%   acquired(a, uniqueVar56)
+%   economicsectorcompany(b, uniqueVar53)
+%   companyeconomicsector(underscore, b)
+%   companyalsoknownas(underscore, a)
+%   bankboughtbank(uniqueVar50, uniqueVar51)
+%   bankboughtbank(uniqueVar55, underscore)
+%   acquired(uniqueVar54, a)
+%   acquired(underscore, uniqueVar56)
+%   economicsectorcompany(b, uniqueVar48)
+%   companyalsoknownas(uniqueVar48, uniqueVar49)
+%   companyalsoknownas(uniqueVar52, a)
+%   bankboughtbank(uniqueVar48, underscore)
+%   economicsectorcompany(b, uniqueVar50)
+%   companyalsoknownas(uniqueVar54, underscore)
+%   companyalsoknownas(a, underscore)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%  Final call for computing score for companyeconomicsector.  %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+stepLength_tree1(1.0).
+stepLength_tree2(1.0).
+stepLength_tree3(1.0).
+stepLength_tree4(1.0).
+stepLength_tree5(1.0).
+stepLength_tree6(1.0).
+stepLength_tree7(1.0).
+stepLength_tree8(1.0).
+stepLength_tree9(1.0).
+stepLength_tree10(1.0).
+
+logPrior(-1.8).
+companyeconomicsector(D, E, Total) :- // A general accessor. 
+   companyeconomicsector(D, E, 1000000, Total), !.
+companyeconomicsector(D, E, Total) :- waitHere("This should not fail", companyeconomicsector(D, E, Total)).
+
+companyeconomicsector(D, E, TreesToUse, Total) :- // A tree-limited accessor (e.g., for tuning the number of trees to use).
+   logPrior(LogPrior),
+   getScore_companyeconomicsector_tree1(D, E, TreesToUse, Total1),
+   getScore_companyeconomicsector_tree2(D, E, TreesToUse, Total2),
+   getScore_companyeconomicsector_tree3(D, E, TreesToUse, Total3),
+   getScore_companyeconomicsector_tree4(D, E, TreesToUse, Total4),
+   getScore_companyeconomicsector_tree5(D, E, TreesToUse, Total5),
+   getScore_companyeconomicsector_tree6(D, E, TreesToUse, Total6),
+   getScore_companyeconomicsector_tree7(D, E, TreesToUse, Total7),
+   getScore_companyeconomicsector_tree8(D, E, TreesToUse, Total8),
+   getScore_companyeconomicsector_tree9(D, E, TreesToUse, Total9),
+   getScore_companyeconomicsector_tree10(D, E, TreesToUse, Total10),
+   Total is LogPrior + Total1 + Total2 + Total3 + Total4 + Total5 + Total6 + Total7 + Total8 + Total9 + Total10,
+   !.
+companyeconomicsector(D, E, TreesToUse, Total) :- waitHere("This should not fail", companyeconomicsector(D, E, TreesToUse, Total)).
+
+getScore_companyeconomicsector_tree1(D, E, TreesToUse, 0.0) :- 1 > TreesToUse, !.
+getScore_companyeconomicsector_tree1(D, E, TreesToUse, Total1) :- companyeconomicsector_tree1(D, E, Total), stepLength_tree1(StepLen), Total1 is Total * StepLen.
+
+getScore_companyeconomicsector_tree2(D, E, TreesToUse, 0.0) :- 2 > TreesToUse, !.
+getScore_companyeconomicsector_tree2(D, E, TreesToUse, Total2) :- companyeconomicsector_tree2(D, E, Total), stepLength_tree2(StepLen), Total2 is Total * StepLen.
+
+getScore_companyeconomicsector_tree3(D, E, TreesToUse, 0.0) :- 3 > TreesToUse, !.
+getScore_companyeconomicsector_tree3(D, E, TreesToUse, Total3) :- companyeconomicsector_tree3(D, E, Total), stepLength_tree3(StepLen), Total3 is Total * StepLen.
+
+getScore_companyeconomicsector_tree4(D, E, TreesToUse, 0.0) :- 4 > TreesToUse, !.
+getScore_companyeconomicsector_tree4(D, E, TreesToUse, Total4) :- companyeconomicsector_tree4(D, E, Total), stepLength_tree4(StepLen), Total4 is Total * StepLen.
+
+getScore_companyeconomicsector_tree5(D, E, TreesToUse, 0.0) :- 5 > TreesToUse, !.
+getScore_companyeconomicsector_tree5(D, E, TreesToUse, Total5) :- companyeconomicsector_tree5(D, E, Total), stepLength_tree5(StepLen), Total5 is Total * StepLen.
+
+getScore_companyeconomicsector_tree6(D, E, TreesToUse, 0.0) :- 6 > TreesToUse, !.
+getScore_companyeconomicsector_tree6(D, E, TreesToUse, Total6) :- companyeconomicsector_tree6(D, E, Total), stepLength_tree6(StepLen), Total6 is Total * StepLen.
+
+getScore_companyeconomicsector_tree7(D, E, TreesToUse, 0.0) :- 7 > TreesToUse, !.
+getScore_companyeconomicsector_tree7(D, E, TreesToUse, Total7) :- companyeconomicsector_tree7(D, E, Total), stepLength_tree7(StepLen), Total7 is Total * StepLen.
+
+getScore_companyeconomicsector_tree8(D, E, TreesToUse, 0.0) :- 8 > TreesToUse, !.
+getScore_companyeconomicsector_tree8(D, E, TreesToUse, Total8) :- companyeconomicsector_tree8(D, E, Total), stepLength_tree8(StepLen), Total8 is Total * StepLen.
+
+getScore_companyeconomicsector_tree9(D, E, TreesToUse, 0.0) :- 9 > TreesToUse, !.
+getScore_companyeconomicsector_tree9(D, E, TreesToUse, Total9) :- companyeconomicsector_tree9(D, E, Total), stepLength_tree9(StepLen), Total9 is Total * StepLen.
+
+getScore_companyeconomicsector_tree10(D, E, TreesToUse, 0.0) :- 10 > TreesToUse, !.
+getScore_companyeconomicsector_tree10(D, E, TreesToUse, Total10) :- companyeconomicsector_tree10(D, E, Total), stepLength_tree10(StepLen), Total10 is Total * StepLen.
+
+flattenedLiteralsInThisSetOfTrees(companyeconomicsector, 120, [
+   acquired(underscore, a),
+   bankboughtbank(underscore, uniqueVar23),
+   acquired(uniqueVar25, a),
+   companyalsoknownas(uniqueVar38, uniqueVar39),
+   acquired(uniqueVar14, underscore),
+   bankboughtbank(uniqueVar3, underscore),
+   economicsectorcompany(b, uniqueVar3),
+   economicsectorcompany(b, uniqueVar33),
+   economicsectorcompany(b, uniqueVar37),
+   bankboughtbank(uniqueVar48, underscore),
+   companyalsoknownas(uniqueVar43, a),
+   economicsectorcompany(a, uniqueVar18),
+   acquired(uniqueVar33, underscore),
+   bankboughtbank(uniqueVar52, uniqueVar51),
+   bankboughtbank(uniqueVar29, underscore),
+   acquired(a, uniqueVar14),
+   bankboughtbank(a, underscore),
+   bankboughtbank(uniqueVar31, underscore),
+   acquired(uniqueVar42, underscore),
+   bankboughtbank(uniqueVar30, a),
+   economicsectorcompany(a, uniqueVar36),
+   acquired(uniqueVar23, a),
+   economicsectorcompany(a, uniqueVar16),
+   acquired(underscore, uniqueVar56),
+   acquired(uniqueVar18, underscore),
+   companyalsoknownas(uniqueVar43, uniqueVar44),
+   bankboughtbank(uniqueVar24, underscore),
+   bankboughtbank(uniqueVar10, a),
+   acquired(uniqueVar31, underscore),
+   bankboughtbank(uniqueVar1, uniqueVar2),
+   economicsectorcompany(b, underscore),
+   bankboughtbank(underscore, a),
+   acquired(uniqueVar9, underscore),
+   bankboughtbank(uniqueVar53, underscore),
+   bankboughtbank(uniqueVar26, underscore),
+   bankboughtbank(uniqueVar15, underscore),
+   companyalsoknownas(uniqueVar41, underscore),
+   bankboughtbank(uniqueVar55, underscore),
+   acquired(a, uniqueVar4),
+   economicsectorcompany(b, uniqueVar31),
+   economicsectorcompany(b, uniqueVar29),
+   economicsectorcompany(b, uniqueVar34),
+   acquired(uniqueVar28, underscore),
+   acquired(uniqueVar21, underscore),
+   companyalsoknownas(uniqueVar45, underscore),
+   economicsectorcompany(a, uniqueVar55),
+   companyalsoknownas(a, uniqueVar10),
+   acquired(a, uniqueVar32),
+   bankboughtbank(uniqueVar6, a),
+   companyalsoknownas(uniqueVar17, underscore),
+   companyalsoknownas(uniqueVar5, underscore),
+   acquired(uniqueVar16, underscore),
+   companyalsoknownas(uniqueVar30, underscore),
+   acquired(a, uniqueVar56),
+   companyeconomicsector(uniqueVar11, a),
+   acquired(uniqueVar7, underscore),
+   companyalsoknownas(underscore, uniqueVar8),
+   bankboughtbank(underscore, uniqueVar20),
+   economicsectorcompany(b, uniqueVar53),
+   companyeconomicsector(uniqueVar5, a),
+   companyeconomicsector(underscore, b),
+   acquired(uniqueVar19, underscore),
+   acquired(uniqueVar47, underscore),
+   bankboughtbank(uniqueVar50, uniqueVar51),
+   companyalsoknownas(uniqueVar48, uniqueVar49),
+   economicsectorcompany(b, uniqueVar50),
+   companyeconomicsector(uniqueVar7, a),
+   acquired(a, uniqueVar27),
+   economicsectorcompany(b, uniqueVar21),
+   bankboughtbank(uniqueVar20, a),
+   acquired(a, uniqueVar13),
+   bankboughtbank(underscore, uniqueVar27),
+   economicsectorcompany(b, uniqueVar48),
+   companyalsoknownas(uniqueVar52, a),
+   companyalsoknownas(uniqueVar28, a),
+   acquired(uniqueVar39, a),
+   bankboughtbank(uniqueVar16, uniqueVar17),
+   bankboughtbank(uniqueVar33, underscore),
+   companyalsoknownas(underscore, uniqueVar6),
+   acquired(a, underscore),
+   companyalsoknownas(uniqueVar40, uniqueVar41),
+   economicsectorcompany(b, uniqueVar19),
+   economicsectorcompany(b, uniqueVar42),
+   companyalsoknownas(uniqueVar38, a),
+   acquired(uniqueVar22, underscore),
+   economicsectorcompany(b, uniqueVar15),
+   bankboughtbank(uniqueVar18, underscore),
+   economicsectorcompany(a, uniqueVar22),
+   acquired(uniqueVar12, uniqueVar13),
+   companyalsoknownas(uniqueVar13, underscore),
+   companyalsoknownas(underscore, uniqueVar35),
+   companyeconomicsector(uniqueVar9, a),
+   companyalsoknownas(a, uniqueVar44),
+   companyalsoknownas(uniqueVar41, a),
+   companyalsoknownas(uniqueVar49, a),
+   bankboughtbank(uniqueVar34, underscore),
+   companyalsoknownas(uniqueVar45, a),
+   economicsectorcompany(a, uniqueVar47),
+   companyalsoknownas(underscore, a),
+   acquired(underscore, uniqueVar4),
+   companyalsoknownas(underscore, uniqueVar2),
+   economicsectorcompany(b, uniqueVar24),
+   acquired(uniqueVar54, a),
+   companyalsoknownas(a, underscore),
+   bankboughtbank(uniqueVar8, a),
+   acquired(uniqueVar35, a),
+   economicsectorcompany(a, underscore),
+   economicsectorcompany(a, uniqueVar46),
+   companyalsoknownas(uniqueVar37, uniqueVar38),
+   economicsectorcompany(a, uniqueVar26),
+   acquired(uniqueVar32, a),
+   bankboughtbank(uniqueVar11, underscore),
+   acquired(a, uniqueVar12),
+   bankboughtbank(uniqueVar46, underscore),
+   bankboughtbank(uniqueVar36, underscore),
+   economicsectorcompany(b, uniqueVar40),
+   economicsectorcompany(a, uniqueVar1),
+   bankboughtbank(a, uniqueVar25),
+   acquired(uniqueVar15, underscore),
+   companyalsoknownas(uniqueVar54, underscore)]).

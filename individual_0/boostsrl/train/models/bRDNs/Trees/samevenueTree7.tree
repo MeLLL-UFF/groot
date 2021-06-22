@@ -1,0 +1,7 @@
+setParam: stringsAreCaseSensitive = true.
+
+usePrologVariables: true.
+
+
+(samevenue(A, B, 0.1770964977452773) :-  /* #pos=103 */ venue(UniqueVar8, A), venue(UniqueVar8, B)).
+samevenue(_, _, 0.04636814545182876) /* #neg=1.542 #pos=668 */ .

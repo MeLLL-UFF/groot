@@ -1,0 +1,617 @@
+usePrologVariables: true.
+
+% maxTreeDepthInNodes                 = 3
+% maxTreeDepthInLiterals              = 12
+% maxNumberOfLiteralsAtAnInteriorNode = 2
+% maxFreeBridgersInBody               = 1
+% maxNumberOfClauses                  = 8
+% maxNodesToConsider                  = 10
+% maxNodesToCreate                    = 10.000
+% maxAcceptableNodeScoreToStop        = 0,003
+% negPosRatio                         = 2,000
+% testNegPosRatio                     = -1,000
+% # of pos examples                   = 1.146
+% # of neg examples                   = 0
+
+
+
+%%%%%  WILL-Produced Tree #1 @ 21:04:37 6/7/21.  [Using 4.742.176 memory cells.]  %%%%%
+
+% FOR workedunder(A, B):
+%   if ( director(B), actor(A) )
+%   then if ( movie(C, A), movie(C, B) )
+%   | then return 0.8581489350995083;  // std dev = 1,43e-06, 382,000 (wgt'ed) examples reached here.  /* #pos=382 */
+%   | else return -0.14185106490048763;  // std dev = 8,16e-08, 88,000 (wgt'ed) examples reached here.  /* #neg=88 */
+%   else return -0.14185106490048882;  // std dev = 0,000, 676,000 (wgt'ed) examples reached here.  /* #neg=676 */
+
+
+% Clauses:
+
+workedunder(A, B, 0.8581489350995083) :- 
+     director(B), 
+     actor(A), 
+     movie(C, A), 
+     movie(C, B), 
+     !. // Clause #1.
+
+workedunder(A, B, -0.14185106490048763) :- 
+     director(B), 
+     actor(A), 
+     !. // Clause #2.
+
+workedunder(A, B, -0.14185106490048882) :- !. // Clause #3.
+
+
+% The flattened versions of these clauses:
+
+flattened_workedunder(a, b, 0.8581489350995083) :-  /* #pos=382 */ 
+   director(b),
+   actor(a),
+   movie(uniqueVar1, a),
+   movie(uniqueVar1, b),
+   !. // Flattened version of clause #1.
+
+flattened_workedunder(a, b, -0.14185106490048763) :-  /* #neg=88 */ 
+   director(b),
+   actor(a),
+   !. // Flattened version of clause #2.
+
+flattened_workedunder(underscore, underscore, -0.14185106490048882) :-  /* #neg=676 */ 
+   !. // Flattened version of clause #3.
+
+
+% The unique flattened literals:
+%   actor(a)
+%   movie(uniqueVar1, b)
+%   movie(uniqueVar1, a)
+%   director(b)
+
+%%%%%  WILL-Produced Tree #2 @ 21:04:38 6/7/21.  [Using 4.942.200 memory cells.]  %%%%%
+
+% FOR workedunder(A, B):
+%   if ( director(B), actor(A) )
+%   then if ( movie(C, A), movie(C, B) )
+%   | then return 0.7194734122109581;  // std dev = 0,000, 382,000 (wgt'ed) examples reached here.  /* #pos=382 */
+%   | else return -0.1254446385283914;  // std dev = 0,000, 88,000 (wgt'ed) examples reached here.  /* #neg=88 */
+%   else return -0.12544463852839233;  // std dev = 0,000, 676,000 (wgt'ed) examples reached here.  /* #neg=676 */
+
+
+% Clauses:
+
+workedunder(A, B, 0.7194734122109581) :- 
+     director(B), 
+     actor(A), 
+     movie(C, A), 
+     movie(C, B), 
+     !. // Clause #1.
+
+workedunder(A, B, -0.1254446385283914) :- 
+     director(B), 
+     actor(A), 
+     !. // Clause #2.
+
+workedunder(A, B, -0.12544463852839233) :- !. // Clause #3.
+
+
+% The flattened versions of these clauses:
+
+flattened_workedunder(a, b, 0.7194734122109581) :-  /* #pos=382 */ 
+   director(b),
+   actor(a),
+   movie(uniqueVar2, a),
+   movie(uniqueVar2, b),
+   !. // Flattened version of clause #1.
+
+flattened_workedunder(a, b, -0.1254446385283914) :-  /* #neg=88 */ 
+   director(b),
+   actor(a),
+   !. // Flattened version of clause #2.
+
+flattened_workedunder(underscore, underscore, -0.12544463852839233) :-  /* #neg=676 */ 
+   !. // Flattened version of clause #3.
+
+
+% The unique flattened literals:
+%   actor(a)
+%   director(b)
+%   movie(uniqueVar2, a)
+%   movie(uniqueVar2, b)
+
+%%%%%  WILL-Produced Tree #3 @ 21:04:38 6/7/21.  [Using 5.134.560 memory cells.]  %%%%%
+
+% FOR workedunder(A, B):
+%   if ( director(B), actor(A) )
+%   then if ( movie(C, A), movie(C, B) )
+%   | then return 0.555366436746283;  // std dev = 0,000, 382,000 (wgt'ed) examples reached here.  /* #pos=382 */
+%   | else return -0.11231637819360621;  // std dev = 7,15e-08, 88,000 (wgt'ed) examples reached here.  /* #neg=88 */
+%   else return -0.11231637819360629;  // std dev = 0,000, 676,000 (wgt'ed) examples reached here.  /* #neg=676 */
+
+
+% Clauses:
+
+workedunder(A, B, 0.555366436746283) :- 
+     director(B), 
+     actor(A), 
+     movie(C, A), 
+     movie(C, B), 
+     !. // Clause #1.
+
+workedunder(A, B, -0.11231637819360621) :- 
+     director(B), 
+     actor(A), 
+     !. // Clause #2.
+
+workedunder(A, B, -0.11231637819360629) :- !. // Clause #3.
+
+
+% The flattened versions of these clauses:
+
+flattened_workedunder(a, b, 0.555366436746283) :-  /* #pos=382 */ 
+   director(b),
+   actor(a),
+   movie(uniqueVar3, a),
+   movie(uniqueVar3, b),
+   !. // Flattened version of clause #1.
+
+flattened_workedunder(a, b, -0.11231637819360621) :-  /* #neg=88 */ 
+   director(b),
+   actor(a),
+   !. // Flattened version of clause #2.
+
+flattened_workedunder(underscore, underscore, -0.11231637819360629) :-  /* #neg=676 */ 
+   !. // Flattened version of clause #3.
+
+
+% The unique flattened literals:
+%   actor(a)
+%   director(b)
+%   movie(uniqueVar3, b)
+%   movie(uniqueVar3, a)
+
+%%%%%  WILL-Produced Tree #4 @ 21:04:39 6/7/21.  [Using 5.152.656 memory cells.]  %%%%%
+
+% FOR workedunder(A, B):
+%   if ( actor(A), director(B) )
+%   then if ( movie(C, A), movie(C, B) )
+%   | then return 0.417513584158312;  // std dev = 0,000, 382,000 (wgt'ed) examples reached here.  /* #pos=382 */
+%   | else return -0.1015963294878362;  // std dev = 5,27e-08, 88,000 (wgt'ed) examples reached here.  /* #neg=88 */
+%   else return -0.1015963294878355;  // std dev = 3,70e-07, 676,000 (wgt'ed) examples reached here.  /* #neg=676 */
+
+
+% Clauses:
+
+workedunder(A, B, 0.417513584158312) :- 
+     actor(A), 
+     director(B), 
+     movie(C, A), 
+     movie(C, B), 
+     !. // Clause #1.
+
+workedunder(A, B, -0.1015963294878362) :- 
+     actor(A), 
+     director(B), 
+     !. // Clause #2.
+
+workedunder(A, B, -0.1015963294878355) :- !. // Clause #3.
+
+
+% The flattened versions of these clauses:
+
+flattened_workedunder(a, b, 0.417513584158312) :-  /* #pos=382 */ 
+   actor(a),
+   director(b),
+   movie(uniqueVar4, a),
+   movie(uniqueVar4, b),
+   !. // Flattened version of clause #1.
+
+flattened_workedunder(a, b, -0.1015963294878362) :-  /* #neg=88 */ 
+   actor(a),
+   director(b),
+   !. // Flattened version of clause #2.
+
+flattened_workedunder(underscore, underscore, -0.1015963294878355) :-  /* #neg=676 */ 
+   !. // Flattened version of clause #3.
+
+
+% The unique flattened literals:
+%   actor(a)
+%   director(b)
+%   movie(uniqueVar4, a)
+%   movie(uniqueVar4, b)
+
+%%%%%  WILL-Produced Tree #5 @ 21:04:39 6/7/21.  [Using 5.158.888 memory cells.]  %%%%%
+
+% FOR workedunder(A, B):
+%   if ( director(B), actor(A) )
+%   then if ( movie(C, A), movie(C, B) )
+%   | then return 0.32071184716015166;  // std dev = 0,000, 382,000 (wgt'ed) examples reached here.  /* #pos=382 */
+%   | else return -0.09269127618926105;  // std dev = 2,11e-08, 88,000 (wgt'ed) examples reached here.  /* #neg=88 */
+%   else return -0.09269127618926191;  // std dev = 0,000, 676,000 (wgt'ed) examples reached here.  /* #neg=676 */
+
+
+% Clauses:
+
+workedunder(A, B, 0.32071184716015166) :- 
+     director(B), 
+     actor(A), 
+     movie(C, A), 
+     movie(C, B), 
+     !. // Clause #1.
+
+workedunder(A, B, -0.09269127618926105) :- 
+     director(B), 
+     actor(A), 
+     !. // Clause #2.
+
+workedunder(A, B, -0.09269127618926191) :- !. // Clause #3.
+
+
+% The flattened versions of these clauses:
+
+flattened_workedunder(a, b, 0.32071184716015166) :-  /* #pos=382 */ 
+   director(b),
+   actor(a),
+   movie(uniqueVar5, a),
+   movie(uniqueVar5, b),
+   !. // Flattened version of clause #1.
+
+flattened_workedunder(a, b, -0.09269127618926105) :-  /* #neg=88 */ 
+   director(b),
+   actor(a),
+   !. // Flattened version of clause #2.
+
+flattened_workedunder(underscore, underscore, -0.09269127618926191) :-  /* #neg=676 */ 
+   !. // Flattened version of clause #3.
+
+
+% The unique flattened literals:
+%   actor(a)
+%   movie(uniqueVar5, a)
+%   movie(uniqueVar5, b)
+%   director(b)
+
+%%%%%  WILL-Produced Tree #6 @ 21:04:39 6/7/21.  [Using 5.176.648 memory cells.]  %%%%%
+
+% FOR workedunder(A, B):
+%   if ( actor(A), director(B) )
+%   then if ( movie(C, A), movie(C, B) )
+%   | then return 0.25517224256948734;  // std dev = 4,42e-07, 382,000 (wgt'ed) examples reached here.  /* #pos=382 */
+%   | else return -0.08518475138839682;  // std dev = 5,16e-08, 88,000 (wgt'ed) examples reached here.  /* #neg=88 */
+%   else return -0.08518475138839675;  // std dev = 1,12e-07, 676,000 (wgt'ed) examples reached here.  /* #neg=676 */
+
+
+% Clauses:
+
+workedunder(A, B, 0.25517224256948734) :- 
+     actor(A), 
+     director(B), 
+     movie(C, A), 
+     movie(C, B), 
+     !. // Clause #1.
+
+workedunder(A, B, -0.08518475138839682) :- 
+     actor(A), 
+     director(B), 
+     !. // Clause #2.
+
+workedunder(A, B, -0.08518475138839675) :- !. // Clause #3.
+
+
+% The flattened versions of these clauses:
+
+flattened_workedunder(a, b, 0.25517224256948734) :-  /* #pos=382 */ 
+   actor(a),
+   director(b),
+   movie(uniqueVar6, a),
+   movie(uniqueVar6, b),
+   !. // Flattened version of clause #1.
+
+flattened_workedunder(a, b, -0.08518475138839682) :-  /* #neg=88 */ 
+   actor(a),
+   director(b),
+   !. // Flattened version of clause #2.
+
+flattened_workedunder(underscore, underscore, -0.08518475138839675) :-  /* #neg=676 */ 
+   !. // Flattened version of clause #3.
+
+
+% The unique flattened literals:
+%   actor(a)
+%   movie(uniqueVar6, a)
+%   movie(uniqueVar6, b)
+%   director(b)
+
+%%%%%  WILL-Produced Tree #7 @ 21:04:39 6/7/21.  [Using 5.181.616 memory cells.]  %%%%%
+
+% FOR workedunder(A, B):
+%   if ( director(B), actor(A) )
+%   then if ( movie(C, A), movie(C, B) )
+%   | then return 0.20975771563253462;  // std dev = 2,53e-07, 382,000 (wgt'ed) examples reached here.  /* #pos=382 */
+%   | else return -0.07877675473109162;  // std dev = 5,05e-08, 88,000 (wgt'ed) examples reached here.  /* #neg=88 */
+%   else return -0.07877675473109264;  // std dev = 0,000, 676,000 (wgt'ed) examples reached here.  /* #neg=676 */
+
+
+% Clauses:
+
+workedunder(A, B, 0.20975771563253462) :- 
+     director(B), 
+     actor(A), 
+     movie(C, A), 
+     movie(C, B), 
+     !. // Clause #1.
+
+workedunder(A, B, -0.07877675473109162) :- 
+     director(B), 
+     actor(A), 
+     !. // Clause #2.
+
+workedunder(A, B, -0.07877675473109264) :- !. // Clause #3.
+
+
+% The flattened versions of these clauses:
+
+flattened_workedunder(a, b, 0.20975771563253462) :-  /* #pos=382 */ 
+   director(b),
+   actor(a),
+   movie(uniqueVar7, a),
+   movie(uniqueVar7, b),
+   !. // Flattened version of clause #1.
+
+flattened_workedunder(a, b, -0.07877675473109162) :-  /* #neg=88 */ 
+   director(b),
+   actor(a),
+   !. // Flattened version of clause #2.
+
+flattened_workedunder(underscore, underscore, -0.07877675473109264) :-  /* #neg=676 */ 
+   !. // Flattened version of clause #3.
+
+
+% The unique flattened literals:
+%   movie(uniqueVar7, b)
+%   actor(a)
+%   director(b)
+%   movie(uniqueVar7, a)
+
+%%%%%  WILL-Produced Tree #8 @ 21:04:39 6/7/21.  [Using 5.202.984 memory cells.]  %%%%%
+
+% FOR workedunder(A, B):
+%   if ( actor(A), director(B) )
+%   then if ( movie(C, A), movie(C, B) )
+%   | then return 0.17709649774527667;  // std dev = 2,60e-07, 382,000 (wgt'ed) examples reached here.  /* #pos=382 */
+%   | else return -0.07324622576333707;  // std dev = 0,000, 88,000 (wgt'ed) examples reached here.  /* #neg=88 */
+%   else return -0.07324622576333675;  // std dev = 1,62e-07, 676,000 (wgt'ed) examples reached here.  /* #neg=676 */
+
+
+% Clauses:
+
+workedunder(A, B, 0.17709649774527667) :- 
+     actor(A), 
+     director(B), 
+     movie(C, A), 
+     movie(C, B), 
+     !. // Clause #1.
+
+workedunder(A, B, -0.07324622576333707) :- 
+     actor(A), 
+     director(B), 
+     !. // Clause #2.
+
+workedunder(A, B, -0.07324622576333675) :- !. // Clause #3.
+
+
+% The flattened versions of these clauses:
+
+flattened_workedunder(a, b, 0.17709649774527667) :-  /* #pos=382 */ 
+   actor(a),
+   director(b),
+   movie(uniqueVar8, a),
+   movie(uniqueVar8, b),
+   !. // Flattened version of clause #1.
+
+flattened_workedunder(a, b, -0.07324622576333707) :-  /* #neg=88 */ 
+   actor(a),
+   director(b),
+   !. // Flattened version of clause #2.
+
+flattened_workedunder(underscore, underscore, -0.07324622576333675) :-  /* #neg=676 */ 
+   !. // Flattened version of clause #3.
+
+
+% The unique flattened literals:
+%   movie(uniqueVar8, a)
+%   movie(uniqueVar8, b)
+%   actor(a)
+%   director(b)
+
+%%%%%  WILL-Produced Tree #9 @ 21:04:40 6/7/21.  [Using 5.215.312 memory cells.]  %%%%%
+
+% FOR workedunder(A, B):
+%   if ( director(B), actor(A) )
+%   then if ( movie(C, A), movie(C, B) )
+%   | then return 0.15274385809367164;  // std dev = 0,000, 382,000 (wgt'ed) examples reached here.  /* #pos=382 */
+%   | else return -0.06842697784420265;  // std dev = 4,21e-08, 88,000 (wgt'ed) examples reached here.  /* #neg=88 */
+%   else return -0.06842697784420244;  // std dev = 1,94e-07, 676,000 (wgt'ed) examples reached here.  /* #neg=676 */
+
+
+% Clauses:
+
+workedunder(A, B, 0.15274385809367164) :- 
+     director(B), 
+     actor(A), 
+     movie(C, A), 
+     movie(C, B), 
+     !. // Clause #1.
+
+workedunder(A, B, -0.06842697784420265) :- 
+     director(B), 
+     actor(A), 
+     !. // Clause #2.
+
+workedunder(A, B, -0.06842697784420244) :- !. // Clause #3.
+
+
+% The flattened versions of these clauses:
+
+flattened_workedunder(a, b, 0.15274385809367164) :-  /* #pos=382 */ 
+   director(b),
+   actor(a),
+   movie(uniqueVar9, a),
+   movie(uniqueVar9, b),
+   !. // Flattened version of clause #1.
+
+flattened_workedunder(a, b, -0.06842697784420265) :-  /* #neg=88 */ 
+   director(b),
+   actor(a),
+   !. // Flattened version of clause #2.
+
+flattened_workedunder(underscore, underscore, -0.06842697784420244) :-  /* #neg=676 */ 
+   !. // Flattened version of clause #3.
+
+
+% The unique flattened literals:
+%   actor(a)
+%   movie(uniqueVar9, a)
+%   movie(uniqueVar9, b)
+%   director(b)
+
+%%%%%  WILL-Produced Tree #10 @ 21:04:40 6/7/21.  [Using 5.220.472 memory cells.]  %%%%%
+
+% FOR workedunder(A, B):
+%   if ( actor(A), director(B) )
+%   then if ( movie(C, A), movie(C, B) )
+%   | then return 0.13400703000801212;  // std dev = 0,000, 382,000 (wgt'ed) examples reached here.  /* #pos=382 */
+%   | else return -0.06419184008202626;  // std dev = 0,000, 88,000 (wgt'ed) examples reached here.  /* #neg=88 */
+%   else return -0.06419184008202548;  // std dev = 2,46e-07, 676,000 (wgt'ed) examples reached here.  /* #neg=676 */
+
+
+% Clauses:
+
+workedunder(A, B, 0.13400703000801212) :- 
+     actor(A), 
+     director(B), 
+     movie(C, A), 
+     movie(C, B), 
+     !. // Clause #1.
+
+workedunder(A, B, -0.06419184008202626) :- 
+     actor(A), 
+     director(B), 
+     !. // Clause #2.
+
+workedunder(A, B, -0.06419184008202548) :- !. // Clause #3.
+
+
+% The flattened versions of these clauses:
+
+flattened_workedunder(a, b, 0.13400703000801212) :-  /* #pos=382 */ 
+   actor(a),
+   director(b),
+   movie(uniqueVar10, a),
+   movie(uniqueVar10, b),
+   !. // Flattened version of clause #1.
+
+flattened_workedunder(a, b, -0.06419184008202626) :-  /* #neg=88 */ 
+   actor(a),
+   director(b),
+   !. // Flattened version of clause #2.
+
+flattened_workedunder(underscore, underscore, -0.06419184008202548) :-  /* #neg=676 */ 
+   !. // Flattened version of clause #3.
+
+
+% The unique flattened literals:
+%   actor(a)
+%   movie(uniqueVar10, a)
+%   director(b)
+%   movie(uniqueVar10, b)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%  Final call for computing score for workedunder.  %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+stepLength_tree1(1.0).
+stepLength_tree2(1.0).
+stepLength_tree3(1.0).
+stepLength_tree4(1.0).
+stepLength_tree5(1.0).
+stepLength_tree6(1.0).
+stepLength_tree7(1.0).
+stepLength_tree8(1.0).
+stepLength_tree9(1.0).
+stepLength_tree10(1.0).
+
+logPrior(-1.8).
+workedunder(D, E, Total) :- // A general accessor. 
+   workedunder(D, E, 1000000, Total), !.
+workedunder(D, E, Total) :- waitHere("This should not fail", workedunder(D, E, Total)).
+
+workedunder(D, E, TreesToUse, Total) :- // A tree-limited accessor (e.g., for tuning the number of trees to use).
+   logPrior(LogPrior),
+   getScore_workedunder_tree1(D, E, TreesToUse, Total1),
+   getScore_workedunder_tree2(D, E, TreesToUse, Total2),
+   getScore_workedunder_tree3(D, E, TreesToUse, Total3),
+   getScore_workedunder_tree4(D, E, TreesToUse, Total4),
+   getScore_workedunder_tree5(D, E, TreesToUse, Total5),
+   getScore_workedunder_tree6(D, E, TreesToUse, Total6),
+   getScore_workedunder_tree7(D, E, TreesToUse, Total7),
+   getScore_workedunder_tree8(D, E, TreesToUse, Total8),
+   getScore_workedunder_tree9(D, E, TreesToUse, Total9),
+   getScore_workedunder_tree10(D, E, TreesToUse, Total10),
+   Total is LogPrior + Total1 + Total2 + Total3 + Total4 + Total5 + Total6 + Total7 + Total8 + Total9 + Total10,
+   !.
+workedunder(D, E, TreesToUse, Total) :- waitHere("This should not fail", workedunder(D, E, TreesToUse, Total)).
+
+getScore_workedunder_tree1(D, E, TreesToUse, 0.0) :- 1 > TreesToUse, !.
+getScore_workedunder_tree1(D, E, TreesToUse, Total1) :- workedunder_tree1(D, E, Total), stepLength_tree1(StepLen), Total1 is Total * StepLen.
+
+getScore_workedunder_tree2(D, E, TreesToUse, 0.0) :- 2 > TreesToUse, !.
+getScore_workedunder_tree2(D, E, TreesToUse, Total2) :- workedunder_tree2(D, E, Total), stepLength_tree2(StepLen), Total2 is Total * StepLen.
+
+getScore_workedunder_tree3(D, E, TreesToUse, 0.0) :- 3 > TreesToUse, !.
+getScore_workedunder_tree3(D, E, TreesToUse, Total3) :- workedunder_tree3(D, E, Total), stepLength_tree3(StepLen), Total3 is Total * StepLen.
+
+getScore_workedunder_tree4(D, E, TreesToUse, 0.0) :- 4 > TreesToUse, !.
+getScore_workedunder_tree4(D, E, TreesToUse, Total4) :- workedunder_tree4(D, E, Total), stepLength_tree4(StepLen), Total4 is Total * StepLen.
+
+getScore_workedunder_tree5(D, E, TreesToUse, 0.0) :- 5 > TreesToUse, !.
+getScore_workedunder_tree5(D, E, TreesToUse, Total5) :- workedunder_tree5(D, E, Total), stepLength_tree5(StepLen), Total5 is Total * StepLen.
+
+getScore_workedunder_tree6(D, E, TreesToUse, 0.0) :- 6 > TreesToUse, !.
+getScore_workedunder_tree6(D, E, TreesToUse, Total6) :- workedunder_tree6(D, E, Total), stepLength_tree6(StepLen), Total6 is Total * StepLen.
+
+getScore_workedunder_tree7(D, E, TreesToUse, 0.0) :- 7 > TreesToUse, !.
+getScore_workedunder_tree7(D, E, TreesToUse, Total7) :- workedunder_tree7(D, E, Total), stepLength_tree7(StepLen), Total7 is Total * StepLen.
+
+getScore_workedunder_tree8(D, E, TreesToUse, 0.0) :- 8 > TreesToUse, !.
+getScore_workedunder_tree8(D, E, TreesToUse, Total8) :- workedunder_tree8(D, E, Total), stepLength_tree8(StepLen), Total8 is Total * StepLen.
+
+getScore_workedunder_tree9(D, E, TreesToUse, 0.0) :- 9 > TreesToUse, !.
+getScore_workedunder_tree9(D, E, TreesToUse, Total9) :- workedunder_tree9(D, E, Total), stepLength_tree9(StepLen), Total9 is Total * StepLen.
+
+getScore_workedunder_tree10(D, E, TreesToUse, 0.0) :- 10 > TreesToUse, !.
+getScore_workedunder_tree10(D, E, TreesToUse, Total10) :- workedunder_tree10(D, E, Total), stepLength_tree10(StepLen), Total10 is Total * StepLen.
+
+flattenedLiteralsInThisSetOfTrees(workedunder, 22, [
+   movie(uniqueVar8, b),
+   movie(uniqueVar10, a),
+   movie(uniqueVar4, a),
+   movie(uniqueVar7, a),
+   movie(uniqueVar2, a),
+   movie(uniqueVar1, b),
+   movie(uniqueVar9, a),
+   movie(uniqueVar9, b),
+   movie(uniqueVar5, a),
+   movie(uniqueVar5, b),
+   director(b),
+   movie(uniqueVar3, b),
+   movie(uniqueVar3, a),
+   movie(uniqueVar8, a),
+   movie(uniqueVar7, b),
+   movie(uniqueVar1, a),
+   movie(uniqueVar10, b),
+   movie(uniqueVar2, b),
+   movie(uniqueVar4, b),
+   actor(a),
+   movie(uniqueVar6, a),
+   movie(uniqueVar6, b)]).
