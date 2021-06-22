@@ -34,6 +34,9 @@ def genetic(src_struct, target, source, pos_target,
         print("GENERATION: ", generation)
 
         for ind in pop.population:
+            print(ind.results[-1])
+
+        for ind in pop.population:
             ind.source_tree = ind.individual_trees
             ind.predicate_inst.kb_source = ind.predicate_inst.kb_target
             ind.predicate_inst.generate_new_preds()
@@ -49,6 +52,7 @@ def genetic(src_struct, target, source, pos_target,
         print('MELHOR RESULTADO: ', pop.best_result())
 
         elite = pop.toolbox.selBest(pop.population, num_pop_elite)
+        elite = pop.get_elite(pop.population, elite, num_pop_elite)
 
         if has_same_best_value == ((NUM_GEN)/2)+1:
             final_time = time() - start_time
