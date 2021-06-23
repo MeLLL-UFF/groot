@@ -1,9 +1,0 @@
-setParam: stringsAreCaseSensitive = true.
-
-usePrologVariables: true.
-
-
-(companyeconomicsector(_, A, 0) :- companyeconomicsector(UniqueVar21, A), acquired(UniqueVar21, _)).
-(companyeconomicsector(A, _, 0) :- acquired(UniqueVar22, A), bankboughtbank(UniqueVar23, UniqueVar22), bankboughtbank(A, UniqueVar23), bankboughtbank(UniqueVar23, A)).
-(companyeconomicsector(A, _, -0.060099531566126664) :-  /* #neg=8 #pos=2 */ acquired(UniqueVar24, A), bankboughtbank(_, UniqueVar24)).
-companyeconomicsector(_, _, 0.07374606714998858) /* #neg=508 #pos=256 */ .

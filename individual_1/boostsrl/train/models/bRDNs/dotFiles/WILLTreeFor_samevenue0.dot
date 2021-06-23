@@ -1,7 +1,0 @@
-digraph G{ 
-1[label = "[samevenue(C, A), samevenue(C, B)]"];
-1 -> 2[label="True"];
-1 -> 3[label="False"];
-2[shape = box,label = "0,000(0,500)"];
-3[shape = box,label = "0,191(0,548)"];
-}

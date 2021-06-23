@@ -1,8 +1,0 @@
-setParam: stringsAreCaseSensitive = true.
-
-usePrologVariables: true.
-
-
-(companyeconomicsector(_, A, 0) :- companyeconomicsector(_, A)).
-(companyeconomicsector(A, _, 0.06138999675767501) :-  /* #neg=51 #pos=24 */ companyalsoknownas(A, _)).
-companyeconomicsector(_, _, 0.05874789511069434) /* #neg=465 #pos=234 */ .

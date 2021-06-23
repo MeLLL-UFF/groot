@@ -1,7 +1,0 @@
-setParam: stringsAreCaseSensitive = true.
-
-usePrologVariables: true.
-
-
-(samevenue(A, B, 0) :- samevenue(UniqueVar7, A), recursion_samevenue(UniqueVar7, B)).
-samevenue(_, _, 0.06479591611328821) /* #neg=1.542 #pos=771 */ .
