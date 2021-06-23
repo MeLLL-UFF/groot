@@ -1,0 +1,1 @@
+AUC/aucTemp.txt.pr --- --- Writing standardized PR file test/AUC/aucTemp.txt.spr --- --- Writing ROC file test/AUC/aucTemp.txt.roc --- Area Under the Curve for Precision - Recall is 0.1689251568398311 Area Under the Curve for ROC is 0.5753114382785958 

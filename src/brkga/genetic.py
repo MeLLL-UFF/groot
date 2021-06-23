@@ -49,6 +49,7 @@ def genetic(src_struct, target, source, pos_target,
         print('MELHOR RESULTADO: ', pop.best_result())
 
         elite = pop.toolbox.selBest(pop.population, num_pop_elite)
+        elite = pop.get_elite(pop.population, elite, num_pop_elite)
 
         if has_same_best_value == ((NUM_GEN)/2)+1:
             final_time = time() - start_time

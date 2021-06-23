@@ -1,0 +1,8 @@
+setParam: stringsAreCaseSensitive = true.
+
+usePrologVariables: true.
+
+
+(companyeconomicsector(_, A, 0) :- companyeconomicsector(_, A)).
+(companyeconomicsector(A, _, 0) :- bankboughtbank(_, A), bankboughtbank(A, _)).
+companyeconomicsector(_, _, 0.19148226843284097) /* #neg=516 #pos=258 */ .

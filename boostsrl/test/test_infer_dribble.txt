@@ -1,0 +1,147 @@
+% Running on host: C02DX2QHML7H
+
+% Switching to VarIndicator = uppercase.
+
+% Unset'ing VarIndicator.
+
+% Calling ILPouterLoop from createRegressionOuterLooper.
+
+% getInputArgWithDefaultValue: args=[test/test_pos.txt, test/test_neg.txt, test/test_bk.txt, test/test_facts.txt]
+%  for N=0: args[N]=test/test_pos.txt
+
+% getInputArgWithDefaultValue: args=[test/test_pos.txt, test/test_neg.txt, test/test_bk.txt, test/test_facts.txt]
+%  for N=1: args[N]=test/test_neg.txt
+
+% getInputArgWithDefaultValue: args=[test/test_pos.txt, test/test_neg.txt, test/test_bk.txt, test/test_facts.txt]
+%  for N=2: args[N]=test/test_bk.txt
+
+% getInputArgWithDefaultValue: args=[test/test_pos.txt, test/test_neg.txt, test/test_bk.txt, test/test_facts.txt]
+%  for N=3: args[N]=test/test_facts.txt
+
+% Welcome to the WILL ILP/SRL systems.
+
+
+% Switching to VarIndicator = uppercase.
+
+% Unset'ing VarIndicator.
+% Reading background theory from dir: null
+% Load '../background.txt'.
+
+% Switching to VarIndicator = uppercase.
+
+***** Warning: % Since this is the first setting of the notation for variables, will keep:
+%   variableIndicator = uppercase *****
+
+
+***** Warning: % Since this is the first setting of the notation for variables, will keep:
+%   variableIndicator = uppercase *****
+
+% [ LazyGroundClauseIndex ]  Building full index for mode/1 with 1 assertions.
+% LoadAllModes() called.  Currently loaded modes: []
+% [ LazyGroundClauseIndex ]  Building full index for sameAs/2 with 2 assertions.
+% [ LazyGroundNthArgumentClauseIndex ]  Argument 1:  Building full index for exp/3.
+% [ LazyGroundNthArgumentClauseIndex ]  Argument 0:  Building full index for log/3.
+% LoadAllLibraries() called.  Currently loaded libraries: [listsInLogic, differentInLogic, modes_arithmeticInLogic, inlines_comparisonInLogic, modes_listsInLogic, inlines_differentInLogic, modes_differentInLogic, arithmeticInLogic, inlines_listsInLogic, modes_comparisonInLogic, comparisonInLogic, inlines_arithmeticInLogic]
+
+%  Read the facts.
+%  Have read 4.774 facts.
+% Have read 76 examples from 'test' [test/test*].
+% Have read 2.720 examples from 'test' [test/test*].
+
+%  LearnOneClause initialized.
+
+% The outer looper has been created.
+
+% Initializing the ILP inner looper.
+
+% NEW target:                 advisedby(D, E)
+%  targetPred:                advisedby/2
+%  targetArgTypes:            signature = [const, const], types = [+person, +person]
+%  targets:                   [advisedby(D, E)]
+%  targetPredicates:          [advisedby/2]
+%  targetArgSpecs:            [[D[+person], E[+person]]]
+%  variablesInTargets:        [[D, E]]
+
+% Started collecting constants
+
+% Collecting the types of constants.
+
+% Looking at the training examples to see if any types of new constants can be inferred.
+% Time to collect constants: 49 milliseconds
+% Time to collect examples: 0 seconds
+
+% Read 76 pos examples and 2.720 neg examples.
+% Time to init learnOneClause: 56 milliseconds
+% Old dirtrain/models/
+
+% Have 76 'raw' positive examples and kept 76.
+% Have 2.720 'raw' negative examples and kept 2.720.
+
+% processing backup's for advisedby
+%  POS EX = 76
+%  NEG EX = 2.720
+
+% Memory usage by WILLSetup (just counts # targets?):
+%  |backupPosExamples| = 1
+%  |backupNegExamples| = 1
+%  |predicatesAsFacts| = 0
+%  |addedToFactBase|   = 0
+
+% Getting bRDN's target predicates.
+% Did not learn a model for 'advisedby' this run.
+%   loadModel (#0): train/models/bRDNs/Trees/advisedbyTree0.tree
+%   loadModel (#1): train/models/bRDNs/Trees/advisedbyTree1.tree
+%   loadModel (#2): train/models/bRDNs/Trees/advisedbyTree2.tree
+%   loadModel (#3): train/models/bRDNs/Trees/advisedbyTree3.tree
+%   loadModel (#4): train/models/bRDNs/Trees/advisedbyTree4.tree
+%   loadModel (#5): train/models/bRDNs/Trees/advisedbyTree5.tree
+%   loadModel (#6): train/models/bRDNs/Trees/advisedbyTree6.tree
+%   loadModel (#7): train/models/bRDNs/Trees/advisedbyTree7.tree
+%   loadModel (#8): train/models/bRDNs/Trees/advisedbyTree8.tree
+%   loadModel (#9): train/models/bRDNs/Trees/advisedbyTree9.tree
+%  Done loading 10 models.
+File: test/advice.txt doesnt exist.Hence no advice loaded
+
+% for advisedby |lookupPos| = 76
+% for advisedby |lookupNeg| = 2.720
+% getJointExamples: |pos| = 76, |neg| = 2.720
+
+% Starting inference in bRDN.
+% Trees = 10
+
+% Starting getMarginalProbabilities.
+% [ LazyGroundClauseIndex ]  Building full index for student/1 with 432 assertions.
+% [ LazyGroundNthArgumentClauseIndex ]  Argument 1:  Building full index for publication/2.
+% [ LazyGroundClauseIndex ]  Building full index for professor/1 with 124 assertions.
+% [ LazyGroundClauseIndex ]  Building full index for publication/2 with 1.468 assertions.
+% No Gibbs sampling needed during inference.
+ (Arithmetic) Mean Probability Assigned to Correct Output Class: 2.245,120/2.796,00 = 0,802976
+
+ The weighted count of positive examples = 76,000 and the weighted count of negative examples = 2.720,000
+
+printExamples: Writing out predictions (for Tuffy?) on 2.796 examples for 'advisedby' to:
+  test/results_advisedby.db
+ and to:
+  test/query_advisedby.db
+%    No need to compress since small: test/query_advisedby.db
+
+% Computing Area Under Curves.
+%Pos=76
+%Neg=2720
+%LL:-39.12971823491375
+%LL:-749.3475433457388
+
+% Running command: java -jar ./auc.jar test/AUC/aucTemp.txt list 0.0
+% WAITING FOR command: java -jar ./auc.jar test/AUC/aucTemp.txt list 0.0
+% DONE WAITING FOR command: java -jar ./auc.jar test/AUC/aucTemp.txt list 0.0
+% F1 = 1.0
+% Threshold = 0.2942797607636447
+
+%   AUC ROC   = 0,904593
+%   AUC PR    = 0,205038
+%   CLL	      = -0,268007
+%   Precision = 0,093252 at threshold = 0,500
+%   Recall    = 1,000000
+%   F1        = 0,170595
+
+% Total inference time (10 trees): 1,548 seconds.

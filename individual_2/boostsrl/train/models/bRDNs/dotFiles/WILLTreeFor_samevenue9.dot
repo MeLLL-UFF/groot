@@ -1,0 +1,7 @@
+digraph G{ 
+1[label = "[recursion_samevenue(C, A), recursion_samevenue(C, B)]"];
+1 -> 2[label="True"];
+1 -> 3[label="False"];
+2[shape = box,label = "0,697(0,667)"];
+3[shape = box,label = "-0,301(0,425)"];
+}

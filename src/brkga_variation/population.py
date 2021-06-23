@@ -227,6 +227,22 @@ class Population:
         # print(f"bestResult: {result}")
         return result
 
+    def get_elite(self, population, elite, num_pop_elite):
+        best_values = sorted([ind.fitness.values[0] for ind in elite], reverse=False)
+        best_inds = []
+        for i in best_values:
+            tmp_best = []
+            for ind in population:
+                if ind.fitness.values[0] == i:
+                    tmp_best.append((ind, ind.results[-1]['m_cll']))
+            tmp_best = sorted(tmp_best, reverse=False, key=lambda tup: tup[1])
+            best_inds.extend([ind[0] for ind in tmp_best])
+
+            if len(best_inds) >= num_pop_elite:
+                return best_inds[:num_pop_elite]
+
+        return best_inds
+
     def sel_best_cll(self, best_ind_auc_pr): 
         best_auc_pr = best_ind_auc_pr.results[-1]['m_auc_pr']
         best_inds = []

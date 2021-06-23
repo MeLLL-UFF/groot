@@ -1,0 +1,19 @@
+digraph G{ 
+1[label = "[student(A), professor(B)]"];
+1 -> 2[label="True"];
+1 -> 3[label="False"];
+2[label = "[publication(C, A), publication(C, B)]"];
+2 -> 4[label="True"];
+2 -> 5[label="False"];
+4[shape = box,label = "0,177(0,544)"];
+5[label = "[projectmember(D, B), publication(E, B)]"];
+5 -> 6[label="True"];
+5 -> 7[label="False"];
+6[shape = box,label = "0,232(0,558)"];
+7[label = "[ta(F, A, G), publication(H, B)]"];
+7 -> 8[label="True"];
+7 -> 9[label="False"];
+8[shape = box,label = "0,118(0,529)"];
+9[shape = box,label = "-0,018(0,496)"];
+3[shape = box,label = "-0,073(0,482)"];
+}

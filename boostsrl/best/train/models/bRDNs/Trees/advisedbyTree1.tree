@@ -1,0 +1,10 @@
+setParam: stringsAreCaseSensitive = true.
+
+usePrologVariables: true.
+
+
+(advisedby(A, B, 0.7194734122109545) :-  /* #pos=4 */ professor(B), student(A), publication(UniqueVar4, A), publication(UniqueVar4, B)).
+(advisedby(A, B, 0.1281847446026639) :-  /* #neg=2 #pos=1 */ professor(B), student(A), projectmember(_, B), ta(_, A, _)).
+(advisedby(A, B, 0.7670719622367216) :-  /* #pos=3 */ professor(B), student(A), projectmember(_, B)).
+(advisedby(A, B, 0.3648721582071893) :-  /* #neg=6 #pos=8 */ professor(B), student(A)).
+advisedby(_, _, -0.12544463852839138) /* #neg=24 */ .
