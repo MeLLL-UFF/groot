@@ -199,6 +199,7 @@ class Population:
                 # ind.fitness.values =  -math.sqrt(result[0]**2+result[3]**2),
                 ind.results.append(result[1])
                 ind.variances = result[2]  
+
     
     def best_result(self):
         """
@@ -214,6 +215,7 @@ class Population:
         ind = self.population[0]
         for indice in range(self.pop_size):
             fit = self.population[indice].fitness.values
+            print("FIT: ", fit)
             # print(fit, fit[0] < result)
             if fit[0] < result:
                 result = fit[0]
