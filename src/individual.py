@@ -520,14 +520,18 @@ class Individual:
         new_source_tree = []
         for idx in range(0, len(ind.individual_trees)):
             operator = choice(operators)
-            new_src, new_ind = ind.revision.modify_tree(ind,
-                                                        ind.individual_trees[idx], 
-                                                        ind.variances[idx],
-                                                        ind.first_source_tree[idx], 
-                                                        operator,
-                                                        random_line)
-            new_source_tree.append(new_src)
-            new_individual_trees.append(new_ind)
+            if len(ind.variances) > 0:
+                new_src, new_ind = ind.revision.modify_tree(ind,
+                                                            ind.individual_trees[idx], 
+                                                            ind.variances[idx],
+                                                            ind.first_source_tree[idx], 
+                                                            operator,
+                                                            random_line)
+                new_source_tree.append(new_src)
+                new_individual_trees.append(new_ind)
+            else:
+                new_source_tree.append(ind.first_source_tree[idx])
+                new_individual_trees.append(ind.individual_trees[idx])
         # print("KB: ", ind.predicate_inst.kb_source)
         ind.individual_trees = new_individual_trees
         ind.first_source_tree = new_source_tree
