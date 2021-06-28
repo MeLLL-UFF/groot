@@ -5,6 +5,7 @@ import numpy as np
 import os
 from random import choice, randint, random
 import re
+import signal
 import shutil
 import string
 import sys
@@ -195,6 +196,10 @@ class Individual:
             os.makedirs(f'individual_{idx}/boostsrl')
         shutil.copy('boostsrl/auc.jar', f'individual_{idx}/boostsrl/')
         shutil.copy('boostsrl/v1-0.jar', f'individual_{idx}/boostsrl/')
+        
+    @staticmethod  
+    def signal_handler(signum, frame):
+        raise Exception("Timed out!")
 
     @staticmethod
     def _delete_folder(idx):
@@ -318,23 +323,29 @@ class Individual:
             train_neg_target = np.random.choice(train_neg_target, 2*len(train_pos_target))
 
 
-            model_tr = boostsrl.train(background_train, train_pos_target, train_neg_target, 
-                                        train_facts_target, refine=refine, transfer=transfer, 
-                                        trees=10)
+            signal.signal(signal.SIGALRM, Individual.signal_handler)
+            signal.alarm(600)   # Ten seconds
+            try:
+                model_tr = boostsrl.train(background_train, train_pos_target, train_neg_target, 
+                                            train_facts_target, refine=refine, transfer=transfer, 
+                                            trees=10)
+            except:
+                make_test = False
 
             make_test = True
-            #with open('boostsrl/train_output.txt', 'r') as f:
-            #    train_file = ' '.join(f.readlines())
-            #    if 'TOO MANY NODES CONSIDERED' in train_file:
-            #        print("INDIVIDUO COM PROBLEMA: ", args["idx"])
-            #        make_test = False
-
             if make_test:
-                test_model = boostsrl.test(model_tr, test_pos_target, test_neg_target, 
-                                        test_facts_target, trees=10)
-                results_fold = test_model.summarize_results()
+                signal.signal(signal.SIGALRM, Individual.signal_handler)
+                signal.alarm(600)   # Ten seconds
+                try:
+                    test_model = boostsrl.test(model_tr, test_pos_target, test_neg_target, 
+                                            test_facts_target, trees=10)
+                except:
+                    results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
+                    variances = []
+                else:
+                    results_fold = test_model.summarize_results()
                     
-                variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
+                    variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
             else:
                 results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
                 variances = []
@@ -509,14 +520,18 @@ class Individual:
         new_source_tree = []
         for idx in range(0, len(ind.individual_trees)):
             operator = choice(operators)
-            new_src, new_ind = ind.revision.modify_tree(ind,
-                                                        ind.individual_trees[idx], 
-                                                        ind.variances[idx],
-                                                        ind.first_source_tree[idx], 
-                                                        operator,
-                                                        random_line)
-            new_source_tree.append(new_src)
-            new_individual_trees.append(new_ind)
+            if len(ind.variances) > 0:
+                new_src, new_ind = ind.revision.modify_tree(ind,
+                                                            ind.individual_trees[idx], 
+                                                            ind.variances[idx],
+                                                            ind.first_source_tree[idx], 
+                                                            operator,
+                                                            random_line)
+                new_source_tree.append(new_src)
+                new_individual_trees.append(new_ind)
+            else:
+                new_source_tree.append(ind.first_source_tree[idx])
+                new_individual_trees.append(ind.individual_trees[idx])
         # print("KB: ", ind.predicate_inst.kb_source)
         ind.individual_trees = new_individual_trees
         ind.first_source_tree = new_source_tree
