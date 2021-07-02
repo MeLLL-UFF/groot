@@ -322,7 +322,7 @@ class Individual:
 
             train_neg_target = np.random.choice(train_neg_target, 2*len(train_pos_target))
 
-
+            make_test = True
             signal.signal(signal.SIGALRM, Individual.signal_handler)
             signal.alarm(600)   # Ten seconds
             try:
@@ -331,8 +331,15 @@ class Individual:
                                             trees=10)
             except:
                 make_test = False
+            else:
+                train_file = ''
+                with open('boostsrl/train_output.txt', 'r') as f:
+                    train_file = ' '.join(f.readlines())
+                if 'Exception' in train_file:
+                    print("INDIVIDUO COM PROBLEMA: ", args["idx"])
+                    make_test = False
 
-            make_test = True
+#             make_test = True
             if make_test:
                 signal.signal(signal.SIGALRM, Individual.signal_handler)
                 signal.alarm(600)   # Ten seconds
@@ -520,14 +527,18 @@ class Individual:
         new_source_tree = []
         for idx in range(0, len(ind.individual_trees)):
             operator = choice(operators)
-            new_src, new_ind = ind.revision.modify_tree(ind,
-                                                        ind.individual_trees[idx], 
-                                                        ind.variances[idx],
-                                                        ind.first_source_tree[idx], 
-                                                        operator,
-                                                        random_line)
-            new_source_tree.append(new_src)
-            new_individual_trees.append(new_ind)
+            if len(ind.variances) > 0:
+                new_src, new_ind = ind.revision.modify_tree(ind,
+                                                            ind.individual_trees[idx], 
+                                                            ind.variances[idx],
+                                                            ind.first_source_tree[idx], 
+                                                            operator,
+                                                            random_line)
+                new_source_tree.append(new_src)
+                new_individual_trees.append(new_ind)
+            else:
+                new_source_tree.append(ind.first_source_tree[idx])
+                new_individual_trees.append(ind.individual_trees[idx])
         # print("KB: ", ind.predicate_inst.kb_source)
         ind.individual_trees = new_individual_trees
         ind.first_source_tree = new_source_tree
@@ -795,7 +806,18 @@ class Individual:
                     new_changed_src_tree = new_src_tree[idx].split(';')
                     branch = new_tree[idx].split(';')[1]
                     for next_branch in range(idx+1, len(new_tree)):
+                        pass_branch = False
                         if new_tree[next_branch].split(';')[1].startswith(branch):
+                            for j in range(0, len(new_tree)):
+                                if new_tree[j].split(';')[1].startswith(branch):
+                                    if new_tree[j].endswith('false;false') and j < next_branch:
+                                        print(next_branch, branch, new_tree)
+                                        pass_branch = True
+                                        break
+                                if pass_branch:
+                                    continue
+                            if pass_branch:
+                                continue
                             change_branch = new_tree[next_branch].split(';')[1].split(f'{branch},')[1].split(',')[0]
                             if change_branch == 'false':
                                 new_changed_tree[-1] = new_changed_tree[-1].replace(new_changed_tree[-1], 'true')
