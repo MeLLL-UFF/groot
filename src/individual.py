@@ -806,11 +806,18 @@ class Individual:
                     new_changed_src_tree = new_src_tree[idx].split(';')
                     branch = new_tree[idx].split(';')[1]
                     for next_branch in range(idx+1, len(new_tree)):
-                        print(next_branch, branch, new_tree)
+                        pass_branch = False
                         if new_tree[next_branch].split(';')[1].startswith(branch):
-                            if new_tree[next_branch-1].split(';')[1].startswith(branch):
-                                if new_tree[next_branch-1].endswith('false;false'):
+                            for j in range(0, len(new_tree)):
+                                if new_tree[j].split(';')[1].startswith(branch):
+                                    if new_tree[j].endswith('false;false') and j < next_branch:
+                                        print(next_branch, branch, new_tree)
+                                        pass_branch = True
+                                        break
+                                if pass_branch:
                                     continue
+                            if pass_branch:
+                                continue
                             change_branch = new_tree[next_branch].split(';')[1].split(f'{branch},')[1].split(',')[0]
                             if change_branch == 'false':
                                 new_changed_tree[-1] = new_changed_tree[-1].replace(new_changed_tree[-1], 'true')
