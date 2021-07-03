@@ -229,27 +229,30 @@ def save_base_results(rdn_b_result, rdn_result, tree_b_result, path):
         f.close()
 
 
-def save_groot_results(path, individual_number, final_results, source, target):
+def save_groot_results(path, individual_number, final_results, source, target, last_folder):
     if not os.path.exists(f'{path}'):
         os.makedirs(f'{path}')
 
     rounds = [filename.split('_')[1] for filename in os.listdir(f'{path}') if filename.startswith("round_")]
 
-    last_folder = 1
-    if len(rounds):
-        last_folder = str(int(sorted(rounds)[-1])+1)
+#     last_folder = 1
+#     if len(rounds):
+#         last_folder = str(int(sorted(rounds)[-1])+1)
 
-    if individual_number != 1:
-        last_folder = str(int(sorted(rounds)[-1]))
+#     if individual_number != 1:
+#         last_folder = str(int(sorted(rounds)[-1]))
 
-    if individual_number == 1 and int(last_folder) <= 5:
+#     if individual_number == 1 and int(last_folder) <= 5:
+    try:
         os.makedirs(f'{path}/round_{last_folder}')
+    except:
+        pass
 
     # if int(last_folder) <= 5 and individual_number == 1:
     #     os.makedirs(f'src/experiments/{path}/round_{last_folder}')
     #     os.makedirs(f'src/experiments/{path}/round_{last_folder}/individual_{individual_number}')
 
-    if int(last_folder) <=5:
+    if int(last_folder) <= 10:
         os.makedirs(f'{path}/round_{last_folder}/individual_{individual_number}')
         # os.makedirs(f'src/experiments/{path}/round_{last_folder}/individual_{individual_number}')
 
