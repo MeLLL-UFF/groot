@@ -128,7 +128,7 @@ class Population:
         return population
 
     def crossover_tree(self, population, cross_rate):
-        print('entrei aqui')
+#         print('entrei aqui')
         for individual in population:
             if random() <= cross_rate:     
                 part1 = randint(0, len(individual.individual_trees)-1)
@@ -215,7 +215,7 @@ class Population:
         ind = self.population[0]
         for indice in range(self.pop_size):
             fit = self.population[indice].fitness.values
-            print("FIT: ", fit)
+#             print("FIT: ", fit)
             # print(fit, fit[0] < result)
             if fit[0] < result:
                 result = fit[0]
@@ -259,7 +259,7 @@ class Population:
         for indice in range(self.pop_size):
             fit = self.population[indice].fitness.values
             if fit[0] == result_auc_pr:
-                print(fit[0], result_auc_pr)
+#                 print(fit[0], result_auc_pr)
                 all_best.append(self.population[indice].results[-1])
         # print(all_best)
         best_cll = all_best[0]['m_cll']

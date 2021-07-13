@@ -28,8 +28,8 @@ def genetic(src_struct, target, source, pos_target,
     for generation in range(NUM_GEN):
         print("GENERATION: ", generation)
 
-        for ind in pop.population:
-            print(ind.results[-1])
+#         for ind in pop.population:
+#             print(ind.results[-1])
 
         for ind in pop.population:
             ind.source_tree = ind.individual_trees
