@@ -1,4 +1,5 @@
 from deap import tools, base, creator
+import multiprocessing
 from time import time
 
 from src.individual import *
@@ -9,11 +10,12 @@ from src.transfer import *
 def genetic(src_struct, target, source, pos_target, 
             neg_target, facts_target, kb_source, kb_target,
             target_pred, NUM_GEN=600, pop_size=10, 
-            crossover=0.6, mutation=0.3, trees=10, revision=None, crossover_type=None):
+            crossover=0.6, mutation=0.3, trees=10, revision=None, crossover_type=None, 
+            num_processes = multiprocessing.cpu_count()):
 
     start_time = time()
 
-    pop = Population(pop_size)
+    pop = Population(num_processes, pop_size)
     best_evaluates = []
     all_best_results = []
 
