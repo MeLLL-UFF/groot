@@ -416,7 +416,7 @@ class Individual:
                                'modified_src_tree': population[i].modified_src_tree})
         return input_list
 
-    def run_evaluate(self, population, pos_target, neg_target, facts_target):
+    def run_evaluate(self, population, pos_target, neg_target, facts_target, num_processes):
         """
             Run evaluation in parallel
             Before running the evaluation, create a folder for each individual
@@ -441,7 +441,7 @@ class Individual:
         pool.join()
 
         input_list = self._input_list(population, pos_target, neg_target, facts_target)
-        pool = multiprocessing.Pool(processes = multiprocessing.cpu_count())
+        pool = multiprocessing.Pool(processes = num_processes)
         results = pool.map(self.evaluate, input_list)
         
         pool.terminate()
