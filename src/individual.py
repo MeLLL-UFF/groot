@@ -350,9 +350,12 @@ class Individual:
                     results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
                     variances = []
                 else:
-                    results_fold = test_model.summarize_results()
-                    
-                    variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
+                    try:
+                        results_fold = test_model.summarize_results()
+                        variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
+                    except:
+                        results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
+                        variances = []
             else:
                 results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
                 variances = []
