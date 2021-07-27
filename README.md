@@ -1,6 +1,10 @@
 # GROOT - Genetic algorithms to aid  tRansfer Learning with bOOsTsrl
+<p align="center">
+    <img src=https://raw.githubusercontent.com/MeLL-UFF/groot/master/groot.png>
+    <!-- ![GROOT][1.1] -->
+</p>
 
-![GROOT][1.1]
+
 
 This framework is made to offer transfer learning between relational domains, using genetic algorithms. 
 
