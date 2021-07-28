@@ -264,7 +264,7 @@ class Individual:
             ----------
             -m_cll: tuple (the cll is a negative value; the objetive is to minimize the -mean(cll))
             results: dictionary
-        """        
+        """      
         pos_target = args['pos_target']
         neg_target = args['neg_target']
         facts_target = args['facts_target']
@@ -272,6 +272,7 @@ class Individual:
         # trees = args['trees']
 
         os.chdir(f'individual_{args["idx"]}')
+#         print("FAZER EVALUATE: ", args["idx"])
 # 
         refine = []
         for tree in args['modified_src_tree']:
@@ -344,18 +345,20 @@ class Individual:
                     results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
                     variances = []
                 else:
-#                     try:
-                    results_fold = test_model.summarize_results()
-                    variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
-#                     except:
-#                         results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
-#                         variances = []
+                    try:
+#                         print('estou testando aqui: ')
+                        results_fold = test_model.summarize_results()
+                        variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
+                    except:
+#                         print('entrei aqui')
+                        results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
+                        variances = []
             else:
                 results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
                 variances = []
         
             results.append(results_fold)
-            
+#         print(len(results))    
         m_auc_pr, m_auc_roc, m_cll, m_prec, m_rec, \
         m_f1, s_auc_pr, s_auc_roc, s_cll, s_prec, s_rec, s_f1 = Individual.get_results(results)
 
