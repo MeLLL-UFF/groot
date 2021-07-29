@@ -47,7 +47,7 @@ def get_train_neg_pos(source, target, source_pred, target_pred):
     return train_pos, train_neg, train_facts
     
 
-experiments = {'experiment_1': ['pageclass', 'accounttype', 'webkb', 'twitter']}
+experiments = {'experiment_1': ['accounttype', 'pageclass', 'twitter', 'webkb']}
 # experiments = {'experiment_1': ['teamplayssport', 'companyeconomicsector', 'nell_sports', 'nell_finances']}
 for experiment in experiments:
     logging.info(f"EXPERIMENT SOURCE {experiments[experiment][2]}_{experiments[experiment][0]}")
@@ -70,7 +70,7 @@ for experiment in experiments:
 
     pred_target = create_pred_target(kb_target)
     
-    source_dataset = datasets.load(source_kb, kb_source, target=source, seed=441773, balanced=0) #facts, pos, neg
+#     source_dataset = datasets.load(source_kb, kb_source, target=source, seed=441773, balanced=0) #facts, pos, neg
     target_dataset = datasets.load(target_kb, kb_target, target=target, seed=441773, balanced=0) #facts, pos, neg
 
     ss = []
@@ -119,11 +119,11 @@ for experiment in experiments:
                     test_neg.extend(val_neg[index])
                     test_facts.extend(val_facts[index])
             test = [test_pos, test_neg, test_facts]
-            ttrain.append(test[2])
+#             ttrain.append(test[2])
 
             train_pos_gen = [ttrain[0], test[0]]
             train_neg_gen = [ttrain[1], test[1]]
-            train_facts_gen = test[2]
+            train_facts_gen = [test[2], test[2]]
 
             @use_named_args(space)
             def objective(**params):
@@ -156,18 +156,18 @@ for experiment in experiments:
         test_facts = []
         for index in range(0, len(train_pos)):
             if index == fold:
-                ttrain = [train_pos[index], train_neg[index]]
-                test_facts.extend(train_facts[index])
+                ttrain = [train_pos[index], train_neg[index], train_facts[index]]
+#                 test_facts.extend(train_facts[index])
             else:
                 test_pos.extend(train_pos[index])
                 test_neg.extend(train_neg[index])
                 test_facts.extend(train_facts[index])
         test = [test_pos, test_neg, test_facts]
-        ttrain.append(test[2])
+#         ttrain.append(test[2])
 
         train_pos_gen = [ttrain[0], test[0]]
         train_neg_gen = [ttrain[1], test[1]]
-        train_facts_gen = test[2]
+        train_facts_gen = [ttrain[2], test[2]]
 
         for _round in range(0, n_rounds):
             logging.info(f"ROUND {str(_round+1)}")
@@ -254,11 +254,11 @@ for experiment in experiments:
                     test_neg.extend(val_neg[index])
                     test_facts.extend(val_facts[index])
             test = [test_pos, test_neg, test_facts]
-            ttrain.append(test[2])
+#             ttrain.append(test[2])
 
             train_pos_gen = [ttrain[0], test[0]]
             train_neg_gen = [ttrain[1], test[1]]
-            train_facts_gen = test[2]
+            train_facts_gen = [test[2], test[2]]
 
             @use_named_args(space)
             def objective(**params):
@@ -293,18 +293,18 @@ for experiment in experiments:
         test_facts = []
         for index in range(0, len(train_pos)):
             if index == fold:
-                ttrain = [train_pos[index], train_neg[index]]
-                test_facts.extend(train_facts[index])
+                ttrain = [train_pos[index], train_neg[index], train_facts[index]]
+#                 test_facts.extend(train_facts[index])
             else:
                 test_pos.extend(train_pos[index])
                 test_neg.extend(train_neg[index])
                 test_facts.extend(train_facts[index])
         test = [test_pos, test_neg, test_facts]
-        ttrain.append(test[2])
+#         ttrain.append(test[2])
 
         train_pos_gen = [ttrain[0], test[0]]
         train_neg_gen = [ttrain[1], test[1]]
-        train_facts_gen = test[2]
+        train_facts_gen = [ttrain[2], test[2]]
 
         for _round in range(0, n_rounds):
             logging.info(f"ROUND {str(_round+1)}")
@@ -394,11 +394,11 @@ for experiment in experiments:
                     test_neg.extend(val_neg[index])
                     test_facts.extend(val_facts[index])
             test = [test_pos, test_neg, test_facts]
-            ttrain.append(test[2])
+#             ttrain.append(test[2])
 
             train_pos_gen = [ttrain[0], test[0]]
             train_neg_gen = [ttrain[1], test[1]]
-            train_facts_gen = test[2]
+            train_facts_gen = [test[2], test[2]]
 
             @use_named_args(space)
             def objective(**params):
@@ -434,18 +434,18 @@ for experiment in experiments:
         test_facts = []
         for index in range(0, len(train_pos)):
             if index == fold:
-                ttrain = [train_pos[index], train_neg[index]]
-                test_facts.extend(train_facts[index])
+                ttrain = [train_pos[index], train_neg[index], train_facts[index]]
+#                 test_facts.extend(train_facts[index])
             else:
                 test_pos.extend(train_pos[index])
                 test_neg.extend(train_neg[index])
                 test_facts.extend(train_facts[index])
         test = [test_pos, test_neg, test_facts]
-        ttrain.append(test[2])
+#         ttrain.append(test[2])
 
         train_pos_gen = [ttrain[0], test[0]]
         train_neg_gen = [ttrain[1], test[1]]
-        train_facts_gen = test[2]
+        train_facts_gen = [ttrain[2], test[2]]
 
         for _round in range(1, n_rounds):
             logging.info(f"ROUND {str(_round+1)}")

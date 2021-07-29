@@ -264,7 +264,7 @@ class Individual:
             ----------
             -m_cll: tuple (the cll is a negative value; the objetive is to minimize the -mean(cll))
             results: dictionary
-        """        
+        """      
         pos_target = args['pos_target']
         neg_target = args['neg_target']
         facts_target = args['facts_target']
@@ -272,6 +272,7 @@ class Individual:
         # trees = args['trees']
 
         os.chdir(f'individual_{args["idx"]}')
+#         print("FAZER EVALUATE: ", args["idx"])
 # 
         refine = []
         for tree in args['modified_src_tree']:
@@ -295,12 +296,6 @@ class Individual:
                                     trees=10)
 
                 make_test = True
-#                 with open('boostsrl/train_output.txt', 'r') as f:
-#                     train_file = ' '.join(f.readlines())
-#                     if 'TOO MANY NODES CONSIDERED' in train_file:
-#                         print("INDIVIDUO COM PROBLEMA: ", args["idx"])
-#                         make_test = False
-
                 if make_test:
                     test_model = boostsrl.test(model_tr, test_pos_target, test_neg_target, 
                                             test_facts_target, trees=10)
@@ -317,8 +312,8 @@ class Individual:
 
         else:
             train_pos_target, train_neg_target, train_facts_target, \
-            test_pos_target, test_neg_target, test_facts_target = pos_target[0], neg_target[0], facts_target, \
-                                                                pos_target[1], neg_target[1], facts_target
+            test_pos_target, test_neg_target, test_facts_target = pos_target[0], neg_target[0], facts_target[0], \
+                                                                pos_target[1], neg_target[1], facts_target[1]
 
             train_neg_target = np.random.choice(train_neg_target, 2*len(train_pos_target))
 
@@ -350,37 +345,22 @@ class Individual:
                     results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
                     variances = []
                 else:
-                    results_fold = test_model.summarize_results()
-                    
-                    variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
+                    try:
+#                         print('estou testando aqui: ')
+                        results_fold = test_model.summarize_results()
+                        variances = [model_tr.get_variances(treenumber=i+1) for i in range(10)]
+                    except:
+#                         print('entrei aqui')
+                        results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
+                        variances = []
             else:
                 results_fold = {'AUC PR': 0.0, 'AUC ROC': 0.0, 'CLL': 0.0, 'Precision': 0.0, 'Recall': 0.0, 'F1': 0.0}
                 variances = []
         
             results.append(results_fold)
-            
+#         print(len(results))    
         m_auc_pr, m_auc_roc, m_cll, m_prec, m_rec, \
         m_f1, s_auc_pr, s_auc_roc, s_cll, s_prec, s_rec, s_f1 = Individual.get_results(results)
-        
-       
-
-
-        # print('MEDIA')
-        # print("AUC PR: ", m_auc_pr)
-        # print("AUC ROC: ", m_auc_roc)
-        # print("CLL: ", m_cll)
-        # print("PREC: ", m_prec)
-        # print("RECALL: ", m_rec)
-        # print("F1: ", m_f1)
-        # print("-------------------")
-        # print('STD')
-        # print("AUC PR: ", s_auc_pr)
-        # print("AUC ROC: ", s_auc_roc)
-        # print("CLL: ", s_cll)
-        # print("PREC: ", s_prec)
-        # print("RECALL: ", s_rec)
-        # print("F1: ", s_f1)
-        # print("-------------------")
 
 
         results = {'m_auc_pr': m_auc_pr, 'm_auc_roc': m_auc_roc,
