@@ -1,5 +1,6 @@
 import json
 import logging
+import multiprocessing
 import numpy as np
 from skopt.space import Real, Integer, Categorical
 from skopt.utils import use_named_args
@@ -16,7 +17,8 @@ from src.predicate import *
 
 
 logging.basicConfig(level=logging.INFO)
-n_rounds = 5
+n_rounds = 10
+num_processes = multiprocessing.cpu_count()
 
 def get_k_best_individuals(population, k):
     best_ind = []
@@ -33,16 +35,19 @@ def get_train_neg_pos(source, target, source_pred, target_pred):
     train_neg = []
     train_pos = []
     
-    with open(f'groot_experiments/{source}_{target}_{source_pred}_{target_pred}/neg.txt', 'r') as f:
+    with open(f'groot_experiments/{source}_{target}_{source_pred}_{target_pred}/neg_tmp.txt', 'r') as f:
         train_neg = json.loads(f.readline())
         
-    with open(f'groot_experiments/{source}_{target}_{source_pred}_{target_pred}/pos.txt', 'r') as f:
+    with open(f'groot_experiments/{source}_{target}_{source_pred}_{target_pred}/pos_tmp.txt', 'r') as f:
         train_pos = json.loads(f.readline())
         
-    return train_pos, train_neg
+    with open(f'groot_experiments/{source}_{target}_{source_pred}_{target_pred}/facts_tmp.txt', 'r') as f:
+        train_facts = json.loads(f.readline())
+        
+    return train_pos, train_neg, train_facts
     
 
-experiments = {'experiment_1': ['workedunder', 'samevenue', 'imdb', 'cora']}
+experiments = {'experiment_1': ['accounttype', 'pageclass', 'twitter', 'webkb']}
 # experiments = {'experiment_1': ['teamplayssport', 'companyeconomicsector', 'nell_sports', 'nell_finances']}
 for experiment in experiments:
     logging.info(f"EXPERIMENT SOURCE {experiments[experiment][2]}_{experiments[experiment][0]}")
@@ -53,6 +58,9 @@ for experiment in experiments:
     source_pred = experiments[experiment][0]
     target_pred = experiments[experiment][1]
     
+    if target_kb in ['webkb', 'yeast', 'yago', 'yago2s', 'yeast2']:
+        num_processes = int(multiprocessing.cpu_count()/2)
+        
     source = source_pred
     target = target_pred
 
@@ -62,23 +70,22 @@ for experiment in experiments:
 
     pred_target = create_pred_target(kb_target)
     
-    source_dataset = datasets.load(source_kb, kb_source, target=source, seed=441773, balanced=0) #facts, pos, neg
+#     source_dataset = datasets.load(source_kb, kb_source, target=source, seed=441773, balanced=0) #facts, pos, neg
     target_dataset = datasets.load(target_kb, kb_target, target=target, seed=441773, balanced=0) #facts, pos, neg
 
     ss = []
     with open('src/experiments/structures.json', 'r') as f:
         ss = json.loads(f.readline())
 
-    src_struct = copy.deepcopy(ss[source_kb])
+    src_struct = copy.deepcopy(ss[f"{source_kb}_{source_pred}"])
     new_src_struct = []
     for i in range(0, len(src_struct)):
         new_src_struct.append(define_individual(src_struct[i], i))  
     structured_src = src_struct
 
     
-    train_pos, train_neg = get_train_neg_pos(source_kb, target_kb, source, target)
-    facts =  [x for y in target_dataset[0] for x in y]
-    train_facts = [facts]*len(train_pos)
+#     train_pos, train_neg, train_facts = get_train_neg_pos(source_kb, target_kb, source, target)
+    train_pos, train_neg, train_facts = target_dataset[1], target_dataset[2], target_dataset[0]
 
     logging.info("Iniciando algoritmo genético...")
 
@@ -91,8 +98,8 @@ for experiment in experiments:
               Categorical(mutation_rate_list, name='mutation_rate'),
               Categorical(crossover_rate_list, name='crossover_rate')]
 
-    
-    for fold in range(len(train_pos)):
+    logging.info(f"NUMBER OF FOLDS: {len(train_pos)}")
+    for fold in range(0, len(train_pos)):
         logging.info(f"FOLD: {fold}")
         best_res = []
         val_pos, val_neg, val_facts = get_train_test([train_pos[fold]], [train_neg[fold]], [train_facts[fold]],  n_folds=3)
@@ -112,18 +119,19 @@ for experiment in experiments:
                     test_neg.extend(val_neg[index])
                     test_facts.extend(val_facts[index])
             test = [test_pos, test_neg, test_facts]
-            ttrain.append(test[2])
+#             ttrain.append(test[2])
 
             train_pos_gen = [ttrain[0], test[0]]
             train_neg_gen = [ttrain[1], test[1]]
-            train_facts_gen = test[2]
+            train_facts_gen = [test[2], test[2]]
 
             @use_named_args(space)
             def objective(**params):
                 res = genetic(new_src_struct, target, source, train_pos_gen, train_neg_gen, train_facts_gen,
                                   kb_source, kb_target, pred_target,
                                   NUM_GEN=14, pop_size=params['num_individuals'], crossover=params['crossover_rate'],
-                                  mutation=params['mutation_rate'], crossover_type='tree_ind', revision='guided')
+                                  mutation=params['mutation_rate'], crossover_type='tree_ind', revision='guided',
+                                  num_processes=num_processes)
 
                 return res[1][-1]
             res_gp = gp_minimize(objective, space, n_calls=10, random_state=0)
@@ -148,18 +156,18 @@ for experiment in experiments:
         test_facts = []
         for index in range(0, len(train_pos)):
             if index == fold:
-                ttrain = [train_pos[index], train_neg[index]]
-                test_facts.extend(train_facts[index])
+                ttrain = [train_pos[index], train_neg[index], train_facts[index]]
+#                 test_facts.extend(train_facts[index])
             else:
                 test_pos.extend(train_pos[index])
                 test_neg.extend(train_neg[index])
                 test_facts.extend(train_facts[index])
         test = [test_pos, test_neg, test_facts]
-        ttrain.append(test[2])
+#         ttrain.append(test[2])
 
         train_pos_gen = [ttrain[0], test[0]]
         train_neg_gen = [ttrain[1], test[1]]
-        train_facts_gen = test[2]
+        train_facts_gen = [ttrain[2], test[2]]
 
         for _round in range(0, n_rounds):
             logging.info(f"ROUND {str(_round+1)}")
@@ -170,7 +178,8 @@ for experiment in experiments:
                             kb_source, kb_target, pred_target,
                             NUM_GEN=14, pop_size=parameters[0], 
                             mutation=parameters[1], crossover=parameters[2],
-                            crossover_type='tree_ind', revision='guided')
+                            crossover_type='tree_ind', revision='guided',
+                            num_processes=num_processes)
 
 
             final_results = {}
@@ -206,7 +215,7 @@ for experiment in experiments:
                 final_results[f'refine:{source}->{target}'] = rrefine
                 final_results[f'transfer:{source}->{target}'] = rtransfer
                 final_results[f'inf:{source}->{target}'] = inf
-                save_groot_results(f'groot_experiments/{source_kb}_{target_kb}_{source_pred}_{target_pred}/s_genetic/train_fold_{fold}/{str(parameters[2])}_{str(parameters[1])}_{str(parameters[0])}_15', n_ind, final_results, source_pred, target_pred)
+                save_groot_results(f'groot_experiments/{source_kb}_{target_kb}_{source_pred}_{target_pred}/s_genetic_tmp/train_fold_{fold}/{str(parameters[2])}_{str(parameters[1])}_{str(parameters[0])}_15', n_ind, final_results, source_pred, target_pred, _round+1)
                 n_ind += 1
 
     logging.info("Finalizado algoritmo genético!")
@@ -245,19 +254,19 @@ for experiment in experiments:
                     test_neg.extend(val_neg[index])
                     test_facts.extend(val_facts[index])
             test = [test_pos, test_neg, test_facts]
-            ttrain.append(test[2])
+#             ttrain.append(test[2])
 
             train_pos_gen = [ttrain[0], test[0]]
             train_neg_gen = [ttrain[1], test[1]]
-            train_facts_gen = test[2]
+            train_facts_gen = [test[2], test[2]]
 
             @use_named_args(space)
             def objective(**params):
                 res = brkga(new_src_struct, target, source, train_pos_gen, train_neg_gen, train_facts_gen,
                             kb_source, kb_target, pred_target,
-                                  NUM_GEN=14, pop_size=params['num_individuals'], crossover=params['crossover_rate'],
-                                  mutation=params['mutation_rate'], num_elite=params['num_elite'], 
-                                  num_mutation=params['num_mutation'])
+                            NUM_GEN=14, pop_size=params['num_individuals'], crossover=params['crossover_rate'],
+                            mutation=params['mutation_rate'], num_elite=params['num_elite'], 
+                            num_mutation=params['num_mutation'], num_processes=num_processes)
 
                 return res[1][-1]
             res_gp = gp_minimize(objective, space, n_calls=10, random_state=0)
@@ -284,18 +293,18 @@ for experiment in experiments:
         test_facts = []
         for index in range(0, len(train_pos)):
             if index == fold:
-                ttrain = [train_pos[index], train_neg[index]]
-                test_facts.extend(train_facts[index])
+                ttrain = [train_pos[index], train_neg[index], train_facts[index]]
+#                 test_facts.extend(train_facts[index])
             else:
                 test_pos.extend(train_pos[index])
                 test_neg.extend(train_neg[index])
                 test_facts.extend(train_facts[index])
         test = [test_pos, test_neg, test_facts]
-        ttrain.append(test[2])
+#         ttrain.append(test[2])
 
         train_pos_gen = [ttrain[0], test[0]]
         train_neg_gen = [ttrain[1], test[1]]
-        train_facts_gen = test[2]
+        train_facts_gen = [ttrain[2], test[2]]
 
         for _round in range(0, n_rounds):
             logging.info(f"ROUND {str(_round+1)}")
@@ -307,7 +316,8 @@ for experiment in experiments:
                             NUM_GEN=14, pop_size=parameters[0], 
                             mutation=parameters[1], crossover=parameters[2],
                             num_elite=parameters[3], 
-                            num_mutation=parameters[4])
+                            num_mutation=parameters[4], 
+                            num_processes=num_processes)
 
 
             final_results = {}
@@ -343,8 +353,8 @@ for experiment in experiments:
                 final_results[f'refine:{source}->{target}'] = rrefine
                 final_results[f'transfer:{source}->{target}'] = rtransfer
                 final_results[f'inf:{source}->{target}'] = inf
-                save_groot_results(                                                                            f'groot_experiments/{source_kb}_{target_kb}_{source_pred}_{target_pred}/brkga/train_fold_{fold}/{str(parameters[2])}_{str(parameters[1])}_{str(parameters[0])}_15_{str(parameters[3])}_{str(parameters[4])}', 
-                                                                          n_ind, final_results, source_pred, target_pred)
+                save_groot_results(                                                                            f'groot_experiments/{source_kb}_{target_kb}_{source_pred}_{target_pred}/brkga_tmp/train_fold_{fold}/{str(parameters[2])}_{str(parameters[1])}_{str(parameters[0])}_15_{str(parameters[3])}_{str(parameters[4])}', 
+                                                                          n_ind, final_results, source_pred, target_pred, _round+1)
                 n_ind += 1
 
     logging.info("Finalizado BRKGA!")
@@ -365,10 +375,11 @@ for experiment in experiments:
               Categorical(num_mutation_list, name='num_mutation')]
     
     for fold in range(len(train_pos)):
+        logging.info(f"FOLD: {fold}")
         best_res = []
         val_pos, val_neg, val_facts = get_train_test([train_pos[fold]], [train_neg[fold]], [train_facts[fold]],  n_folds=3)
         for i in range(len(val_pos)):
-            
+        
             test = []
             ttrain = []
             test_pos = []
@@ -383,19 +394,20 @@ for experiment in experiments:
                     test_neg.extend(val_neg[index])
                     test_facts.extend(val_facts[index])
             test = [test_pos, test_neg, test_facts]
-            ttrain.append(test[2])
+#             ttrain.append(test[2])
 
             train_pos_gen = [ttrain[0], test[0]]
             train_neg_gen = [ttrain[1], test[1]]
-            train_facts_gen = test[2]
+            train_facts_gen = [test[2], test[2]]
 
             @use_named_args(space)
             def objective(**params):
-                res = brkga_var(new_src_struct, target, source, vtrain_pos_gen, train_neg_gen, train_facts_gen,
+                res = brkga_var(new_src_struct, target, source, train_pos_gen, train_neg_gen, train_facts_gen,
                                 kb_source, kb_target, pred_target,
-                              NUM_GEN=14, pop_size=params['num_individuals'], crossover=params['crossover_rate'],
-                              mutation=params['mutation_rate'], num_top=params['num_elite'], 
-                              num_bottom=params['num_mutation'], revision='guided')
+                                NUM_GEN=14, pop_size=params['num_individuals'], crossover=params['crossover_rate'],
+                                mutation=params['mutation_rate'], num_top=params['num_elite'], 
+                                num_bottom=params['num_mutation'], revision='guided', 
+                                num_processes=num_processes)
 
                 return res[1][-1]
             res_gp = gp_minimize(objective, space, n_calls=10, random_state=0)
@@ -413,7 +425,7 @@ for experiment in experiments:
 
 
     #     fold = best_res[0][1]
-        parameters = best_res[0][2]
+        parameters = best_res#best_res[0][2]
 
         test = []
         ttrain = []
@@ -422,21 +434,22 @@ for experiment in experiments:
         test_facts = []
         for index in range(0, len(train_pos)):
             if index == fold:
-                ttrain = [train_pos[index], train_neg[index]]
-                test_facts.extend(train_facts[index])
+                ttrain = [train_pos[index], train_neg[index], train_facts[index]]
+#                 test_facts.extend(train_facts[index])
             else:
                 test_pos.extend(train_pos[index])
                 test_neg.extend(train_neg[index])
                 test_facts.extend(train_facts[index])
         test = [test_pos, test_neg, test_facts]
-        ttrain.append(test[2])
+#         ttrain.append(test[2])
 
         train_pos_gen = [ttrain[0], test[0]]
         train_neg_gen = [ttrain[1], test[1]]
-        train_facts_gen = test[2]
+        train_facts_gen = [ttrain[2], test[2]]
 
-        for _round in range(0, n_rounds):
+        for _round in range(1, n_rounds):
             logging.info(f"ROUND {str(_round+1)}")
+            print(f"PARAMETERS {parameters}")
 
 
             res_brkga_var = brkga_var(new_src_struct, target_pred, source_pred, 
@@ -445,7 +458,7 @@ for experiment in experiments:
                             NUM_GEN=14, pop_size=parameters[0], 
                             mutation=parameters[1], crossover=parameters[2],
                             num_top=parameters[3], 
-                            num_bottom=parameters[4], revision='guided')
+                            num_bottom=parameters[4], revision='guided', num_processes=num_processes)
 
 
             final_results = {}
@@ -481,7 +494,7 @@ for experiment in experiments:
                 final_results[f'refine:{source}->{target}'] = rrefine
                 final_results[f'transfer:{source}->{target}'] = rtransfer
                 final_results[f'inf:{source}->{target}'] = inf
-                save_groot_results(f'groot_experiments/{source_kb}_{target_kb}_{source_pred}_{target_pred}/brkga_var/train_fold_{fold}/{str(parameters[2])}_{str(parameters[1])}_{str(parameters[0])}_15_{str(parameters[3])}_{str(parameters[4])}', n_ind, final_results, source_pred, target_pred)
+                save_groot_results(f'groot_experiments/{source_kb}_{target_kb}_{source_pred}_{target_pred}/brkga_var_tmp/train_fold_{fold}/{str(parameters[2])}_{str(parameters[1])}_{str(parameters[0])}_15_{str(parameters[3])}_{str(parameters[4])}', n_ind, final_results, source_pred, target_pred, _round+1)
                 n_ind += 1
 
     logging.info("Finalizado BRKGA VARIATION!")

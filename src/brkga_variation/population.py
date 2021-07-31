@@ -9,7 +9,7 @@ from src.predicate import *
 
 class Population:
 
-    def __init__(self, pop_size=20):
+    def __init__(self, num_processes, pop_size=20):
         """
             Constructor
 
@@ -19,6 +19,7 @@ class Population:
         """
         self.population = []
         self.pop_size = pop_size
+        self.num_processes = num_processes
         self.toolbox = base.Toolbox()
         self.toolbox.register("mate", tools.cxOnePoint) 
         self.toolbox.register("select", tools.selTournament, tournsize=3)
@@ -203,7 +204,7 @@ class Population:
                 ind.modified_src_tree = tree[1]
                 ind.transfer = tree[2]
 
-            results = evaluate_pop[0].run_evaluate(evaluate_pop, pos_target, neg_target, facts_target)
+            results = evaluate_pop[0].run_evaluate(evaluate_pop, pos_target, neg_target, facts_target, self.num_processes)
             for ind, result in zip(evaluate_pop, results):
                 ind.fitness.values = result[3],
                 ind.results.append(result[1])    
@@ -249,6 +250,8 @@ class Population:
         for i in self.population:
             if i.results[-1]['m_auc_pr'] == best_auc_pr:
                 best_inds.append(i)
+        if len(best_inds) == 0:
+            return [best_ind_auc_pr]
         best_cll = best_inds[0].results[-1]['m_cll']
         best_ind = best_inds[0]
         for i in best_inds:

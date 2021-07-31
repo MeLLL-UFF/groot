@@ -9,7 +9,7 @@ from src.predicate import *
 
 class Population:
 
-    def __init__(self, pop_size=20):
+    def __init__(self, num_processes, pop_size=20):
         """
             Constructor
 
@@ -19,6 +19,7 @@ class Population:
         """
         self.population = []
         self.pop_size = pop_size
+        self.num_processes = num_processes
         self.toolbox = base.Toolbox()
         self.toolbox.register("mate", tools.cxOnePoint) 
         self.toolbox.register("select", tools.selTournament, tournsize=3)
@@ -128,7 +129,7 @@ class Population:
         return population
 
     def crossover_tree(self, population, cross_rate):
-        print('entrei aqui')
+#         print('entrei aqui')
         for individual in population:
             if random() <= cross_rate:     
                 part1 = randint(0, len(individual.individual_trees)-1)
@@ -193,12 +194,13 @@ class Population:
                 ind.modified_src_tree = tree[1]
                 ind.transfer = tree[2]
 
-            results = evaluate_pop[0].run_evaluate(evaluate_pop, pos_target, neg_target, facts_target)
+            results = evaluate_pop[0].run_evaluate(evaluate_pop, pos_target, neg_target, facts_target, self.num_processes)
             for ind, result in zip(evaluate_pop, results):
                 ind.fitness.values = result[3],
                 # ind.fitness.values =  -math.sqrt(result[0]**2+result[3]**2),
                 ind.results.append(result[1])
                 ind.variances = result[2]  
+
     
     def best_result(self):
         """
@@ -214,6 +216,7 @@ class Population:
         ind = self.population[0]
         for indice in range(self.pop_size):
             fit = self.population[indice].fitness.values
+#             print("FIT: ", fit)
             # print(fit, fit[0] < result)
             if fit[0] < result:
                 result = fit[0]
@@ -223,9 +226,14 @@ class Population:
     def sel_best_cll(self, best_ind_auc_pr): 
         best_auc_pr = best_ind_auc_pr.results[-1]['m_auc_pr']
         best_inds = []
+#         print("TAMANHO POPULACAO: ", len(self.population))
         for i in self.population:
+#             print("COMPARACAO: ", best_auc_pr, i.results[-1]['m_auc_pr'])
             if i.results[-1]['m_auc_pr'] == best_auc_pr:
                 best_inds.append(i)
+#         print(best_inds[0].results)
+        if len(best_inds) == 0:
+            return [best_ind_auc_pr]
         best_cll = best_inds[0].results[-1]['m_cll']
         best_ind = best_inds[0]
         for i in best_inds:
@@ -257,7 +265,7 @@ class Population:
         for indice in range(self.pop_size):
             fit = self.population[indice].fitness.values
             if fit[0] == result_auc_pr:
-                print(fit[0], result_auc_pr)
+#                 print(fit[0], result_auc_pr)
                 all_best.append(self.population[indice].results[-1])
         # print(all_best)
         best_cll = all_best[0]['m_cll']
