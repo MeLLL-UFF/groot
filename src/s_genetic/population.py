@@ -226,9 +226,14 @@ class Population:
     def sel_best_cll(self, best_ind_auc_pr): 
         best_auc_pr = best_ind_auc_pr.results[-1]['m_auc_pr']
         best_inds = []
+#         print("TAMANHO POPULACAO: ", len(self.population))
         for i in self.population:
+#             print("COMPARACAO: ", best_auc_pr, i.results[-1]['m_auc_pr'])
             if i.results[-1]['m_auc_pr'] == best_auc_pr:
                 best_inds.append(i)
+#         print(best_inds[0].results)
+        if len(best_inds) == 0:
+            return [best_ind_auc_pr]
         best_cll = best_inds[0].results[-1]['m_cll']
         best_ind = best_inds[0]
         for i in best_inds:

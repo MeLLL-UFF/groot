@@ -250,6 +250,8 @@ class Population:
         for i in self.population:
             if i.results[-1]['m_auc_pr'] == best_auc_pr:
                 best_inds.append(i)
+        if len(best_inds) == 0:
+            return [best_ind_auc_pr]
         best_cll = best_inds[0].results[-1]['m_cll']
         best_ind = best_inds[0]
         for i in best_inds:

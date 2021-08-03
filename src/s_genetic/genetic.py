@@ -43,6 +43,7 @@ def genetic(src_struct, target, source, pos_target,
             ind.predicate_inst.mapping_type = {}
       
         best_individuals = pop.toolbox.selBest(pop.population, 1)
+#         print(best_individuals[0].results)
         best_individuals = pop.sel_best_cll(best_individuals[0])
 
         if len(best_evaluates) > 0 and pop.best_result() == best_evaluates[-1]:
