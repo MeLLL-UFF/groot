@@ -52,7 +52,7 @@ def genetic(src_struct, target, source, pos_target,
         else:
             has_same_best_value = 0
         best_evaluates.append(pop.best_result())
-        print('MELHOR RESULTADO: ', pop.best_result())
+#         print('MELHOR RESULTADO: ', pop.best_result())
 
         if has_same_best_value == ((NUM_GEN)/2)+1:
             final_time = time() - start_time
