@@ -290,6 +290,7 @@ class Individual:
                                                                                 facts_target, i)
                 
                 train_neg_target = np.random.choice(train_neg_target, 2*len(train_pos_target))
+                
 
                 model_tr = boostsrl.train(background_train, train_pos_target, train_neg_target, 
                                     train_facts_target, refine=refine, transfer=transfer, 
@@ -319,7 +320,7 @@ class Individual:
 
             make_test = True
             signal.signal(signal.SIGALRM, Individual.signal_handler)
-            signal.alarm(600)   # Ten seconds
+            signal.alarm(600)   # Ten minutes
             try:
                 model_tr = boostsrl.train(background_train, train_pos_target, train_neg_target, 
                                             train_facts_target, refine=refine, transfer=transfer, 
@@ -331,13 +332,13 @@ class Individual:
                 with open('boostsrl/train_output.txt', 'r') as f:
                     train_file = ' '.join(f.readlines())
                 if 'Exception' in train_file:
-                    print("INDIVIDUO COM PROBLEMA: ", args["idx"])
+#                     print("INDIVIDUO COM PROBLEMA: ", args["idx"])
                     make_test = False
 
 #             make_test = True
             if make_test:
                 signal.signal(signal.SIGALRM, Individual.signal_handler)
-                signal.alarm(600)   # Ten seconds
+                signal.alarm(600)   # Ten minutes
                 try:
                     test_model = boostsrl.test(model_tr, test_pos_target, test_neg_target, 
                                             test_facts_target, trees=10)
