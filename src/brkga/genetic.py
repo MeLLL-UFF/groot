@@ -48,7 +48,7 @@ def genetic(src_struct, target, source, pos_target,
         else:
             has_same_best_value = 0
         best_evaluates.append(pop.best_result())
-        print('MELHOR RESULTADO: ', pop.best_result())
+#         print('MELHOR RESULTADO: ', pop.best_result())
 
         elite = pop.toolbox.selBest(pop.population, num_pop_elite)
         elite = pop.get_elite(pop.population, elite, num_pop_elite)
