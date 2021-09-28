@@ -1,0 +1,1 @@
+{"AUC ROC": 0.932863, "AUC PR": 0.29479, "CLL": -0.307678, "Precision": [NaN, 0.5], "Recall": 0.0, "F1": NaN}
