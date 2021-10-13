@@ -130,14 +130,14 @@ for experiment in experiments:
             
             for i in range(len(val_pos)):
 
-                test = []
+                test_ = []
                 ttrain = []
                 train_pos_ = []
                 train_neg_ = [] 
                 train_facts_ = []
                 for index in range(0, len(val_pos)):
                     if index == i:
-                        test = [val_pos[index], val_neg[index]]
+                        test_ = [val_pos[index], val_neg[index]]
                         train_facts.extend(val_facts[index])
                     else:
                         train_pos_.extend(val_pos[index])
@@ -145,8 +145,8 @@ for experiment in experiments:
                         train_facts_.extend(val_facts[index])
                 ttrain = [train_pos_, train_neg_, train_facts_]
 
-                train_pos_gen = [ttrain[0], test[0]]
-                train_neg_gen = [ttrain[1], test[1]]
+                train_pos_gen = [ttrain[0], test_[0]]
+                train_neg_gen = [ttrain[1], test_[1]]
                 train_facts_gen = [ttrain[2], ttrain[2]]
             
             
@@ -280,14 +280,14 @@ for experiment in experiments:
             
             for i in range(len(val_pos)):
 
-                test = []
+                test_ = []
                 ttrain = []
                 train_pos_ = []
                 train_neg_ = [] 
                 train_facts_ = []
                 for index in range(0, len(val_pos)):
                     if index == i:
-                        test = [val_pos[index], val_neg[index]]
+                        test_ = [val_pos[index], val_neg[index]]
                         train_facts.extend(val_facts[index])
                     else:
                         train_pos_.extend(val_pos[index])
@@ -295,8 +295,8 @@ for experiment in experiments:
                         train_facts_.extend(val_facts[index])
                 ttrain = [train_pos_, train_neg_, train_facts_]
 
-                train_pos_gen = [ttrain[0], test[0]]
-                train_neg_gen = [ttrain[1], test[1]]
+                train_pos_gen = [ttrain[0], test_[0]]
+                train_neg_gen = [ttrain[1], test_[1]]
                 train_facts_gen = [ttrain[2], ttrain[2]]
 
                 @use_named_args(space)
@@ -431,14 +431,14 @@ for experiment in experiments:
             
             for i in range(len(val_pos)):
 
-                test = []
+                test_ = []
                 ttrain = []
                 train_pos_ = []
                 train_neg_ = [] 
                 train_facts_ = []
                 for index in range(0, len(val_pos)):
                     if index == i:
-                        test = [val_pos[index], val_neg[index]]
+                        test_ = [val_pos[index], val_neg[index]]
                         train_facts.extend(val_facts[index])
                     else:
                         train_pos_.extend(val_pos[index])
@@ -446,8 +446,8 @@ for experiment in experiments:
                         train_facts_.extend(val_facts[index])
                 ttrain = [train_pos_, train_neg_, train_facts_]
 
-                train_pos_gen = [ttrain[0], test[0]]
-                train_neg_gen = [ttrain[1], test[1]]
+                train_pos_gen = [ttrain[0], test_[0]]
+                train_neg_gen = [ttrain[1], test_[1]]
                 train_facts_gen = [ttrain[2], ttrain[2]]
 
                 @use_named_args(space)
